@@ -1,0 +1,108 @@
+sw_volume: 100
+audio_device_state:0:ALSA LOL
+audio_device_state:1:My FIFO
+audio_device_state:1:My Pulse Output
+state: pause
+current: 55
+time: 92.647000
+random: 0
+repeat: 1
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:Pi - Soundtrack/A Low Frequency Inversion Field.mp3
+1:Pi - Soundtrack/2 Pi R.mp3
+2:Pi - Soundtrack/Angel.mp3
+3:Pi - Soundtrack/Bucephalus Bouncing Ball.mp3
+4:Pi - Soundtrack/Anthem.mp3
+5:Pi - Soundtrack/Drippy.mp3
+6:Pi - Soundtrack/Kalpol Intro.mp3
+7:Pi - Soundtrack/No Man's Land.mp3
+8:Pi - Soundtrack/P.E.T.R.O.L..mp3
+9:Pi - Soundtrack/Pi R2.mp3
+10:Pi - Soundtrack/Third from the Sun.mp3
+11:Pi - Soundtrack/Watching Windows [Ed Rush & Optical Remix].mp3
+12:Pi - Soundtrack/We Got the Gun.mp3
+13:Moby Go-The Very Best of Moby/CD 1/Moby - Why Does My Heart Feel So Bad_ - 11.mp3
+14:Moby Go-The Very Best of Moby/CD 1/Moby - Honey - 13.mp3
+15:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/01 - Aphex Twin - Xtal.flac
+16:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/02 - Aphex Twin - Tha.flac
+17:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/03 - Aphex Twin - Pulsewidth.flac
+18:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/04 - Aphex Twin - Ageispolis.flac
+19:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/05 - Aphex Twin - I.flac
+20:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/06 - Aphex Twin - Green Calx.flac
+21:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/07 - Aphex Twin - Heliosphan.flac
+22:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/08 - Aphex Twin - We are the music makers.flac
+23:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/09 - Aphex Twin - Schottkey 7th Path.flac
+24:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/10 - Aphex Twin - Ptolemy.flac
+25:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/11 - Aphex Twin - Hedphelym.flac
+26:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/12 - Aphex Twin - Delphium.flac
+27:Aphex Twin - Selected Ambient Works 85-92 (1992) - FLAC (tracks)/13 - Aphex Twin - Actium.flac
+28:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/01. Triangle.mp3
+29:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/02. Can't Leave The Night.mp3
+30:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/03. Confessions (Feat. Leland Whitty).mp3
+31:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/04. Kaleidoscope.mp3
+32:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/05. Eyes Closed.mp3
+33:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/06. Hedron.mp3
+34:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/07. Differently, Still.mp3
+35:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/08. Since You Asked Kindly.mp3
+36:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/08. Since You Asked Kindly.mp3
+37:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/09. CS60.mp3
+38:BADBADNOTGOOD • III [2014] VØ/III • [2014] VØ/10. Sustain (Bonus Track).mp3
+39:The Underachievers - Indigioism/06 - Herb Shuttles (Prod Roca Beats).mp3
+40:Moby Go-The Very Best of Moby/CD 1/Moby - Extreme Ways - 10.mp3
+41:Moby Go-The Very Best of Moby/CD 1/Moby - Porcelain - 03.mp3
+42:Moby Go-The Very Best of Moby/CD 1/Moby - South Side - 08.mp3
+43:Moby Go-The Very Best of Moby/CD 1/Moby - We Are All Made Of Stars - 04.mp3
+44:Aphex Twin - Syro (2014) MP3-320/01. Minipops 67 [Source Field Mix].mp3
+45:Aphex Twin - Syro (2014) MP3-320/04. 4 Bit 9d Api+E+6.mp3
+46:Aphex Twin - Syro (2014) MP3-320/05. 180db_.mp3
+47:Aphex Twin - Syro (2014) MP3-320/06. Circlont6a [Syrobonkus Mix].mp3
+48:Aphex Twin - Syro (2014) MP3-320/07. Fz Pseudotimestretch+E+3.mp3
+49:Aphex Twin - Syro (2014) MP3-320/09. Syro U473t8+E [Piezoluminescence Mix].mp3
+50:Aphex Twin - Syro (2014) MP3-320/08. Circlont14 [Shrymoming Mix].mp3
+51:Aphex Twin - Syro (2014) MP3-320/10. Papat4 [Pineal Mix].mp3
+52:Aphex Twin - Syro (2014) MP3-320/12. Aisatsana.mp3
+53:Aphex Twin - Syro (2014) MP3-320/11. S950tx16wasr10 [Earth Portal Mix].mp3
+54:Danger Doom - The Mouse and the Mask (2005)[FLAC]/13 - Space Hoes.flac
+55:Danger Doom - The Mouse and the Mask (2005)[FLAC]/02 - Sofa King.flac
+56:Freddie Gibbs & Madlib - Piñata [FLAC]/5 - Harold's.flac
+song_begin: http://streamer.radiocampus.be:8000/stream_hi.ogg
+Title: Campus Info
+mtime: 0
+song_end
+58:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Pro Era- P.E.E.P The aPROcalypse Mp3@320kbps/10 School High (Joey Badass, Dyemond Lewis, Kirk Knight, Nyck Caution) [prod. brandUn DeShay].mp3
+59:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/09 Sit N' Prey (ft. Dessy Hings and T Nah Apex) [Prod. By Navie D.].mp3
+60:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/10 Trap Door [Prod. By Alchemist].mp3
+61:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/11 Satellite (ft. Chuck Strangers and Kirk Knight and Dessy Hinds) [Prod. By Lee Bannon].mp3
+62:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/12 95 Til Infinity [Prod. By Lee Bannon].mp3
+63:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/13 Amethyst Rockstar (ft. Kirk Knight) [Prod. By MF DOOM].mp3
+64:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/14 Reign [Prod. by Chuck Strangers].mp3
+65:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/15 Sorry Bonita (ft. Pro Era) [Prod. by Oddisee].mp3
+66:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/16 LongLiveSteelo [Prod. by Kirk Knight].mp3
+67:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Summer Knights Mp3@320kbps/17 Unorthodox (Bonus) [Prod. By DJ Premier].mp3
+68:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- 1999 Mp3@320kbps/02 Waves [prod. Freddie Joachim].mp3
+69:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- 1999 Mp3@320kbps/07 World Domination [prod. MF DOOM].mp3
+70:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- 1999 Mp3@320kbps/07 World Domination [prod. MF DOOM].mp3
+71:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- 1999 Mp3@320kbps/04 Survival Tactics (ft. Capital STEEZ) [prod. Vin Skully].mp3
+72:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- 1999 Mp3@320kbps/15 Suspect (ft. PRO ERA).mp3
+73:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- 1999 Mp3@320kbps/14 Where It's At (ft. Kirk Knight) [prod. J Dilla].mp3
+74:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/01. Ruckus In B Minor.mp3
+75:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/02. Felt.mp3
+76:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/03. 40th Street Black  We Will Fight.mp3
+77:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/04. Mistaken Identity.mp3
+78:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/05. Hold The Heater.mp3
+79:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/06. Crushed Egos.mp3
+80:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/07. Keep Watch.mp3
+81:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/08. Miracle.mp3
+82:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/09. Preacher's Daughter.mp3
+83:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/10. Pioneer The Frontier.mp3
+84:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/11. Necklace.mp3
+85:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/12. Ron O'neal.mp3
+86:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/13. A Better Tomorrow.mp3
+87:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/14. Never Let Go.mp3
+88:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/15. Wu-Tang Reunion.mp3
+playlist_end
