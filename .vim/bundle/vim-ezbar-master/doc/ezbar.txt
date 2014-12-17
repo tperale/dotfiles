@@ -1,0 +1,335 @@
+*ezbar.txt* statusline configuration helper for minimalist.
+
+Version: 0.9
+Author : t9md <taqumd@gmail.com>
+GitHub : https://github.com/t9md/vim-ezbar
+==============================================================================
+CONTENTS					*ezbar-contents*
+
+Introduction				    |ezbar-introduction|
+Mapping					    |ezbar-mapping|
+Commands				    |ezbar-commands|
+Variables				    |ezbar-variables|
+Functions				    |ezbar-functions|
+Configuration Example			    |ezbar-example|
+Bug					    |ezbar-bug|
+Todo					    |ezbar-todo|
+Changelog				    |ezbar-changelog|
+
+==============================================================================
+INTRODUCTION					*ezbar-introduction*
+
+What's this?~
+statusline configuration helper for minimalist.
+
+Feature~
+- No fancy colorscheme
+- Simple design, easy to configure for vim-scripter(advanced user), no
+  fail-safe guared for begginer
+- Dynamically configure color based on condition.
+- All statusline component(part) is implemented as dictionary function.
+- No precedence to predefined parts, so it's up to you how organize your
+  statusline.
+
+==============================================================================
+MAPPINGS					*ezbar-mappings*
+
+==============================================================================
+COMMANDS						*ezbar-commands*
+
+*:EzbarDisable*
+*:EzbarEnable*
+	See corresponding |ezbar-functions|.
+
+							*:EzbarColorCheck*
+{range}:EzbarColorCheck
+	Useful while you are trying to customize color.
+	Temporarily highlight selected reange of lines like following color
+	coonfiguration. Its' just helper setup helper, not essential part of
+	this plugin.
+>
+      \ { 'chg_color': {'gui': [ s:bg, 'gray61'], 'cterm': [240, 254] }},
+<
+							  *:EzbarColorCapture*
+EzbarColorCapture {highlight}
+	Capture specified highlight as ezbar color dictionary form to v:register.
+	You can paste with |p| after capture.
+	Example >
+		:EzbarColorCapture Constant
+<
+==============================================================================
+VARIABLES						*ezbar-variables*
+
+							      *g:ezbar_enable*
+g:ezbar_enable
+	Default: 1
+	Type:    |Number|
+	Set 0 to disable.
+
+								     *g:ezbar*
+g:ezbar
+	Default: {}
+	Type:    |Dictionary|
+	All configuration belongs this Dictionary.
+
+							       *g:ezbar.alias*
+g:ezbar.alias
+	Default: Not defined
+	Type:    |Dictionary|
+	Simple remame table { {form}: {to} } form.
+	If you want to express layout more short form.
+	You can use short name in layout by setting this rename table.
+
+	Example: use short name in layout by aliasing part name~
+>
+	let g:ezbar.alias = {
+	      \ 'm':     'mode',
+	      \ 'ro':    'readonly',
+	      \ 'fn':    'filename',
+	      \ 'mod':   'modified',
+	      \ 'ft':    'filetype',
+	      \ 'wb':    'win_buf',
+	      \ 'enc':   'encoding',
+	      \ '%':     'percent',
+	      \ 'lc':    'line_col',
+	      \ }
+
+	let s:active = '|1 m |2  wb ro |3 cwd = |2 ft fn mod ft |1 enc % lc '
+	let g:ezbar.active = split(s:active)
+<
+
+							       *g:ezbar.hide_rule*
+g:ezbar.hide_rule
+	Default: Not defined
+	Type:    |Dictionary|
+	Used to hide parts based on window width( s:PARTS.__width. )
+	This dictionary is used withn helper.hide().
+	So to actually hide parts, you need to call helper.hide() within
+	__init() hook.
+
+	Example: use short name in layout by aliasing part name~
+>
+	let g:ezbar.hide_rule = {
+	      \ 90: ['cwd'],
+	      \ 65: ['fugitive'],
+	      \ 60: ['encoding', 'filetype'],
+	      \ 50: ['percent'],
+	      \ 35: ['mode', 'readonly', 'cwd'],
+	      \ }
+
+	function! s:u.__init() "{{{1
+	  if !self.__active
+	    return
+	  endif
+	  let hide = []
+	  if get(g:, 'choosewin_active', 0)
+	    let hide += ['validate']
+	  endif
+	  call self.__.hide(hide)
+	endfunction
+<
+------------------------------------------------------------------------------
+*ezbar-auto-variable*
+
+Each time ezbar generate &statusline and before calling each parts function.
+ezbar automatically set special variable for convenience.
+All of these automatic variable name began double underscore.
+So user should not use these name as parts name to avoid conflict.
+
+
+ | varname        | brief description                                 |
+ | -------------- | ------------------------------------------------- |
+ | __active       | indicate active window or not                     |
+ | __mode         | result of mode()                                  |
+ | __width        | winwidth                                          |
+ | __filetype     | filetype                                          |
+ | __buftype      | buftype                                           |
+ | __parts        | normalized part with parts name as key            |
+ | __layout       | layout specified as g:ezbar.active or inactive    |
+ | __c            | indicate current default color set to part        |
+ | __color        | color collections you specify as g:ezbar.color    |
+ | __winnr        | window number                                     |
+ | __             | helper function collection                        |
+ | __theme_loaded | flag to manage theme is loaded                    |
+
+
+{PARTS}.__active	|Number|: ( 0 or 1 ). Indicate active window or not.
+{PARTS}.__mode		|String|:  result of |mode()|
+{PARTS}.__width		|Number|: result of |winwidth()|
+{PARTS}.__filetype	|String|: |&filetype|
+{PARTS}.__buftype	|String|: |&buftype|
+{PARTS}.__parts
+	Type: |Dictionary|
+	{key}:		part function name.
+	{value}:	normalized part.
+	usefull to directly access other part's attribute like 's' or 'c'.
+
+{PARTS}.__layout
+	Type: |List|
+	Layout is the list you specified in g:ezbar.active or inactive.
+	At start(of each status line refresh), ezbar copy these list and
+	transform each part_name string into normalized part.
+	So you can manupilate this layout within |__init()| hook.
+	You can modify this variable to manupilate layout.
+
+	Example: hide some parts when winwidth is narrow~
+>
+	function! g:ezbar.__init(_)
+	  if self.__is_active
+	    let hide = []
+	    if winwidth(0) < 80
+	      let hide += self.__layout[-3:]
+	    endif
+	    if winwidth(0) < 30
+	      call add(hide, 'filename')
+	    endif
+	    call filter(self.__layout, 'index(hide, v:val) == -1')
+	  endif
+	endfunction
+<
+
+{PARTS}.__c
+	Type: |Dictionary| or |String|
+	Represent current color which is used for un colorized part.
+
+{PARTS}.__color
+	Type: |Dictionary|
+	Color collection table used to dynamically modify color within
+	part-function.
+
+{PARTS}.__
+	Type: |Dictionary|
+	Collection of helper function.
+
+------------------------------------------------------------------------------
+*ezbar-helper*
+
+Below is the list of helper function which is stored under {PARTS}.__ .
+
+ezbar.parts.__.screen()
+	Return: 'gui' or 'ctem'
+
+ezbar.parts.__.reverse({color})
+	return reversed(swapped background to foreground) {color} dictionary.
+>
+	" within parts function
+	" set reversed color to self.__c (default color)
+	self.__c = self.__.reverse(self.__c)
+<
+
+ezbar.parts.__.getvar({varname})
+	return value of {varname} for current window.
+	this is the simple wrapper of getwinvar({PARTS}.__winnr, {varname})
+>
+	" strait foward way
+	function! g:ezbar.parts.encoding() "{{{1
+	  return getwinvar(self.__winnr, '&encoding')
+	endfunction
+
+	" using this wrapper
+	function! g:ezbar.parts.encoding() "{{{1
+	  return self.__getvar('&encoding')
+	endfunction
+<
+
+------------------------------------------------------------------------------
+*ezbar-hook*
+
+{PARTS}.__init()
+	Default: Not Defined
+	Type:    |Function|
+
+	Called at very first timing before each parts-function is called.
+
+{PARTS}.__part_missing({partname})
+	called when partname part-function not found.
+
+{PARTS}.__finish()
+
+==============================================================================
+FUNCTIONS						*ezbar-functions*
+
+ezbar#enable()
+ezbar#disable()
+	Enable or disable ezbar. Useful while try&error for customizing.
+
+ezbar#string({active}, {winnum})
+	Return string that represent |statusline|.
+	{active}: 0 or 1
+	{winnum}: |winnum()|for target window.
+
+ezbar#set()
+	Set &satusline with the result of |ezbar#string()|.
+	Called every timing needed to refresh |statusline|.
+
+==============================================================================
+CONFIGURATION EXAMPLE				    *ezbar-example*
+
+See README.md for complete example.
+
+==============================================================================
+BUG							    *ezbar-bug*
+
+==============================================================================
+TODO							    *ezbar-todo*
+
+[ ] hlmanager should not use hl_defstr to check existence.
+    use string() and store as hash key.
+[?] Depelicate to store highlight name directry or internaly convert to
+    dictionary before store, to avoid type mismatch error when modify color.
+    [Strategy] hl#register() if arg is str, cature hl def then convrt to dict.
+    This elminate tedious unlet clause to avioid type error.
+    Need re-capture/redefine when refresh()
+[x] allow access to preceding normalized parts from later parts.
+    this allow right parts decide color, besed on color of left parts
+[x] introduce way to change partial color like only fg, only bg, reverse
+    like empty field respect default color ['', 'yellow' ]
+[x] LeafCage: want to change default color in parts-function()
+[x] LeafCage: reduce type() call
+[x] LeafCage: default self.color_active is not used?
+[x] LeafCage: _init(), pass winnum as argument
+[x] itchyny: care other tab in ezbar#disable()
+
+==============================================================================
+CHANGELOG						*ezbar-changelog*
+2014-02-07:
+	- renamed command prefix from 'EzBar' to 'Ezbar'
+2014-02-05:
+	- [newfeature] add hide() feature 
+2014-01-20:
+	- [newfeature] now layout can take |String|and internally converted to
+	  |List|.
+	- [newfeature] introduce alias table
+2014-01-18:
+	- [improve] performance for hlmanager, more neat separator color.
+	- [bigchange] no longer pass argment to parts function.
+	  instead, g:ezbar.parts.__winnr is set automatically.
+	- cleanup, parts separator consider background color of next parts.
+2014-01-17:
+	- [imporove] introduce more standardized parts import way.
+	- [renamevar] __colors to __color, __color to __c to avoid confusion.
+2014-01-17: v0.8
+	- [bigchange] many many change, and improve merge dev branch delete
+	  old doc.
+2014-01-16:
+	- catch error in parts and notify within parts.
+2014-01-15:
+	- change command name of :EzBarCheckHighlight to :EzBarColorCheck
+2014-01-14:
+	- [change] '__is_active' now '__active'
+	- [behaveChange] disastrous behavior change eliminate { 'chg_color': }
+	  , { '__SEP__': }
+	- [new] add _parts_missing() special hook
+2013-12-28: v0.2
+	- [experiment] now __layout is to modify in _init()
+	- [experiment] set __default_color parts variable.
+	- [bugfix] initalize timing for self.color_active/color_inactive.
+	- [experiment] add new argument to _init() which is |winuum()|of
+	  target window, suggested by LeafCage.
+2013-12-27:
+	- reduce type() call for performance and readability suggested by
+	  LeafCage.
+2013-11-21:
+	- initial release.
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/thomacer/documents/Programme'
+let g:netrw_dirhist_2='/home/thomacer/documents/Programme/autre'
+let g:netrw_dirhist_3='/home/thomacer/Dropbox/srs_bsns/Ecole/ulb/projet_info/projet_annee'
+let g:netrw_dirhist_4='/home/thomacer/Dropbox/srs_bsns/Ecole/ulb/projet_info'
+let g:netrw_dirhist_5='/home/thomacer/Dropbox/srs_bsns/Ecole/ulb/projet_info/projet_2'
+let g:netrw_dirhist_6='/home/thomacer/Dropbox/srs_bsns/Ecole/ulb/projet_info/projet_annee'
