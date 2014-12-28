@@ -27,7 +27,7 @@ font pango:DejaVu Sans Mono 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec zsh
+bindsym $mod+Return exec gnome-terminal
 
 # kill focused window
 # bindsym $mod+Shift+q kill
@@ -152,3 +152,5 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+exec --no-startup-id nm-applet
