@@ -1,6 +1,7 @@
 My config
 ======
 
-Install
+Clone
 ======
-git clone https://github.com/thomacer/config
+
+    git clone https://github.com/thomacer/config
