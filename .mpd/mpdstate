@@ -3,8 +3,8 @@ audio_device_state:0:ALSA LOL
 audio_device_state:1:My FIFO
 audio_device_state:1:My Pulse Output
 state: pause
-current: 55
-time: 92.647000
+current: 61
+time: 125.596000
 random: 0
 repeat: 1
 single: 0
