@@ -7,8 +7,8 @@
 set $mod Mod4
 
 # Some colors
-set $lime #70E602
-set $darklime #
+set $lime #15FF00
+set $darklime #BF7A02
 set $blue #131D24
 set $lightblue #232D34
 set $lightgray #DDEEDD
@@ -69,7 +69,7 @@ client.urgent           $urgentred $urgentred $white $urgentred
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
+font pango:Liberation Mono 9
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -199,13 +199,13 @@ bar {
     workspace_buttons  yes
 
     colors {
-        background     #302b2e
-        statusline     #ffffff
+        background     #21424D
+        statusline     $white
 
-	focused_workspace  #ffffff #FF8000
-        active_workspace   #ffffff #333333
-        inactive_workspace #23241C #C3CF53
-        urgent_workspace   #ffffff #900000
+	focused_workspace  #333333 $lime
+        active_workspace   $white  $lime
+        inactive_workspace #23241C $darklime
+        urgent_workspace   $white  #900000
     }
 }
 
