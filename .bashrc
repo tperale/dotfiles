@@ -89,6 +89,7 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -108,6 +109,10 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+
+# Extrait n'importe quel type de fichier
+alias extract='~/bin/extract'
 
 alias prettyping='~/bin/prettyping'
 

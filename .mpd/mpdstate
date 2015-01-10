@@ -1,11 +1,11 @@
-sw_volume: 100
+sw_volume: 96
 audio_device_state:0:ALSA LOL
 audio_device_state:1:My FIFO
 audio_device_state:1:My Pulse Output
 state: pause
-current: 61
-time: 125.596000
-random: 0
+current: 39
+time: 36.408000
+random: 1
 repeat: 1
 single: 0
 consume: 0
@@ -71,7 +71,7 @@ playlist_begin
 55:Danger Doom - The Mouse and the Mask (2005)[FLAC]/02 - Sofa King.flac
 56:Freddie Gibbs & Madlib - Piñata [FLAC]/5 - Harold's.flac
 song_begin: http://streamer.radiocampus.be:8000/stream_hi.ogg
-Title: Campus Info
+Title: Radio Fluxus
 mtime: 0
 song_end
 58:Joey Bada$$- Discography- Mp3@320kbps/Joey Bada$$- Pro Era- P.E.E.P The aPROcalypse Mp3@320kbps/10 School High (Joey Badass, Dyemond Lewis, Kirk Knight, Nyck Caution) [prod. brandUn DeShay].mp3
@@ -105,4 +105,62 @@ song_end
 86:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/13. A Better Tomorrow.mp3
 87:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/14. Never Let Go.mp3
 88:Wu-Tang Clan - A Better Tomorrow  (2014) 320 KBPS [GloDLS]/15. Wu-Tang Reunion.mp3
+89:Quasimoto-Yessir Whatever (2013) V0/1. Quasimoto - Broad Factor.mp3
+90:Quasimoto-Yessir Whatever (2013) V0/2. Quasimoto - Seasons Change.mp3
+91:Quasimoto-Yessir Whatever (2013) V0/3. Quasimoto - The Front.mp3
+92:Quasimoto-Yessir Whatever (2013) V0/4. Quasimoto - Youngblood.mp3
+93:Quasimoto-Yessir Whatever (2013) V0/5. Quasimoto - Astronaut.mp3
+94:Quasimoto-Yessir Whatever (2013) V0/6. Quasimoto - Planned Attack.mp3
+95:Quasimoto-Yessir Whatever (2013) V0/7. Quasimoto - Brothers Can't See Me.mp3
+96:Quasimoto-Yessir Whatever (2013) V0/8. Quasimoto - Catchin' The Vibe.mp3
+97:Quasimoto-Yessir Whatever (2013) V0/9. Quasimoto - Am I Confused.mp3
+98:Quasimoto-Yessir Whatever (2013) V0/10. Quasimoto - Sparkdala.mp3
+99:Quasimoto-Yessir Whatever (2013) V0/11. Quasimoto - Green Power.mp3
+100:Quasimoto-Yessir Whatever (2013) V0/12. Quasimoto - LAX To JFK.mp3
+101:Quasimoto-Yessir Whatever (2013) V0/1. Quasimoto - Broad Factor.mp3
+102:Quasimoto-Yessir Whatever (2013) V0/2. Quasimoto - Seasons Change.mp3
+103:Quasimoto-Yessir Whatever (2013) V0/3. Quasimoto - The Front.mp3
+104:Quasimoto-Yessir Whatever (2013) V0/4. Quasimoto - Youngblood.mp3
+105:Quasimoto-Yessir Whatever (2013) V0/5. Quasimoto - Astronaut.mp3
+106:Quasimoto-Yessir Whatever (2013) V0/6. Quasimoto - Planned Attack.mp3
+107:Quasimoto-Yessir Whatever (2013) V0/7. Quasimoto - Brothers Can't See Me.mp3
+108:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/02. Take It Slow.mp3
+109:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/03. Polo Jacket & Dashiki.mp3
+110:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/04. Nah Test.mp3
+111:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/05. Waiting In Vain.mp3
+112:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/06. Fake Nice Friends.mp3
+113:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/07. Uno Uno.mp3
+114:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/08. 50. Cent Phillies.mp3
+115:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/09. Quincy's 2000.mp3
+116:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/10. Duppy Conquer.mp3
+117:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/11. Reciprocate The Vibe.mp3
+118:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/12. Mental Field Trips.mp3
+119:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/13. Fly Away.mp3
+120:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/14. Vero Cai.mp3
+121:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/15. Let _ G Know... (Keep It A Billion).mp3
+122:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/16. Love And Peace.mp3
+123:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/17. Lacking Give A Damn.mp3
+124:Ras G - Down 2 Earth Vol. 2 (The Standard Bap Edition) (2014)/18. Dark Nights.mp3
+125:NTM - Discographie (5 Albums, 2 EP, 4 Maxis)(107 x mp3 160kbs)/Paris sous les Bombes/Come again.mp3
+126:NTM - Discographie (5 Albums, 2 EP, 4 Maxis)(107 x mp3 160kbs)/1993 - J'appuie sur la gachette/Police.mp3
+127:NTM - Discographie (5 Albums, 2 EP, 4 Maxis)(107 x mp3 160kbs)/Suprême NTM/Back dans les bacs.mp3
+128:NTM - Discographie (5 Albums, 2 EP, 4 Maxis)(107 x mp3 160kbs)/Suprême NTM/Ma BenZ.mp3
+129:NTM - Discographie (5 Albums, 2 EP, 4 Maxis)(107 x mp3 160kbs)/Paris sous les Bombes/Paris sous les bombes.mp3
+130:NTM - Discographie (5 Albums, 2 EP, 4 Maxis)(107 x mp3 160kbs)/Paris sous les Bombes/Qui paiera les dégats.mp3
+131:NTM - Discographie (5 Albums, 2 EP, 4 Maxis)(107 x mp3 160kbs)/Paris sous les Bombes/Tout n'est pas si facile.mp3
+132:il y a une poussire qui chante/07 - Je sais (Booba).mp3
+133:il y a une poussire qui chante/14 - Trous de mémoire (Lio).mp3
+134:il y a une poussire qui chante/02 - Toi et moi (Daniel Balavoine).mp3
+135:il y a une poussire qui chante/05 - Le sud (Nino Ferrer).mp3
+136:il y a une poussire qui chante/06 - Soleil reggae (Laid Back).mp3
+137:il y a une poussire qui chante/03 - J'aime les choses (Martin Creed).mp3
+138:il y a une poussire qui chante/04 - Tonton du bled (113).mp3
+139:il y a une poussire qui chante/01 - C'est l'heure du percolateur (Cajmere).mp3
+140:il y a une poussire qui chante/08 - Le slip (Jacques Lizne).mp3
+141:il y a une poussire qui chante/09 - La dcoration (Jean-Luc le Tnia).mp3
+142:il y a une poussire qui chante/09 - La dcoration (Jean-Luc le Tnia).mp3
+143:il y a une poussire qui chante/10 - Libre du dsir (Gala).mp3
+144:il y a une poussire qui chante/11 - La transformation (Dick Annegarn).mp3
+145:il y a une poussire qui chante/12 - The fool on the hill (The Beatles).mp3
+146:il y a une poussire qui chante/13 - Quelqu'un de bien (Enzo Enzo).mp3
 playlist_end

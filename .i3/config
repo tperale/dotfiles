@@ -7,14 +7,14 @@
 set $mod Mod4
 
 # Some colors
-set $lime #15FF00
+set $lime #3267C2
 set $darklime #BF7A02
 set $blue #131D24
-set $lightblue #232D34
+set $lightblue #21424D
 set $lightgray #DDEEDD
 set $darkgray #444444
 set $white #FFFFFF
-set $urgentred #B33A3A
+set $urgentred #BD2849
 
 # Workspace
 set $ws1 "1:☭"
@@ -199,13 +199,13 @@ bar {
     workspace_buttons  yes
 
     colors {
-        background     #21424D
+        background     $lightblue
         statusline     $white
 
 	focused_workspace  #333333 $lime
         active_workspace   $white  $lime
         inactive_workspace #23241C $darklime
-        urgent_workspace   $white  #900000
+        urgent_workspace   $white  $urgentred
     }
 }
 
@@ -213,3 +213,5 @@ exec --no-startup-id nm-applet
 # exec python ~/.i3/i3session restore
 
 exec_always --no-startup-id feh --bg-center ~/.i3/wallpaper.jpg
+exec --no-startup-id cb-dropbox-pipemenu --start-dropbox
+exec mpd
