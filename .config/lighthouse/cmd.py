@@ -2,6 +2,7 @@
 
 import sys
 import random
+from math import *
 from time import sleep
 import logging
 from google import pygoogle
@@ -74,12 +75,11 @@ find_thr = None
 
 def find(query):
     sleep(.5)  # Don't be too aggressive...
-    find_out = str(subprocess.check_output("find ~ -name %s" % (query),
-                                           shell=True))
+    find_out = subprocess.check_output("find ~ -name %s" % (query), shell=True)
 
     find_array = find_out.split("\n")[:-1]
 
-    if (len(find_array) != 0):
+    if len(find_array) != 0:
         for i in xrange(min(5, len(find_array))):
             append_output(str(find_array[i]), "terminator --working-directory=%s" % (find_array[i]))
 
@@ -158,11 +158,7 @@ def get_xdg_cmd(cmd):
 
 
 special = {
-    "chrom": (lambda x: ("did you mean firefox?", "firefox")),
-    "fir": (lambda x: ("%I~/.config/lighthouse/firefox.png%firefox", "firefox")),
-    "gim": (lambda x: ("%I~/.config/lighthouse/gimp.png%GIMP", "gimp")),
-    "vi": (lambda x: ("vim", "terminator -e vim")),
-    "hto": (lambda x: ("htop", "terminator -e htop")),
+#    "vi": ('("vim", "terminator -x vim")'),
     "bat": (lambda x: get_process_output("acpi", "%s", ""))
 }
 
@@ -184,39 +180,52 @@ while 1:
         update_output()
         continue
 
-    # Could be a command...
-    append_output("execute '"+userInput+"'", userInput)
-
-    # Could be bash...
-    append_output("run '"+userInput+"' in a shell", "terminator -e "+userInput)
-
-    # Scan for keywords
-    for keyword in special:
-        if userInput[0:len(keyword)] == keyword:
-            out = special[keyword](userInput)
-            if out is not None:
-                prepend_output(*out)
-
-    # Look for XDG applications of the given name.
-    xdg_cmd = get_xdg_cmd(userInput)
-    if xdg_cmd:
-        append_output(*xdg_cmd)
-
-    # Is this python?
     try:
-        out = eval(userInput)
-        if (type(out) != str and str(out)[0] == '<'):
-            pass  # We don't want gibberish type stuff
-        else:
-            prepend_output("python: "+str(out),
-                           "terminator -e python2.7 -i -c 'print "+userInput+"'")
-    except Exception as e:
+        complete = subprocess.check_output("compgen -c %s" % (userInput),
+                                               shell=True)
+        complete = complete.split('\n')
+
+        for cmd_num in range(min(len(complete), 5)):
+                # Look for XDG applications of the given name.
+                xdg_cmd = get_xdg_cmd(complete[cmd_num])
+                if xdg_cmd:
+                    append_output(*xdg_cmd)
+
+    except:
+        # if no command exist with the user input
+        # but it can still be python or a special bash command
         pass
 
-    # Spawn worker threads
-    google_thr = Process(target=google, args=(userInput,))
-    google_thr.start()
-    find_thr = Process(target=find, args=(userInput,))
-    find_thr.start()
+    finally:
+        # Is this python?
+        try:
+            out = eval(userInput)
+            # if (type(out) != str and str(out)[0] == '<'):
+            #     pass  # We don't want gibberish type stuff
+            # else:
+            prepend_output("python: "+str(out),
+                           "terminator -e python2.7 -i -c 'print %s'" % userInput)
+        except Exception as e:
+            pass
 
-    update_output()
+        # Scan for keywords
+        for keyword in special:
+            if userInput[0:len(keyword)] == keyword:
+                out = special[keyword](userInput)
+                if out is not None:
+                    prepend_output(*out)
+
+        # Could be a command...
+        append_output("execute '"+userInput+"'", userInput)
+
+        # Could be bash...
+        append_output("run '%s' in a shell" % (userInput),
+                      "terminator -e %s" % (userInput))
+
+        # Spawn worker threads
+        google_thr = Process(target=google, args=(userInput,))
+        google_thr.start()
+        find_thr = Process(target=find, args=(userInput,))
+        find_thr.start()
+
+        update_output()
