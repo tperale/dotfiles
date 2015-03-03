@@ -1,23 +1,39 @@
 #!/usr/bin/python2.7
 
 import sys
-import random
-from math import *
-from time import sleep
-import logging
-from google import pygoogle
-from multiprocessing import Process, Value, Manager, Array
-from ctypes import c_char, c_char_p
+#import random
+import os.path
 import subprocess
-import json
+#import json
+import logging
+#from time import sleep
+from google import pygoogle
+#from multiprocessing import Process, Value, Manager, Array
+from ctypes import c_char, c_char_p
 
 MAX_OUTPUT = 100 * 1024
 
-resultStr = Array(c_char, MAX_OUTPUT)
+baseFunc = {"find": [],
+            "python": [],
+            "terminal": [],
+            "exec": [],
+            "google": [],
+            "keyword": [],
+            "xdg": []}
+
+order = ["xdg", "find", "exec", "python", "terminal", "google"]
 
 
 def clear_output():
-    resultStr.value = json.dumps([])
+    fonctions = {"find": [],
+                 "python": [],
+                 "terminal": [],
+                 "exec": [],
+                 "google": [],
+                 "keyword": [],
+                 "xdg": []}
+
+    return fonctions
 
 
 def sanitize_output(string):
@@ -32,58 +48,61 @@ def create_result(title, action):
     return "{" + title + " |" + action + " }"
 
 
-def append_output(title, action):
+def append_output(funcType, fonctions, title, action):
     title = sanitize_output(title)
     action = sanitize_output(action)
-    results = json.loads(resultStr.value)
-    if len(results) < 2:
-        results.append(create_result(title, action))
-    else:  # ignore the bottom two default options
-        results.insert(-2, create_result(title, action))
-    resultStr.value = json.dumps(results)
+
+    # Store result value.
+    fonctions[funcType].append(create_result(title, action))
+
+    return fonctions
 
 
-def prepend_output(title, action):
-    title = sanitize_output(title)
-    action = sanitize_output(action)
-    results = json.loads(resultStr.value)
-    results = [create_result(title, action)] + results
-    resultStr.value = json.dumps(results)
+def update_output(fonctions):
+    toSave = []
+    for funcType in order:
+        for result in fonctions[funcType]:
+            toSave.append(result)
 
-
-def update_output():
-    results = json.loads(resultStr.value)
-    print("".join(results))
+    print("".join(toSave))
     sys.stdout.flush()
-
 
 google_thr = None
 
 
-def google(query):
-    sleep(.5)  # so we aren't querying EVERYTHING we type
+def google(query, fonctions):
     g = pygoogle(userInput, log_level=logging.CRITICAL)
     g.pages = 1
     out = g.get_urls()
     if (len(out) >= 1):
-        append_output(out[0], "xdg-open " + out[0])
-        update_output()
+        append_output('google', fonctions, out[0], "xdg-open " + out[0])
 
 
 find_thr = None
 
 
-def find(query):
-    sleep(.5)  # Don't be too aggressive...
-    find_out = subprocess.check_output("find ~ -name %s" % (query), shell=True)
+def find(query, fonctions):
+    queryList = query.split()  # splitted at space (fuzzy finder implementation)
 
-    find_array = find_out.split("\n")[:-1]
+    command = ["| grep '%s' " % (elem) for elem in queryList]
+    command = " ".join(command)
 
-    if len(find_array) != 0:
-        for i in xrange(min(5, len(find_array))):
-            append_output(str(find_array[i]), "terminator --working-directory=%s" % (find_array[i]))
+    user = os.path.expanduser('~')
 
-        update_output()
+    try:
+        find_array = subprocess.check_output('find %s %s' % (user, command),
+                                            shell=True,
+                                            executable='/bin/bash').split('\n')
+    except Exception:
+        # When 'find' output nothing.
+        fonctions = append_output("find", fonctions, "Nothing found.", "terminator")
+
+    else:
+        for i in xrange(min(3, len(find_array))):
+            fonctions = append_output("find", fonctions, str(find_array[i]),
+                                      "terminator --working-directory=%s" % (find_array[i]))
+    finally:
+        update_output(fonctions)
 
 
 def get_process_output(process, formatting, action):
@@ -158,16 +177,17 @@ def get_xdg_cmd(cmd):
 
 
 special = {
-#    "vi": ('("vim", "terminator -x vim")'),
+    # "vi": ('("vim", "terminator -x vim")'),
     "bat": (lambda x: get_process_output("acpi", "%s", ""))
 }
+
 
 while 1:
     userInput = sys.stdin.readline()
     userInput = userInput[:-1]
 
     # Clear results
-    clear_output()
+    fonctions = clear_output()
 
     # Kill previous worker threads
     if google_thr is not None:
@@ -177,19 +197,30 @@ while 1:
 
     # We don't handle empty strings
     if userInput == '':
-        update_output()
+        update_output(fonctions)
         continue
+
+    # Is this python?
+    try:
+        out = eval(userInput)
+        # if (type(out) != str and str(out)[0] == '<'):
+        #     pass  # We don't want gibberish type stuff
+        # else:
+        append_output('python', fonctions, "python: "+str(out),
+                      "terminator -e python2.7 -i -c 'print %s'" % userInput)
+    except Exception as e:
+        pass
 
     try:
         complete = subprocess.check_output("compgen -c %s" % (userInput),
-                                               shell=True)
+                                           shell=True, executable="/bin/bash")
         complete = complete.split('\n')
 
         for cmd_num in range(min(len(complete), 5)):
                 # Look for XDG applications of the given name.
                 xdg_cmd = get_xdg_cmd(complete[cmd_num])
                 if xdg_cmd:
-                    append_output(*xdg_cmd)
+                    append_output('xdg', fonctions, *xdg_cmd)
 
     except:
         # if no command exist with the user input
@@ -197,35 +228,26 @@ while 1:
         pass
 
     finally:
-        # Is this python?
-        try:
-            out = eval(userInput)
-            # if (type(out) != str and str(out)[0] == '<'):
-            #     pass  # We don't want gibberish type stuff
-            # else:
-            prepend_output("python: "+str(out),
-                           "terminator -e python2.7 -i -c 'print %s'" % userInput)
-        except Exception as e:
-            pass
-
         # Scan for keywords
         for keyword in special:
             if userInput[0:len(keyword)] == keyword:
                 out = special[keyword](userInput)
                 if out is not None:
-                    prepend_output(*out)
+                    append_output('keyword', fonctions, *out)
 
         # Could be a command...
-        append_output("execute '"+userInput+"'", userInput)
+        append_output("exec", fonctions, "execute '"+userInput+"'", userInput)
 
         # Could be bash...
-        append_output("run '%s' in a shell" % (userInput),
+        append_output("terminal", fonctions,
+                      "run '%s' in a shell" % (userInput),
                       "terminator -e %s" % (userInput))
 
         # Spawn worker threads
-        google_thr = Process(target=google, args=(userInput,))
-        google_thr.start()
-        find_thr = Process(target=find, args=(userInput,))
-        find_thr.start()
+        # google_thr = Process(target=google, args=(userInput, fonctions))
+        # google_thr.start()
+        # find_thr = Process(target=find, args=(userInput, fonctions))
+        # find_thr.start()
+        find(userInput, fonctions)
 
-        update_output()
+        # update_output(fonctions)
