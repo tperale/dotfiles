@@ -117,4 +117,49 @@ alias extract='~/bin/extract'
 alias prettyping='~/bin/prettyping'
 
 #return value visualisation
-PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
+#PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
+
+
+# PS1 = '\[\] thomas \[\] \[\]~ \[\] \[\]'
+function _update_ps1() {
+    export PS1="$(powerline shell left -r .bash)"
+}
+
+export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+
+
+# edit single line snippet
+cfg-snippetrc() { $EDITOR ~/.snippetrc ;}
+
+# edit multiline snippet
+cfg-multisnippetrc() { $EDITOR ~/.multisnippet/"$(ls ~/.multisnippet | fzf -e -i)" ;}
+
+#create new multiline snippet
+multisnippet() { $EDITOR ~/.multisnippet/"$1" ;}
+
+fzf-snippet() {
+    selected="$(cat ~/.snippetrc | sed '/^$/d' | sort -n | fzf -e -i )"
+    # remove tags, leading and trailing spaces, also no newline
+    echo "$selected" | sed -e s/\;\;\.\*\$// | sed 's/^[ \t]*//;s/[ \t]*$//' | tr -d '\n' | xclip -selection clipboard
+}
+
+fzf-multisnippet() {
+    # location of snippets
+    dir=~/.multisnippet
+
+    # merge filename and tags into single line
+    results=$(for FILE in $dir/*
+        do
+            getname=$(basename $FILE)
+            gettags=$(head -n 1 $FILE)
+
+                    echo "$getname \t $gettags"
+
+            done)
+
+            # copy content into clipboard without tags
+            filename=$(echo "$(echo $results | fzf -e -i )" | cut -d' ' -f 1)
+            sed 1d $dir/$filename | xclip -selection clipboard
+}
+
+set -o vi
