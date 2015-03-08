@@ -1,253 +1,253 @@
 #!/usr/bin/python2.7
 
 import sys
-#import random
 import os.path
 import subprocess
-#import json
 import logging
-#from time import sleep
 from google import pygoogle
-#from multiprocessing import Process, Value, Manager, Array
-from ctypes import c_char, c_char_p
-
-MAX_OUTPUT = 100 * 1024
-
-baseFunc = {"find": [],
-            "python": [],
-            "terminal": [],
-            "exec": [],
-            "google": [],
-            "keyword": [],
-            "xdg": []}
-
-order = ["xdg", "find", "exec", "python", "terminal", "google"]
+from multiprocessing import Process
 
 
-def clear_output():
-    fonctions = {"find": [],
-                 "python": [],
-                 "terminal": [],
-                 "exec": [],
-                 "google": [],
-                 "keyword": [],
-                 "xdg": []}
+class Function:
+    def __init__(self):
+        self.fonctions = {"find": [],
+                          "python": [],
+                          "terminal": [],
+                          "exec": [],
+                          "google": [],
+                          "keyword": [],
+                          "xdg": []}
 
-    return fonctions
+        self.order = ["xdg", "find", "exec", "python", "terminal", "google"]
 
+        self.google_thr = None
 
-def sanitize_output(string):
-    string = string.replace("{", "\{")
-    string = string.replace("}", "\}")
-    string = string.replace("|", "\|")
-    string = string.replace("\n", " ")
-    return string
+        self.find_thr = None
 
+    def clear_output(self):
+        for fonctionType in self.fonctions:
+            del self.fonctions[fonctionType][:]
 
-def create_result(title, action):
-    return "{" + title + " |" + action + " }"
+    def sanitize_output(self, string):
+        string = string.replace("{", "\{")
+        string = string.replace("}", "\}")
+        string = string.replace("|", "\|")
+        string = string.replace("\n", " ")
+        return string
 
+    def create_result(self, title, action):
+        return "{" + title + " |" + action + " }"
 
-def append_output(funcType, fonctions, title, action):
-    title = sanitize_output(title)
-    action = sanitize_output(action)
+    def append_output(self, funcType, title, action):
+        title = self.sanitize_output(title)
+        action = self.sanitize_output(action)
 
-    # Store result value.
-    fonctions[funcType].append(create_result(title, action))
+        # Store result value.
+        self.fonctions[funcType].append(self.create_result(title, action))
 
-    return fonctions
+    def update_output(self):
+        toSave = []
+        for funcType in self.order:
+            for result in self.fonctions[funcType]:
+                toSave.append(result)
 
+        print("".join(toSave))
+        sys.stdout.flush()
 
-def update_output(fonctions):
-    toSave = []
-    for funcType in order:
-        for result in fonctions[funcType]:
-            toSave.append(result)
+    def google(self, query):
+        g = pygoogle(query, log_level=logging.CRITICAL)
+        g.pages = 1
+        out = g.get_urls()
+        if (len(out) >= 1):
+            self.append_output("google", out[0], "xdg-open " + out[0])
+            self.update_output()
 
-    print("".join(toSave))
-    sys.stdout.flush()
+    def find(self, query):
+        """
+        Little fuzzy implementation.
+        """
 
-google_thr = None
+        queryList = query.split()  # splitted at space (fuzzy finder implementation)
 
+        command = ["| grep '%s' " % (elem) for elem in queryList]
+        command = " ".join(command)
 
-def google(query, fonctions):
-    g = pygoogle(userInput, log_level=logging.CRITICAL)
-    g.pages = 1
-    out = g.get_urls()
-    if (len(out) >= 1):
-        append_output('google', fonctions, out[0], "xdg-open " + out[0])
+        user = os.path.expanduser('~')
 
+        try:
+            find_array = subprocess.check_output('find %s %s' % (user, command),
+                                                 shell=True,
+                                                 executable='/bin/bash').split('\n')
 
-find_thr = None
+        except Exception:
+            # When 'find' output nothing.
+            self.append_output("find", "No path found.", "terminator")
 
-
-def find(query, fonctions):
-    queryList = query.split()  # splitted at space (fuzzy finder implementation)
-
-    command = ["| grep '%s' " % (elem) for elem in queryList]
-    command = " ".join(command)
-
-    user = os.path.expanduser('~')
-
-    try:
-        find_array = subprocess.check_output('find %s %s' % (user, command),
-                                            shell=True,
-                                            executable='/bin/bash').split('\n')
-    except Exception:
-        # When 'find' output nothing.
-        fonctions = append_output("find", fonctions, "Nothing found.", "terminator")
-
-    else:
-        for i in xrange(min(3, len(find_array))):
-            fonctions = append_output("find", fonctions, str(find_array[i]),
-                                      "terminator --working-directory=%s" % (find_array[i]))
-    finally:
-        update_output(fonctions)
-
-
-def get_process_output(process, formatting, action):
-    process_out = str(subprocess.check_output(process))
-    if "%s" in formatting:
-        out_str = formatting % (process_out)
-    else:
-        out_str = formatting
-    if "%s" in action:
-        out_action = action % (process_out)
-    else:
-        out_action = action
-
-    return (out_str, out_action)
-
-
-def get_xdg_cmd(cmd):
-    import re
-
-    try:
-        import xdg.BaseDirectory
-        import xdg.DesktopEntry
-        import xdg.IconTheme
-    except ImportError as e:
-        print(e)
-        return
-
-    def find_desktop_entry(cmd):
-
-        search_name = "%s.desktop" % cmd
-        desktop_files = list(xdg.BaseDirectory.load_data_paths('applications',
-                                                               search_name))
-        if not desktop_files:
-            return
         else:
-            # Earlier paths take precedence.
-            desktop_file = desktop_files[0]
-            desktop_entry = xdg.DesktopEntry.DesktopEntry(desktop_file)
-            return desktop_entry
+            find_array.sort(key=len)
+            for i in xrange(min(3, len(find_array))):
+                if os.path.isdir(find_array[i]):
+                    self.append_output("find", str(find_array[i]),
+                                       "terminator --working-directory=%s" % (find_array[i]))
 
-    def get_icon(desktop_entry):
+                elif '.pdf' in find_array[i] or '.ps' in find_array[i]:
+                    self.append_output("find", str(find_array[i]),
+                                       "terminator -e 'zathura %s'" % (find_array[i]))
 
-        icon_name = desktop_entry.getIcon()
-        if not icon_name:
-            return
+                elif '.mp3' in find_array[i]:
+                    self.append_output("find", str(find_array[i]),
+                                       "terminator -e 'mpv %s'" % (find_array[i]))
+
+                elif os.path.isfile(find_array[i]):
+                    self.append_output("find", str(find_array[i]),
+                                       "terminator -e 'vim %s'" % (find_array[i]))
+
+        finally:
+            self.update_output()
+
+
+    def get_process_output(process, formatting, action):
+        process_out = str(subprocess.check_output(process))
+        if "%s" in formatting:
+            out_str = formatting % (process_out)
         else:
-            icon_path = xdg.IconTheme.getIconPath(icon_name)
-            return icon_path
+            out_str = formatting
+        if "%s" in action:
+            out_action = action % (process_out)
+        else:
+            out_action = action
 
-    def get_xdg_exec(desktop_entry):
-
-        exec_spec = desktop_entry.getExec()
-        # The XDG exec string contains substitution patterns.
-        exec_path = re.sub("%.", "", exec_spec).strip()
-        return exec_path
-
-    desktop_entry = find_desktop_entry(cmd)
-    if not desktop_entry:
-        return
-
-    exec_path = get_xdg_exec(desktop_entry)
-    if not exec_path:
-        return
-
-    icon = get_icon(desktop_entry)
-    if not icon:
-        menu_entry = cmd
-    else:
-        menu_entry = "%%I%s%%%s" % (icon, cmd)
-
-    return (menu_entry, exec_path)
+        return (out_str, out_action)
 
 
-special = {
-    # "vi": ('("vim", "terminator -x vim")'),
-    "bat": (lambda x: get_process_output("acpi", "%s", ""))
-}
+    def get_xdg_cmd(self, cmd):
+        import re
 
+        try:
+            import xdg.BaseDirectory
+            import xdg.DesktopEntry
+            import xdg.IconTheme
+        except ImportError as e:
+            print(e)
+            return
 
-while 1:
-    userInput = sys.stdin.readline()
-    userInput = userInput[:-1]
+        def find_desktop_entry(cmd):
 
-    # Clear results
-    fonctions = clear_output()
+            search_name = "%s.desktop" % cmd
+            desktop_files = list(xdg.BaseDirectory.load_data_paths('applications',
+                                                                search_name))
+            if not desktop_files:
+                return
+            else:
+                # Earlier paths take precedence.
+                desktop_file = desktop_files[0]
+                desktop_entry = xdg.DesktopEntry.DesktopEntry(desktop_file)
+                return desktop_entry
 
-    # Kill previous worker threads
-    if google_thr is not None:
-        google_thr.terminate()
-    if find_thr is not None:
-        find_thr.terminate()
+        def get_icon(desktop_entry):
 
-    # We don't handle empty strings
-    if userInput == '':
-        update_output(fonctions)
-        continue
+            icon_name = desktop_entry.getIcon()
+            if not icon_name:
+                return
+            else:
+                icon_path = xdg.IconTheme.getIconPath(icon_name)
+                return icon_path
 
-    # Is this python?
-    try:
-        out = eval(userInput)
-        # if (type(out) != str and str(out)[0] == '<'):
-        #     pass  # We don't want gibberish type stuff
-        # else:
-        append_output('python', fonctions, "python: "+str(out),
-                      "terminator -e python2.7 -i -c 'print %s'" % userInput)
-    except Exception as e:
-        pass
+        def get_xdg_exec(desktop_entry):
 
-    try:
-        complete = subprocess.check_output("compgen -c %s" % (userInput),
-                                           shell=True, executable="/bin/bash")
-        complete = complete.split('\n')
+            exec_spec = desktop_entry.getExec()
+            # The XDG exec string contains substitution patterns.
+            exec_path = re.sub("%.", "", exec_spec).strip()
+            return exec_path
 
-        for cmd_num in range(min(len(complete), 5)):
+        desktop_entry = find_desktop_entry(cmd)
+        if not desktop_entry:
+            return
+
+        exec_path = get_xdg_exec(desktop_entry)
+        if not exec_path:
+            return
+
+        icon = get_icon(desktop_entry)
+        if not icon:
+            menu_entry = cmd
+        else:
+            menu_entry = "%%I%s%%%s" % (icon, cmd)
+
+        return (menu_entry, exec_path)
+
+    def find_xdg(self, query):
+        try:
+            complete = subprocess.check_output("compgen -c %s" % (query),
+                                               shell=True, executable="/bin/bash")
+            complete = complete.split('\n')
+
+            if len(splittedInput) == 1:
+                # Application don't have spaced name.
                 # Look for XDG applications of the given name.
-                xdg_cmd = get_xdg_cmd(complete[cmd_num])
-                if xdg_cmd:
-                    append_output('xdg', fonctions, *xdg_cmd)
+                for cmd_num in range(min(len(complete), 5)):
+                        xdg_cmd = func.get_xdg_cmd(complete[cmd_num])
+                        if xdg_cmd:
+                            func.append_output('xdg', *xdg_cmd)
 
-    except:
-        # if no command exist with the user input
-        # but it can still be python or a special bash command
-        pass
+        except:
+            # if no command exist with the user input
+            pass
 
-    finally:
+
+if __name__ == '__main__':
+    func = Function()
+
+    find_thr = None
+    google_thr = None
+
+    special = {
+        "bat": (lambda x: func.get_process_output("acpi", "%s", ""))
+    }
+
+    while 1:
+        userInput = sys.stdin.readline()
+        userInput = userInput[:-1]
+        splittedInput = userInput.split()
+
+        # Clear results
+        func.clear_output()
+
+        if find_thr is not None:
+            find_thr.terminate()
+        if google_thr is not None:
+            google_thr.terminate()
+
+
+        # We don't handle empty strings
+        if userInput == '':
+            func.update_output()
+            continue
+
         # Scan for keywords
         for keyword in special:
             if userInput[0:len(keyword)] == keyword:
                 out = special[keyword](userInput)
                 if out is not None:
-                    append_output('keyword', fonctions, *out)
+                    func.append_output('keyword', *out)
+
+        # Could be an xdg app
+        func.find_xdg(splittedInput[-1])
 
         # Could be a command...
-        append_output("exec", fonctions, "execute '"+userInput+"'", userInput)
+        func.append_output("exec", "execute '"+userInput+"'", userInput)
 
         # Could be bash...
-        append_output("terminal", fonctions,
-                      "run '%s' in a shell" % (userInput),
-                      "terminator -e %s" % (userInput))
 
-        # Spawn worker threads
-        # google_thr = Process(target=google, args=(userInput, fonctions))
-        # google_thr.start()
-        # find_thr = Process(target=find, args=(userInput, fonctions))
-        # find_thr.start()
-        find(userInput, fonctions)
+        func.append_output("terminal", "run '%s' in a shell" % (userInput),
+                           "terminator -e %s" % (userInput))
 
-        # update_output(fonctions)
+        func.update_output()
+
+        # Start find thread
+        find_thr = Process(target=func.find, args=(userInput,))
+        find_thr.start()
+        find_thr = Process(target=func.google, args=(userInput,))
+        find_thr.start()
+
+        func.find(userInput)
