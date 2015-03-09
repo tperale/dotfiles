@@ -6,6 +6,7 @@ import subprocess
 import logging
 from google import pygoogle
 from multiprocessing import Process
+from time import sleep
 
 
 class Function:
@@ -201,23 +202,29 @@ if __name__ == '__main__':
     find_thr = None
     google_thr = None
 
+    processList = []
+
     special = {
         "bat": (lambda x: func.get_process_output("acpi", "%s", ""))
     }
 
+    userInput = ''
+    oldInput = ''
+
     while 1:
-        userInput = sys.stdin.readline()
-        userInput = userInput[:-1]
+        while userInput == oldInput:
+            userInput = sys.stdin.readline()
+
+        oldInput = userInput
+
+        for process in processList:
+            if process is not None:
+                process.terminate()
+
         splittedInput = userInput.split()
 
         # Clear results
         func.clear_output()
-
-        if find_thr is not None:
-            find_thr.terminate()
-        if google_thr is not None:
-            google_thr.terminate()
-
 
         # We don't handle empty strings
         if userInput == '':
@@ -247,7 +254,9 @@ if __name__ == '__main__':
         # Start find thread
         find_thr = Process(target=func.find, args=(userInput,))
         find_thr.start()
-        find_thr = Process(target=func.google, args=(userInput,))
-        find_thr.start()
+        processList.append(find_thr)
+        google_thr = Process(target=func.google, args=(userInput,))
+        google_thr.start()
+        processList.append(google_thr)
 
         func.find(userInput)
