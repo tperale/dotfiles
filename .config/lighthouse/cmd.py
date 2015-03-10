@@ -6,10 +6,9 @@ import subprocess
 import logging
 from google import pygoogle
 from multiprocessing import Process
-from time import sleep
 
 
-class Function:
+class Output:
     def __init__(self):
         self.fonctions = {"find": [],
                           "python": [],
@@ -20,10 +19,6 @@ class Function:
                           "xdg": []}
 
         self.order = ["xdg", "find", "exec", "python", "terminal", "google"]
-
-        self.google_thr = None
-
-        self.find_thr = None
 
     def clear_output(self):
         for fonctionType in self.fonctions:
@@ -55,19 +50,71 @@ class Function:
         print("".join(toSave))
         sys.stdout.flush()
 
+    def get_process_output(self, process, formatting, action):
+        process_out = str(subprocess.check_output(process))
+        if "%s" in formatting:
+            out_str = formatting % (process_out)
+        else:
+            out_str = formatting
+        if "%s" in action:
+            out_action = action % (process_out)
+        else:
+            out_action = action
+
+        return (out_str, out_action)
+
+
+class Process_Func:
+    """
+    Here are the mosts time comsuming fonctions of the script.
+    Those are launched with the mutliprocessing Process() function.
+    """
+    def __init__(self, out):
+        self.out = out
+
+        self.videoPlayer = 'mpv'
+        self.pdfReader = 'zathura'
+        self.editor = 'vim'
+
+        self.processList = []
+
+        # New function should be refered here.
+        self.funcNames = [self.google, self.find]
+
+    def spawn(self, query):
+        """
+        Create a process for each function in funcNames.
+        """
+        for function in self.funcNames:
+            process = Process(target=function, args=(query,))
+            process.start()
+            self.processList.append(process)
+
+    def kill(self):
+        """
+        Kill all processes previously started in self.processList
+        """
+        for process in self.processList:
+            process.terminate()
+
+        self.processList = []
+
     def google(self, query):
+        """
+        Get the first result of the 'query' google search.
+        """
         g = pygoogle(query, log_level=logging.CRITICAL)
         g.pages = 1
         out = g.get_urls()
         if (len(out) >= 1):
-            self.append_output("google", out[0], "xdg-open " + out[0])
-            self.update_output()
+            self.out.append_output("google", out[0], "xdg-open " + out[0])
+            self.out.update_output()
 
     def find(self, query):
         """
-        Little fuzzy implementation.
+        Little fuzzy finder implementation that work with  a bash command,
+        it also launch different filetype.
         """
-
         queryList = query.split()  # splitted at space (fuzzy finder implementation)
 
         command = ["| grep '%s' " % (elem) for elem in queryList]
@@ -82,44 +129,34 @@ class Function:
 
         except Exception:
             # When 'find' output nothing.
-            self.append_output("find", "No path found.", "terminator")
+            self.out.append_output("find", "No path found.", "terminator")
 
         else:
             find_array.sort(key=len)
             for i in xrange(min(3, len(find_array))):
                 if os.path.isdir(find_array[i]):
-                    self.append_output("find", str(find_array[i]),
-                                       "terminator --working-directory=%s" % (find_array[i]))
+                    self.out.append_output("find", str(find_array[i]),
+                                           "terminator --working-directory=%s" % (find_array[i]))
 
                 elif '.pdf' in find_array[i] or '.ps' in find_array[i]:
-                    self.append_output("find", str(find_array[i]),
-                                       "terminator -e 'zathura %s'" % (find_array[i]))
+                    self.out.append_output("find", str(find_array[i]),
+                                           "terminator -e 'zathura %s'" % (find_array[i]))
 
                 elif '.mp3' in find_array[i]:
-                    self.append_output("find", str(find_array[i]),
-                                       "terminator -e 'mpv %s'" % (find_array[i]))
+                    self.out.append_output("find", str(find_array[i]),
+                                           "terminator -e 'mpv %s'" % (find_array[i]))
 
                 elif os.path.isfile(find_array[i]):
-                    self.append_output("find", str(find_array[i]),
-                                       "terminator -e 'vim %s'" % (find_array[i]))
+                    self.out.append_output("find", str(find_array[i]),
+                                           "terminator -e 'vim %s'" % (find_array[i]))
 
         finally:
-            self.update_output()
+            self.out.update_output()
 
 
-    def get_process_output(process, formatting, action):
-        process_out = str(subprocess.check_output(process))
-        if "%s" in formatting:
-            out_str = formatting % (process_out)
-        else:
-            out_str = formatting
-        if "%s" in action:
-            out_action = action % (process_out)
-        else:
-            out_action = action
-
-        return (out_str, out_action)
-
+class Function:
+    def __init__(self, out):
+        self.out = out
 
     def get_xdg_cmd(self, cmd):
         import re
@@ -189,7 +226,7 @@ class Function:
                 for cmd_num in range(min(len(complete), 5)):
                         xdg_cmd = func.get_xdg_cmd(complete[cmd_num])
                         if xdg_cmd:
-                            func.append_output('xdg', *xdg_cmd)
+                            self.out.append_output('xdg', *xdg_cmd)
 
         except:
             # if no command exist with the user input
@@ -197,38 +234,29 @@ class Function:
 
 
 if __name__ == '__main__':
-    func = Function()
+    out = Output()
+    threaded_func = Process_Func(out)
+    func = Function(out)
 
-    find_thr = None
-    google_thr = None
-
-    processList = []
+    userInput = ''
 
     special = {
         "bat": (lambda x: func.get_process_output("acpi", "%s", ""))
     }
 
-    userInput = ''
-    oldInput = ''
-
     while 1:
-        while userInput == oldInput:
-            userInput = sys.stdin.readline()
+        userInput = sys.stdin.readline()[:-1]
 
-        oldInput = userInput
-
-        for process in processList:
-            if process is not None:
-                process.terminate()
+        threaded_func.kill()
 
         splittedInput = userInput.split()
 
         # Clear results
-        func.clear_output()
+        out.clear_output()
 
         # We don't handle empty strings
         if userInput == '':
-            func.update_output()
+            out.update_output()
             continue
 
         # Scan for keywords
@@ -236,27 +264,20 @@ if __name__ == '__main__':
             if userInput[0:len(keyword)] == keyword:
                 out = special[keyword](userInput)
                 if out is not None:
-                    func.append_output('keyword', *out)
+                    out.append_output('keyword', *out)
 
-        # Could be an xdg app
-        func.find_xdg(splittedInput[-1])
+        if len(splittedInput) == 1:
+            # Could be an xdg app
+            func.find_xdg(userInput)
 
         # Could be a command...
-        func.append_output("exec", "execute '"+userInput+"'", userInput)
+        out.append_output("exec", "execute '"+userInput+"'", userInput)
 
         # Could be bash...
+        out.append_output("terminal", "run '%s' in a shell" % (userInput),
+                          "terminator -e %s" % (userInput))
 
-        func.append_output("terminal", "run '%s' in a shell" % (userInput),
-                           "terminator -e %s" % (userInput))
+        out.update_output()
 
-        func.update_output()
-
-        # Start find thread
-        find_thr = Process(target=func.find, args=(userInput,))
-        find_thr.start()
-        processList.append(find_thr)
-        google_thr = Process(target=func.google, args=(userInput,))
-        google_thr.start()
-        processList.append(google_thr)
-
-        func.find(userInput)
+        # Start threads
+        threaded_func.spawn(userInput)
