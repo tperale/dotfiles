@@ -50,12 +50,13 @@ class Output:
     def create_result(self, title, action):
         return "{" + title + " |" + action + " }"
 
-    def append_output(self, funcType, title, action, proxy):
+    def append_output(self, funcType, title, action):
         title = self.sanitize_output(title)
         action = self.sanitize_output(action)
 
         # Store result value.
-        proxy[funcType] = proxy[funcType] + [self.create_result(title, action)]
+        self.fonctions[funcType] = \
+            self.fonctions[funcType] + [self.create_result(title, action)]
 
     def update_output(self):
         toSave = []
@@ -106,20 +107,18 @@ class Process_Func:
         self.output = []
 
         self.out = out
-        # self.proxy = manager.dict(out.fonctions)
 
         # List of all function you want ot launch in the next process,
         # New function should be refered here.
         self.funcNames = [self.google, self.find,
-                          self.basic_function, self.find_xdg]
+                          self.basic_function, self.find_xdg, self.special_word]
 
     def spawn(self, query):
         """
         Create a process for each function in funcNames.
         """
-        proxy = self.out.fonctions
         for function in self.funcNames:
-            process = Process(target=function, args=(query, proxy,))
+            process = Process(target=function, args=(query, ))
             process.start()
             self.processList.append(process)
 
@@ -132,7 +131,7 @@ class Process_Func:
 
         self.processList = []
 
-    def google(self, query, proxy):
+    def google(self, query):
         """
         Append the first result of the 'query' google search.
         """
@@ -146,11 +145,10 @@ class Process_Func:
         else:
             if (len(googleOut) >= 1):
                 self.out.append_output("google", googleOut[0],
-                                       "xdg-open " + googleOut[0],
-                                       proxy)
+                                       "xdg-open " + googleOut[0])
                 self.out.update_output()
 
-    def find(self, query, proxy):
+    def find(self, query):
         """
         Little fuzzy finder implementation that work with  a bash command,
         it also launch different filetype.
@@ -169,7 +167,7 @@ class Process_Func:
 
         except Exception:
             # When 'find' output nothing.
-            self.out.append_output("find", "No path found.", TERM, proxy)
+            self.out.append_output("find", "No path found.", TERM)
             self.out.move_bottom("find")
 
         else:
@@ -182,44 +180,39 @@ class Process_Func:
                     # 'foo bar' is considered as a folder in python
                     # but 'foo\ bar' is not.
                     self.out.append_output("find", str(find_array[i]),
-                                           TERM + " --working-directory=%s" % (clearedOut),
-                                           proxy)
+                                           TERM + " --working-directory=%s" % (clearedOut))
 
                 elif '.pdf' == clearedOut[-4:] or '.ps' in clearedOut:
                     self.out.append_output("find", str(find_array[i]),
-                                           "%s %s" % (PDF, clearedOut),
-                                           proxy)
+                                           "%s %s" % (PDF, clearedOut))
 
                 elif '.png' == clearedOut[-4:] or \
                     '.jpg' == clearedOut[-4:] or \
                     '.jpeg' == clearedOut[-5:]:
                     self.out.append_output("find", str(find_array[i]),
-                                           "%s %s" % (IMAGE, clearedOut),
-                                           proxy)
+                                           "%s %s" % (IMAGE, clearedOut))
 
                 elif '.mp3' == clearedOut[-4:]:
                     self.out.append_output("find", str(clearedOut),
-                                           TERM + " -e '%s %s'" % (VIDEO, clearedOut),
-                                           proxy)
+                                           TERM + " -e '%s %s'" % (VIDEO, clearedOut))
 
                 elif os.path.isfile(clearedOut):
                     self.out.append_output("find", str(clearedOut),
-                                           TERM + " -e '%s %s'" % (EDITOR, clearedOut),
-                                           proxy)
+                                           TERM + " -e '%s %s'" % (EDITOR, clearedOut))
 
         finally:
             self.out.update_output()
 
-    def basic_function(self, userInput, proxy):
+    def basic_function(self, userInput):
         """
         Append to the output some basic, command for the user.
         """
         # Could be a command...
         out.append_output("exec", "execute '%s'" % (userInput),
-                          userInput, proxy)
+                          userInput)
         # Could be bash...
         self.out.append_output("terminal", "run '%s' in a shell" % (userInput),
-                               TERM + " -e %s" % (userInput), proxy)
+                               TERM + " -e %s" % (userInput))
 
         self.out.update_output()
 
@@ -276,7 +269,7 @@ class Process_Func:
 
         return (menu_entry, exec_path)
 
-    def find_xdg(self, query, proxy):
+    def find_xdg(self, query):
         """
         Look for XDG applications of the given name.
         """
@@ -289,11 +282,22 @@ class Process_Func:
             for cmd_num in range(min(len(complete), 5)):
                 xdg_cmd = func.get_xdg_cmd(complete[cmd_num])
                 if xdg_cmd:
-                    self.out.append_output('xdg', xdg_cmd[0], xdg_cmd[1], proxy)
+                    print(xdg_cmd)
+                    self.out.append_output('xdg', xdg_cmd[0], xdg_cmd[1])
 
         except:
             # if no command exist with the user input
             pass
+
+    def special_word(self, userInput):
+        # Scan for keywords
+        for keyword in special:
+            if userInput[0:len(keyword)] == keyword:
+                special_out = special[keyword](userInput)
+                if special_out is not None:
+                    self.out.append_output('keyword', special_out[0], special_out[1])
+
+
 
 
 if __name__ == '__main__':
@@ -320,13 +324,6 @@ if __name__ == '__main__':
         if userInput == '':
             out.update_output()
             continue
-
-        # Scan for keywords
-        for keyword in special:
-            if userInput[0:len(keyword)] == keyword:
-                special_out = special[keyword](userInput)
-                if special_out is not None:
-                    out.append_output('keyword', special_out[0], special_out[1], out.fonctions)
 
         #if len(splittedInput) == 1:
             # Application don't have spaced name.
