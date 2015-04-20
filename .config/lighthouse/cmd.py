@@ -2,27 +2,43 @@
 
 import sys
 import os.path
+import os
 import subprocess
 import logging
 from google import pygoogle
-from multiprocessing import Process
+from multiprocessing import Process, Manager
+
+
+# Terminal emulator used by default.
+TERM = 'terminator'
+VIDEO = 'mpv'
+PDF = 'zathura'
+EDITOR = 'vim'
+IMAGE = 'feh'
 
 
 class Output:
     def __init__(self):
-        self.fonctions = {"find": [],
+        manager = Manager()
+        self.fonctions = manager.dict({"find": [],
                           "python": [],
                           "terminal": [],
                           "exec": [],
                           "google": [],
                           "keyword": [],
-                          "xdg": []}
+                          "xdg": []
+                          })
 
-        self.order = ["xdg", "find", "exec", "python", "terminal", "google"]
+        self.defaultOrder = ["xdg", "find", "exec", "python", "terminal", "keyword", "google"]
+
+        self.order = self.defaultOrder[:]
 
     def clear_output(self):
-        for fonctionType in self.fonctions:
-            del self.fonctions[fonctionType][:]
+        for fonctionType in self.order:
+            #del self.fonctions[fonctionType][:]
+            self.fonctions[fonctionType] = []
+
+        self.order[:] = self.defaultOrder
 
     def sanitize_output(self, string):
         string = string.replace("{", "\{")
@@ -34,12 +50,12 @@ class Output:
     def create_result(self, title, action):
         return "{" + title + " |" + action + " }"
 
-    def append_output(self, funcType, title, action):
+    def append_output(self, funcType, title, action, proxy):
         title = self.sanitize_output(title)
         action = self.sanitize_output(action)
 
         # Store result value.
-        self.fonctions[funcType].append(self.create_result(title, action))
+        proxy[funcType] = proxy[funcType] + [self.create_result(title, action)]
 
     def update_output(self):
         toSave = []
@@ -63,6 +79,20 @@ class Output:
 
         return (out_str, out_action)
 
+    def change_order(self, newOrder):
+        """
+        Change the output order.
+        """
+        self.order = newOrder
+
+    def move_bottom(self, funcType):
+        """
+        Change order to output the specified 'funcType' in the last position.
+        """
+        funcIndex = self.order.index(funcType)
+        self.change_order(self.order[:funcIndex]
+                          + self.order[funcIndex+1:] + [funcType])
+
 
 class Process_Func:
     """
@@ -70,23 +100,26 @@ class Process_Func:
     Those are launched with the mutliprocessing Process() function.
     """
     def __init__(self, out):
-        self.out = out
-
-        self.videoPlayer = 'mpv'
-        self.pdfReader = 'zathura'
-        self.editor = 'vim'
+        # self.out = out
 
         self.processList = []
+        self.output = []
 
+        self.out = out
+        # self.proxy = manager.dict(out.fonctions)
+
+        # List of all function you want ot launch in the next process,
         # New function should be refered here.
-        self.funcNames = [self.google, self.find]
+        self.funcNames = [self.google, self.find,
+                          self.basic_function, self.find_xdg]
 
     def spawn(self, query):
         """
         Create a process for each function in funcNames.
         """
+        proxy = self.out.fonctions
         for function in self.funcNames:
-            process = Process(target=function, args=(query,))
+            process = Process(target=function, args=(query, proxy,))
             process.start()
             self.processList.append(process)
 
@@ -99,23 +132,30 @@ class Process_Func:
 
         self.processList = []
 
-    def google(self, query):
+    def google(self, query, proxy):
         """
-        Get the first result of the 'query' google search.
+        Append the first result of the 'query' google search.
         """
-        g = pygoogle(query, log_level=logging.CRITICAL)
-        g.pages = 1
-        out = g.get_urls()
-        if (len(out) >= 1):
-            self.out.append_output("google", out[0], "xdg-open " + out[0])
-            self.out.update_output()
+        try:
+            g = pygoogle(query, log_level=logging.CRITICAL)
+            g.pages = 1
+            googleOut = g.get_urls()
+        except:
+            # When no connection.
+            pass
+        else:
+            if (len(googleOut) >= 1):
+                self.out.append_output("google", googleOut[0],
+                                       "xdg-open " + googleOut[0],
+                                       proxy)
+                self.out.update_output()
 
-    def find(self, query):
+    def find(self, query, proxy):
         """
         Little fuzzy finder implementation that work with  a bash command,
         it also launch different filetype.
         """
-        queryList = query.split()  # splitted at space (fuzzy finder implementation)
+        queryList = query.split()
 
         command = ["| grep '%s' " % (elem) for elem in queryList]
         command = " ".join(command)
@@ -129,34 +169,59 @@ class Process_Func:
 
         except Exception:
             # When 'find' output nothing.
-            self.out.append_output("find", "No path found.", "terminator")
+            self.out.append_output("find", "No path found.", TERM, proxy)
+            self.out.move_bottom("find")
 
         else:
             find_array.sort(key=len)
             for i in xrange(min(3, len(find_array))):
+                clearedOut = find_array[i].strip().replace(' ', '\ ')
+                # Path with space on them wasn't working.
+
                 if os.path.isdir(find_array[i]):
+                    # 'foo bar' is considered as a folder in python
+                    # but 'foo\ bar' is not.
                     self.out.append_output("find", str(find_array[i]),
-                                           "terminator --working-directory=%s" % (find_array[i]))
+                                           TERM + " --working-directory=%s" % (clearedOut),
+                                           proxy)
 
-                elif '.pdf' in find_array[i] or '.ps' in find_array[i]:
+                elif '.pdf' == clearedOut[-4:] or '.ps' in clearedOut:
                     self.out.append_output("find", str(find_array[i]),
-                                           "terminator -e 'zathura %s'" % (find_array[i]))
+                                           "%s %s" % (PDF, clearedOut),
+                                           proxy)
 
-                elif '.mp3' in find_array[i]:
+                elif '.png' == clearedOut[-4:] or \
+                    '.jpg' == clearedOut[-4:] or \
+                    '.jpeg' == clearedOut[-5:]:
                     self.out.append_output("find", str(find_array[i]),
-                                           "terminator -e 'mpv %s'" % (find_array[i]))
+                                           "%s %s" % (IMAGE, clearedOut),
+                                           proxy)
 
-                elif os.path.isfile(find_array[i]):
-                    self.out.append_output("find", str(find_array[i]),
-                                           "terminator -e 'vim %s'" % (find_array[i]))
+                elif '.mp3' == clearedOut[-4:]:
+                    self.out.append_output("find", str(clearedOut),
+                                           TERM + " -e '%s %s'" % (VIDEO, clearedOut),
+                                           proxy)
+
+                elif os.path.isfile(clearedOut):
+                    self.out.append_output("find", str(clearedOut),
+                                           TERM + " -e '%s %s'" % (EDITOR, clearedOut),
+                                           proxy)
 
         finally:
             self.out.update_output()
 
+    def basic_function(self, userInput, proxy):
+        """
+        Append to the output some basic, command for the user.
+        """
+        # Could be a command...
+        out.append_output("exec", "execute '%s'" % (userInput),
+                          userInput, proxy)
+        # Could be bash...
+        self.out.append_output("terminal", "run '%s' in a shell" % (userInput),
+                               TERM + " -e %s" % (userInput), proxy)
 
-class Function:
-    def __init__(self, out):
-        self.out = out
+        self.out.update_output()
 
     def get_xdg_cmd(self, cmd):
         import re
@@ -170,10 +235,9 @@ class Function:
             return
 
         def find_desktop_entry(cmd):
-
             search_name = "%s.desktop" % cmd
             desktop_files = list(xdg.BaseDirectory.load_data_paths('applications',
-                                                                search_name))
+                                                                   search_name))
             if not desktop_files:
                 return
             else:
@@ -183,7 +247,6 @@ class Function:
                 return desktop_entry
 
         def get_icon(desktop_entry):
-
             icon_name = desktop_entry.getIcon()
             if not icon_name:
                 return
@@ -192,7 +255,6 @@ class Function:
                 return icon_path
 
         def get_xdg_exec(desktop_entry):
-
             exec_spec = desktop_entry.getExec()
             # The XDG exec string contains substitution patterns.
             exec_path = re.sub("%.", "", exec_spec).strip()
@@ -214,19 +276,20 @@ class Function:
 
         return (menu_entry, exec_path)
 
-    def find_xdg(self, query):
+    def find_xdg(self, query, proxy):
+        """
+        Look for XDG applications of the given name.
+        """
         try:
             complete = subprocess.check_output("compgen -c %s" % (query),
-                                               shell=True, executable="/bin/bash")
-            complete = complete.split('\n')
+                                               shell=True,
+                                               executable="/bin/bash")
+            complete = complete.split()
 
-            if len(splittedInput) == 1:
-                # Application don't have spaced name.
-                # Look for XDG applications of the given name.
-                for cmd_num in range(min(len(complete), 5)):
-                        xdg_cmd = func.get_xdg_cmd(complete[cmd_num])
-                        if xdg_cmd:
-                            self.out.append_output('xdg', *xdg_cmd)
+            for cmd_num in range(min(len(complete), 5)):
+                xdg_cmd = func.get_xdg_cmd(complete[cmd_num])
+                if xdg_cmd:
+                    self.out.append_output('xdg', xdg_cmd[0], xdg_cmd[1], proxy)
 
         except:
             # if no command exist with the user input
@@ -236,12 +299,11 @@ class Function:
 if __name__ == '__main__':
     out = Output()
     threaded_func = Process_Func(out)
-    func = Function(out)
 
     userInput = ''
 
     special = {
-        "bat": (lambda x: func.get_process_output("acpi", "%s", ""))
+        "bat": (lambda x: out.get_process_output("acpi", "%s", ""))
     }
 
     while 1:
@@ -262,22 +324,12 @@ if __name__ == '__main__':
         # Scan for keywords
         for keyword in special:
             if userInput[0:len(keyword)] == keyword:
-                out = special[keyword](userInput)
-                if out is not None:
-                    out.append_output('keyword', *out)
+                special_out = special[keyword](userInput)
+                if special_out is not None:
+                    out.append_output('keyword', special_out[0], special_out[1], out.fonctions)
 
-        if len(splittedInput) == 1:
-            # Could be an xdg app
-            func.find_xdg(userInput)
+        #if len(splittedInput) == 1:
+            # Application don't have spaced name.
 
-        # Could be a command...
-        out.append_output("exec", "execute '"+userInput+"'", userInput)
-
-        # Could be bash...
-        out.append_output("terminal", "run '%s' in a shell" % (userInput),
-                          "terminator -e %s" % (userInput))
-
-        out.update_output()
-
-        # Start threads
+        # start threads
         threaded_func.spawn(userInput)
