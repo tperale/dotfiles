@@ -11,32 +11,46 @@ from multiprocessing import Process, Manager
 
 # Terminal emulator used by default.
 TERM = 'terminator'
-VIDEO = 'mpv'
-PDF = 'zathura'
-EDITOR = 'vim'
-IMAGE = 'feh'
+EDITOR = 'nvim'
+
+# dictionnary associating program with extension.
+# ex: "feh": ['.jpeg', '.jpg', '.png']
+# We could also add icon to with those program
+fileChoose = {"mpv": ['.mp3', '.mp4', '.mkv', '.flv', '.avi'],
+              "zathura": ['.pdf', '.ps'],
+              # "nvim": ['.txt'],
+              "feh": ['.jpeg', '.jpg', '.png'],
+              "gimp": []}
+
+# Alliases, associate with function.
+# for the key you write with which word you want to output, your function,
+# and for the value you use a lambda function.
+special = {
+    "bat": lambda x: out.get_process_output("acpi", "%s", ""),
+    "qbit": lambda x: out.append_output("xdg", "qbittorrent", "qbittorrent")
+}
 
 
 class Output:
     def __init__(self):
-        manager = Manager()
-        self.fonctions = manager.dict({"find": [],
-                          "python": [],
-                          "terminal": [],
-                          "exec": [],
-                          "google": [],
-                          "keyword": [],
-                          "xdg": []
-                          })
-
-        self.defaultOrder = ["xdg", "find", "exec", "python", "terminal", "keyword", "google"]
+        self.defaultOrder = ["xdg",
+                             "find",
+                             "exec",
+                             "python",
+                             "terminal",
+                             "keyword",
+                             "google"]
 
         self.order = self.defaultOrder[:]
 
+        manager = Manager()
+        self.functions = manager.dict()
+        for name in self.defaultOrder:
+            self.functions[name] = []
+
     def clear_output(self):
-        for fonctionType in self.order:
-            #del self.fonctions[fonctionType][:]
-            self.fonctions[fonctionType] = []
+        for functionType in self.order:
+            self.functions[functionType] = []
 
         self.order[:] = self.defaultOrder
 
@@ -51,17 +65,19 @@ class Output:
         return "{" + title + " |" + action + " }"
 
     def append_output(self, funcType, title, action):
+        """
+        """
         title = self.sanitize_output(title)
         action = self.sanitize_output(action)
 
         # Store result value.
-        self.fonctions[funcType] = \
-            self.fonctions[funcType] + [self.create_result(title, action)]
+        self.functions[funcType] = \
+            self.functions[funcType] + [self.create_result(title, action)]
 
     def update_output(self):
         toSave = []
         for funcType in self.order:
-            for result in self.fonctions[funcType]:
+            for result in self.functions[funcType]:
                 toSave.append(result)
 
         print("".join(toSave))
@@ -97,12 +113,10 @@ class Output:
 
 class Process_Func:
     """
-    Here are the mosts time comsuming fonctions of the script.
+    Here are the mosts time comsuming functions of the script.
     Those are launched with the mutliprocessing Process() function.
     """
     def __init__(self, out):
-        # self.out = out
-
         self.processList = []
         self.output = []
 
@@ -110,8 +124,11 @@ class Process_Func:
 
         # List of all function you want ot launch in the next process,
         # New function should be refered here.
-        self.funcNames = [self.google, self.find,
-                          self.basic_function, self.find_xdg, self.special_word]
+        self.funcNames = [self.google,
+                          self.find,
+                          self.basic_function,
+                          self.find_xdg,
+                          self.special_word]
 
     def spawn(self, query):
         """
@@ -180,25 +197,29 @@ class Process_Func:
                     # 'foo bar' is considered as a folder in python
                     # but 'foo\ bar' is not.
                     self.out.append_output("find", str(find_array[i]),
-                                           TERM + " --working-directory=%s" % (clearedOut))
+                                           "%s --working-directory=%s" % (TERM, clearedOut))
 
-                elif '.pdf' == clearedOut[-4:] or '.ps' in clearedOut:
-                    self.out.append_output("find", str(find_array[i]),
-                                           "%s %s" % (PDF, clearedOut))
+                else:
+                    # Check for every file extension the user specified in the
+                    # begining of this script file
+                    state = False
+                    for name, extensions in fileChoose.items():
+                        j = 0
+                        while j < len(extensions) and \
+                                extensions[j] not in clearedOut:
+                            j += 1
 
-                elif '.png' == clearedOut[-4:] or \
-                    '.jpg' == clearedOut[-4:] or \
-                    '.jpeg' == clearedOut[-5:]:
-                    self.out.append_output("find", str(find_array[i]),
-                                           "%s %s" % (IMAGE, clearedOut))
+                        if j < len(extensions):
+                            state = True
+                            self.out.append_output("find", str(find_array[i]),
+                                                   "%s %s" % (name, clearedOut))
+                            break
 
-                elif '.mp3' == clearedOut[-4:]:
-                    self.out.append_output("find", str(clearedOut),
-                                           TERM + " -e '%s %s'" % (VIDEO, clearedOut))
-
-                elif os.path.isfile(clearedOut):
-                    self.out.append_output("find", str(clearedOut),
-                                           TERM + " -e '%s %s'" % (EDITOR, clearedOut))
+                    if not state and os.path.isfile(clearedOut):
+                        # If no extension was found you can still open it with
+                        # your text editor.
+                        self.out.append_output("find", str(clearedOut),
+                                               "%s -e '%s %s'" % (TERM, EDITOR, clearedOut))
 
         finally:
             self.out.update_output()
@@ -280,10 +301,9 @@ class Process_Func:
             complete = complete.split()
 
             for cmd_num in range(min(len(complete), 5)):
-                xdg_cmd = func.get_xdg_cmd(complete[cmd_num])
+                xdg_cmd = self.get_xdg_cmd(complete[cmd_num])
                 if xdg_cmd:
-                    print(xdg_cmd)
-                    self.out.append_output('xdg', xdg_cmd[0], xdg_cmd[1])
+                    self.out.append_output('xdg', *xdg_cmd)
 
         except:
             # if no command exist with the user input
@@ -292,12 +312,10 @@ class Process_Func:
     def special_word(self, userInput):
         # Scan for keywords
         for keyword in special:
-            if userInput[0:len(keyword)] == keyword:
+            if (userInput[0:len(keyword)] == keyword):
                 special_out = special[keyword](userInput)
                 if special_out is not None:
-                    self.out.append_output('keyword', special_out[0], special_out[1])
-
-
+                    self.out.append_output('keyword', *special_out)
 
 
 if __name__ == '__main__':
@@ -305,10 +323,6 @@ if __name__ == '__main__':
     threaded_func = Process_Func(out)
 
     userInput = ''
-
-    special = {
-        "bat": (lambda x: out.get_process_output("acpi", "%s", ""))
-    }
 
     while 1:
         userInput = sys.stdin.readline()[:-1]
