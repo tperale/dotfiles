@@ -7,9 +7,10 @@ import subprocess
 import logging
 from google import pygoogle
 from multiprocessing import Process, Manager
+from math import *
 
 
-# Terminal emulator used by default.
+# Terminal emulator and terminal text editor used by default.
 TERM = 'terminator'
 EDITOR = 'nvim'
 
@@ -20,6 +21,7 @@ fileChoose = {"mpv": ['.mp3', '.mp4', '.mkv', '.flv', '.avi'],
               "zathura": ['.pdf', '.ps'],
               # "nvim": ['.txt'],
               "feh": ['.jpeg', '.jpg', '.png'],
+              "qbittorrent": ['.torrent'],
               "gimp": []}
 
 # Alliases, associate with function.
@@ -27,7 +29,8 @@ fileChoose = {"mpv": ['.mp3', '.mp4', '.mkv', '.flv', '.avi'],
 # and for the value you use a lambda function.
 special = {
     "bat": lambda x: out.get_process_output("acpi", "%s", ""),
-    "qbit": lambda x: out.append_output("xdg", "qbittorrent", "qbittorrent")
+    "qbi": lambda x: out.append_output("qbittorrent", "qbittorrent", "xdg"),
+    "twitch": lambda x: process.twitch()
 }
 
 
@@ -35,11 +38,11 @@ class Output:
     def __init__(self):
         self.defaultOrder = ["xdg",
                              "find",
-                             "exec",
+                             "basic",
                              "python",
-                             "terminal",
                              "keyword",
-                             "google"]
+                             "google",
+                             "misc"]
 
         self.order = self.defaultOrder[:]
 
@@ -64,8 +67,10 @@ class Output:
     def create_result(self, title, action):
         return "{" + title + " |" + action + " }"
 
-    def append_output(self, funcType, title, action):
+    def append_output(self, title, action, funcType="misc"):
         """
+        ARGUMENTS:
+            funcType: place where the output will be displayed in the output.
         """
         title = self.sanitize_output(title)
         action = self.sanitize_output(action)
@@ -123,11 +128,13 @@ class Process_Func:
         self.out = out
 
         # List of all function you want ot launch in the next process,
-        # New function should be refered here.
+        # To add a new function just refer it in that list, so when self.spawn
+        # is called it will launch it in a process.
         self.funcNames = [self.google,
                           self.find,
                           self.basic_function,
                           self.find_xdg,
+                          # self.calc,
                           self.special_word]
 
     def spawn(self, query):
@@ -157,18 +164,23 @@ class Process_Func:
             g.pages = 1
             googleOut = g.get_urls()
         except:
-            # When no connection.
+            # When no connection for example.
             pass
         else:
             if (len(googleOut) >= 1):
-                self.out.append_output("google", googleOut[0],
-                                       "xdg-open " + googleOut[0])
+                self.out.append_output(googleOut[0],
+                                       "xdg-open " + googleOut[0],
+                                       "google")
                 self.out.update_output()
 
     def find(self, query):
         """
         Little fuzzy finder implementation that work with  a bash command,
-        it also launch different filetype.
+        it also launch different according to his filetype configured in
+        the fileChoose dict.
+        REQUIRE:
+            -bash with compgen
+            -to configure fileChoose
         """
         queryList = query.split()
 
@@ -184,7 +196,7 @@ class Process_Func:
 
         except Exception:
             # When 'find' output nothing.
-            self.out.append_output("find", "No path found.", TERM)
+            self.out.append_output("No path found.", TERM, "find")
             self.out.move_bottom("find")
 
         else:
@@ -196,8 +208,9 @@ class Process_Func:
                 if os.path.isdir(find_array[i]):
                     # 'foo bar' is considered as a folder in python
                     # but 'foo\ bar' is not.
-                    self.out.append_output("find", str(find_array[i]),
-                                           "%s --working-directory=%s" % (TERM, clearedOut))
+                    self.out.append_output(str(find_array[i]),
+                                           "%s --working-directory=%s" % (TERM, clearedOut),
+                                           "find")
 
                 else:
                     # Check for every file extension the user specified in the
@@ -211,31 +224,39 @@ class Process_Func:
 
                         if j < len(extensions):
                             state = True
-                            self.out.append_output("find", str(find_array[i]),
-                                                   "%s %s" % (name, clearedOut))
+                            self.out.append_output(str(find_array[i]),
+                                                   "%s %s" % (name, clearedOut),
+                                                   "find")
                             break
 
                     if not state and os.path.isfile(clearedOut):
                         # If no extension was found you can still open it with
                         # your text editor.
-                        self.out.append_output("find", str(clearedOut),
-                                               "%s -e '%s %s'" % (TERM, EDITOR, clearedOut))
+                        self.out.append_output(str(clearedOut),
+                                               "%s -e '%s %s'" % (TERM, EDITOR, clearedOut),
+                                               "find")
 
         finally:
             self.out.update_output()
 
     def basic_function(self, userInput):
         """
-        Append to the output some basic, command for the user.
+        Append to the output some basic command for the user.
         """
         # Could be a command...
-        out.append_output("exec", "execute '%s'" % (userInput),
-                          userInput)
+        out.append_output("execute '%s'" % (userInput), userInput, "basic")
+
         # Could be bash...
-        self.out.append_output("terminal", "run '%s' in a shell" % (userInput),
-                               TERM + " -e %s" % (userInput))
+        self.out.append_output("run '%s' in a shell" % (userInput),
+                               TERM + " -e %s" % (userInput), "basic")
 
         self.out.update_output()
+
+    # TODO Find a way to eval safely. A calculus.
+    #def calc(self, userInput):
+    #    evaluation = eval(userInput)
+    #    if isinstance(evaluation, int):
+    #        self.out.append_output("python: " + str(evaluation), "")
 
     def get_xdg_cmd(self, cmd):
         import re
@@ -303,7 +324,7 @@ class Process_Func:
             for cmd_num in range(min(len(complete), 5)):
                 xdg_cmd = self.get_xdg_cmd(complete[cmd_num])
                 if xdg_cmd:
-                    self.out.append_output('xdg', *xdg_cmd)
+                    self.out.append_output(xdg_cmd[0], xdg_cmd[1], "xdg")
 
         except:
             # if no command exist with the user input
@@ -315,19 +336,36 @@ class Process_Func:
             if (userInput[0:len(keyword)] == keyword):
                 special_out = special[keyword](userInput)
                 if special_out is not None:
-                    self.out.append_output('keyword', *special_out)
+                    self.out.append_output(special_out[0],
+                                           special_out[1],
+                                           'keyword')
+
+    def twitch(self):
+        import requests
+        import json
+        user = 'thomacer'
+        getSource = requests.get("https://api.twitch.tv/kraken/users/%s/follows/channels"
+                                 % (user))
+        twitchChan = json.loads(getSource.text)
+
+        for channel in twitchChan['follows']:
+            # Iteration on each channel returned by the api.
+            self.out.append_output("Twitch: " + channel['channel']['name'],
+                                   'mpv ' + channel['channel']['url'])
+
+        self.out.update_output()
 
 
 if __name__ == '__main__':
     out = Output()
-    threaded_func = Process_Func(out)
+    process = Process_Func(out)
 
     userInput = ''
 
     while 1:
         userInput = sys.stdin.readline()[:-1]
 
-        threaded_func.kill()
+        process.kill()
 
         splittedInput = userInput.split()
 
@@ -343,4 +381,4 @@ if __name__ == '__main__':
             # Application don't have spaced name.
 
         # start threads
-        threaded_func.spawn(userInput)
+        process.spawn(userInput)
