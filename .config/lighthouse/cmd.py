@@ -30,7 +30,8 @@ fileChoose = {"mpv": ['.mp3', '.mp4', '.mkv', '.flv', '.avi'],
 special = {
     "bat": lambda x: out.get_process_output("acpi", "%s", ""),
     "qbi": lambda x: out.append_output("qbittorrent", "qbittorrent", "xdg"),
-    "twitch": lambda x: process.twitch()
+    "twitch": lambda x: process.twitch(),
+    "scrobble": lambda x: process.scrobble()
 }
 
 
@@ -341,6 +342,14 @@ class Process_Func:
                                            'keyword')
 
     def twitch(self):
+        """
+        Get a user twitch followed channel and then output them to launch it
+        with livestreamer
+        TODO:
+            - use livestreamer
+            - color if channel is live
+            - channel icon.
+        """
         import requests
         import json
         user = 'thomacer'
@@ -354,6 +363,25 @@ class Process_Func:
                                    'mpv ' + channel['channel']['url'])
 
         self.out.update_output()
+
+    def scrobble(self):
+        """
+        Shortcut to launch or stop scrobbling on last.fm.
+        TODO:
+            - Detect wich scrobbler is installed.
+        """
+        scrobbler = 'mpdscribble'
+        try:
+            scrobbleProccess = subprocess.check_output('ps aux | pgrep %s'
+                                                       % (scrobbler),
+                                                       shell=True,
+                                                       executable='/bin/bash')
+        except subprocess.CalledProcessError:
+            self.out.append_output('Start scrobbling', scrobbler)
+
+        else:
+            self.out.append_output('Stop scrobbling', 'kill %s' %
+                                   (scrobbleProccess))
 
 
 if __name__ == '__main__':
