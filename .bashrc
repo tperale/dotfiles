@@ -116,7 +116,12 @@ alias extract='~/bin/extract'
 
 alias prettyping='~/bin/prettyping'
 
-#return value visualisation
+alias cd..="cd .."
+
+export EDITOR="vim"
+export XDG_MUSIC_DIR=/home/thomas/Music
+
+#retur nvalue visualisation
 #PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
 
 
@@ -127,6 +132,17 @@ function _update_ps1() {
 
 export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 
+# colored manpages
+if $_isxrunning; then
+        export PAGER=less
+        export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+        export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+        export LESS_TERMCAP_me=$'\E[0m'           # end mode
+        export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+        export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+        export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+        export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+fi
 
 # edit single line snippet
 cfg-snippetrc() { $EDITOR ~/.snippetrc ;}
@@ -163,3 +179,50 @@ fzf-multisnippet() {
 }
 
 set -o vi
+
+
+function gspeak
+{
+    if [[ "$#" -lt 2 ]]; then
+        echo -e "Usage: ${FUNCNAME} [\"REQUEST\"] [LANGUAGE SHORTCUT]"
+        return 0
+    fi
+
+    mpv "http://translate.google.com/translate_tts?tl=$(echo $2)&q=$(echo $1 | sed 's/\s/+/')" &>/dev/null
+}
+
+wiki () {
+    w3m "http://en.wikipedia.org/w/index.php?search=${*// /+}"
+}
+
+function makeMakefile
+{
+    echo "FLAG = -ggdb3 -Wpedantic -Wall -Wextra -Winit-self -Winline -Wconversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wconversion -Wsign-promo -Wzero-as-null-pointer-constant" > Makefile
+    echo "OUTPUT =  " > Makefile
+    echo "CC = g++" > Makefile
+
+    echo "OBJ = " > Makefile
+
+    echo "all: $(OBJ)" > Makefile
+    echo "\t$(CC) $(OBJ) -std=c++14 $(FLAG) -o $(OUTPUT)" > Makefile
+    echo "clean:" > Makefile
+    echo "\trm *.o" > Makefile
+}
+
+function makeLatex
+{
+    echo "\\documentclass[10pt, a4paper]{article}" > $(echo $1).tex
+    echo "\\usepackage[utf8]{inputenc}" > $(echo $1).tex
+    echo "\\usepackage{listings}" > $(echo $1).tex
+    echo "\\usepackage{hyperref}" > $(echo $1).tex
+
+    echo "\\documentclass[10pt, a4paper]{article}" > $(echo $1).tex
+    echo "\\usepackage[utf8]{inputenc}" > $(echo $1).tex
+    echo "\\usepackage{listings}" > $(echo $1).tex
+    echo "\\usepackage{hyperref}"
+
+    echo "\\begin{document}" > $(echo $1).tex
+    echo "\\end{document}" > $(echo $1).tex
+}
+
+
