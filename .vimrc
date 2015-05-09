@@ -43,8 +43,13 @@ set nocompatible
     " Edit files using sudo/su
     Plugin 'chrisbra/SudoEdit.vim'
 
+    " Latex
+    Plugin 'jcf/vim-latex'
+    Plugin 'xuhdev/vim-latex-live-preview'
+
     " <Tab> everything!
-    Plugin 'ervandew/supertab'
+    " Plugin 'ervandew/supertab'
+    Plugin 'Valloric/YouCompleteMe'
 
     " Fuzzy finder (files, mru, etc)
     Plugin 'kien/ctrlp.vim'
@@ -75,6 +80,17 @@ set nocompatible
     " Align your = etc.
     Plugin 'vim-scripts/Align'
 
+    " Plugin 't9md/choosewin'  
+
+    " Multiple cursor
+    " Plugin 'terryma/vim-multiple-cursors '
+
+    " Meilleur coleurs
+    Plugin 'jeaye/color_coded' 
+    
+    " Correction orthographique.
+    " Plugin 'dpelle/vim-LanguageTool '
+
     " Snippets like textmate
     Plugin 'MarcWeber/vim-addon-mw-utils'
     Plugin 'tomtom/tlib_vim'
@@ -83,6 +99,14 @@ set nocompatible
 
     " Python-mode (---> pep8, checking, etc)
     Plugin 'klen/python-mode'
+
+"    Deprecated ???
+"    Plugin 'jaredly/pydbgp'
+"    Plugin 'vim-debug ' 
+"
+
+    " lisp dev
+    Plugin 'mikaelj/limp' 
 
     "
     Plugin 'mattn/gist-vim'
@@ -286,6 +310,15 @@ set nocompatible
         " Yank(copy) to system clipboard
         noremap <leader>y "+y
 
+        " Yank from cursor to end of line
+        nnoremap Y y$
+
+        " Remap :W to :w
+        command! W w
+
+        " Sudo write (,W) {{{
+        noremap <leader>W :w !sudo tee %<CR>}
+
         " Toggle folding
         nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
         vnoremap <Space> zf
@@ -437,7 +470,7 @@ set nocompatible
         map <F1> :TagbarToggle<CR>
 
         " Toggle pastemode, doesn't indent
-        set pastetoggle=<F3>
+        set pastetoggle=<leader>p
 
         " Syntastic - toggle error list. Probably should be toggleable.
         noremap <silent><leader>lo :Errors<CR>
@@ -491,7 +524,7 @@ set nocompatible
 
     """ Lightline {{{
         let g:lightline = {
-            \ 'colorscheme': 'molokai',
+            \ 'colorscheme': 'jellybeans',
             \ 'active': {
             \     'left': [
             \         ['mode', 'paste'],
@@ -655,4 +688,9 @@ let g:gist_post_anonymous = 1
 let g:gist_open_browser_after_post = 1
 
 " ChooseWindow, choose in witch window, move.
-nmap - <Plug>(choosewin)
+" nmap - <Plug>(choosewin)
+
+" Latex preview
+autocmd FileType tex setl updatetime=1
+let g:livepreview_previewer = 'zathura'
+nmap <F12> : LLPStartPreview<cr>
