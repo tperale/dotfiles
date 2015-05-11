@@ -76,12 +76,12 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
 # some more ls aliases
@@ -89,6 +89,24 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 
+alias g='git'
+alias ga='git add'
+alias gc='git commit'
+alias gclo='git clone'
+alias gl='git pull'
+alias gup='git pull --rebase'
+alias gp='git push'
+alias gpsuom='git push --set-upstream origin master'
+alias gsr='git svn rebase'
+alias gsd='git svn dcommit'
+alias gu="git reset --soft 'HEAD^'"
+
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -195,34 +213,7 @@ wiki () {
     w3m "http://en.wikipedia.org/w/index.php?search=${*// /+}"
 }
 
-function makeMakefile
+memo()
 {
-    echo "FLAG = -ggdb3 -Wpedantic -Wall -Wextra -Winit-self -Winline -Wconversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wconversion -Wsign-promo -Wzero-as-null-pointer-constant" > Makefile
-    echo "OUTPUT =  " > Makefile
-    echo "CC = g++" > Makefile
-
-    echo "OBJ = " > Makefile
-
-    echo "all: $(OBJ)" > Makefile
-    echo "\t$(CC) $(OBJ) -std=c++14 $(FLAG) -o $(OUTPUT)" > Makefile
-    echo "clean:" > Makefile
-    echo "\trm *.o" > Makefile
+  echo "$*" | mail -n -s "$*" thomas.perale@openmailbox.org
 }
-
-function makeLatex
-{
-    echo "\\documentclass[10pt, a4paper]{article}" > $(echo $1).tex
-    echo "\\usepackage[utf8]{inputenc}" > $(echo $1).tex
-    echo "\\usepackage{listings}" > $(echo $1).tex
-    echo "\\usepackage{hyperref}" > $(echo $1).tex
-
-    echo "\\documentclass[10pt, a4paper]{article}" > $(echo $1).tex
-    echo "\\usepackage[utf8]{inputenc}" > $(echo $1).tex
-    echo "\\usepackage{listings}" > $(echo $1).tex
-    echo "\\usepackage{hyperref}"
-
-    echo "\\begin{document}" > $(echo $1).tex
-    echo "\\end{document}" > $(echo $1).tex
-}
-
-
