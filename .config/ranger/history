@@ -1,0 +1,50 @@
+search htt
+shell sudo mkdir conf
+shell sudo mkdir extra
+rename test.py
+shell mkdir 
+shell mkdir projet2
+search tper
+delete
+cmd.py
+rename lighthouserc
+rename cmd.py
+rename Twitch.py
+open_with zathura
+search T
+rename test.jpg
+wallpaper.png
+rename wallpaper.png
+rename panel.sh
+rename general.png
+rename term.png
+rename 2.png
+rename gegeneral.png
+rename
+rename stat.png
+rename stat2.png
+rename account.com.gmail.thomas.perale
+rename account.com.openmailbox.thomas.perale
+open-with vim
+rename account.org.openmailbox.thomas.perale
+rename 
+rename account.be.ac.ulb.tperaletest
+rename account.be.ac.ulb.tperalelol
+rename account.be.ac.ulb.tperale
+rename projet.pdf
+shell mk
+rename PROJET_2
+open_with 
+shell mkdir lua
+shell mkdir  test
+search 
+
+shell mkdir test
+delete 
+cd 
+open
+rename travel
+rename home
+set colorscheme oblivion
+shell 
+rename thomasa
