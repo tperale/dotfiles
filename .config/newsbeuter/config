@@ -3,7 +3,11 @@
 always-display-description  true
 auto-reload         yes
 browser             firefox
+
 player 		        mpv
+
+download-path "~/Podcasts"
+
 cleanup-on-quit		no
 download-retries	10
 download-timeout	20
@@ -13,6 +17,7 @@ reload-time			10
 download-path		~/Article/
 max-downloads		2
 html-renderer "w3m -dump -T text/html"
+notify-program "notify-send"
 
 
 # BINDS
@@ -24,15 +29,17 @@ bind-key                k up
 bind-key                h quit
 unbind-key              l
 bind-key                l open
+unbind-key              g
+bind-key                g home
+unbind-key              G
+bind-key                G end
 
 unbind-key              o
 bind-key                o open-in-browser-and-mark-read
 
-bind-key                O open
 
 
 # COLORS
-
 articlelist-format "%4i %f %D %?T?|%-17T| ?%t"
 
 #color listnormal color244 color234
@@ -42,12 +49,25 @@ articlelist-format "%4i %f %D %?T?|%-17T| ?%t"
 #color article color244 color234
 
 
+color background   default   default
+color listnormal   default   default
+color listnormal_unread   default   default
+color listfocus    black     yellow
+color listfocus_unread    black     yellow
+color info         default   black
+color article      default   default
 
-#color listnormal color244 color234
-color listfocus  color166 color235
-#color info       color136 color235
-#color background color244 color234
-#color article    color244 color234
+# highlights
+highlight article "^(Title):.*$" blue default
+highlight article "https?://[^ ]+" red default
+highlight article "\\[image\\ [0-9]+\\]" green default
+
+
+#color listnormal white black
+#color listfocus  white cyan
+#color info       white blue
+#color background white black
+#color article    white black
 
 #highlight article "^Feed:.*" color174 default
 #highlight article "^Title:.*" color223 color108 bold
