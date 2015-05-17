@@ -83,7 +83,7 @@ set nocompatible
     " Plugin 't9md/choosewin'  
 
     " Multiple cursor
-    " Plugin 'terryma/vim-multiple-cursors '
+    Plugin 'terryma/vim-multiple-cursors'
 
     " Meilleur coleurs
     Plugin 'jeaye/color_coded' 
@@ -116,6 +116,16 @@ set nocompatible
 
     " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
     Plugin 'mhinz/vim-signify'
+
+    " REPL clojure
+    Plugin 'tpope/vim-fireplace'
+    Plugin 'tpope/vim-classpath'
+    Plugin 'tpope/vim-leiningen'
+    Plugin 'tpope/vim-projectionist'
+    Plugin 'tpope/vim-dispatch'
+
+
+
 
     " Awesome syntax checker.
     " REQUIREMENTS: See :h syntastic-intro
@@ -690,6 +700,9 @@ let g:gist_open_browser_after_post = 1
 " ChooseWindow, choose in witch window, move.
 " nmap - <Plug>(choosewin)
 
+" Map start key separately from next key
+let g:multi_cursor_start_key='<F6>'
+"
 " Latex preview
 autocmd FileType tex setl updatetime=1
 let g:livepreview_previewer = 'zathura'
