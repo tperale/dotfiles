@@ -1,0 +1,9 @@
+[user]
+	email = thomas.perale@openmailbox.org
+	name = Perale Thomas
+
+[push]
+    default = current
+
+[color]
+    ui = auto
