@@ -30,4 +30,6 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
-
+alias ulbmail='mutt -F ~/.mutt/muttrc.ulb'
+alias hotmail='mutt -F ~/.mutt/muttrc.hotmail'
+alias openmail='mutt -F ~/.mutt/muttrc.openmail'
