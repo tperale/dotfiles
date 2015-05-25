@@ -86,8 +86,13 @@ fi
 
 # some more ls aliases
 alias ll='ls -l'
+alias sl='ls --color=auto'
+alias lsl='ls --color=auto'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias v='vim'
+alias vd='vimdiff'
 
 alias g='git'
 alias ga='git add'
@@ -101,6 +106,9 @@ alias gsr='git svn rebase'
 alias gsd='git svn dcommit'
 alias gu="git reset --soft 'HEAD^'"
 
+alias cp='cp -i'  # Warn when overwriting
+alias mv='mv -i'  # Warn when overwriting
+alias rm='rm -I'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -131,7 +139,6 @@ fi
 
 # Extrait n'importe quel type de fichier
 alias extract='~/bin/extract'
-
 alias prettyping='~/bin/prettyping'
 
 alias cd..="cd .."
@@ -215,5 +222,15 @@ wiki () {
 
 memo()
 {
-  echo "$*" | mail -n -s "$*" thomas.perale@openmailbox.org
+  echo "$*" | openmail -b "thomas.perale@openmailbox.org"
+}
+
+multiscreen()
+{
+    xrandr --output HDMI1 --off --output LVDS1 --mode 1280x800 --pos 0x384 --rotate normal --output VIRTUAL1 --off --output DP1 --off --output VGA1 --mode 1440x900 --pos 1280x0 --rotate normal
+}
+
+onescreen()
+{
+xrandr --output HDMI1 --off --output LVDS1 --mode 1280x800 --pos 0x0 --rotate normal --output VIRTUAL1 --off --output DP1 --off --output VGA1 --off
 }
