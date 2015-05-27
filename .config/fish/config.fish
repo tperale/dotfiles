@@ -15,6 +15,7 @@ set fish_plugins theme
 #set fish_custom $HOME/dotfiles/oh-my-fish
 
 . "$HOME/.config/fish/functions/aliases.fish"
+. "$HOME/.config/fish/functions/function.fish"
 
 # Load oh-my-fish configuration.
 . $fish_path/oh-my-fish.fish
