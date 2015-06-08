@@ -13,3 +13,12 @@ function fuck -d 'Correct your previous console command'
         history --delete $fucked_up_command
     end
 end
+
+function record
+    ffmpeg -f x11grab -r 25 -s wxga -i :0.0 /tmp/$argv.mp4
+end
+
+
+function yt2mp3
+    youtube-dl -c --restrict-filenames --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" $@ ;
+end
