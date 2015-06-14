@@ -20,5 +20,5 @@ end
 
 
 function yt2mp3
-    youtube-dl -c --restrict-filenames --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" $@ ;
+    ytdl -c --restrict-filenames --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" $argv;
 end
