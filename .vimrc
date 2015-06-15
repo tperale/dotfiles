@@ -123,6 +123,7 @@ set nocompatible
     Plugin 'tpope/vim-leiningen'
     Plugin 'tpope/vim-projectionist'
     Plugin 'tpope/vim-dispatch'
+    Plugin 'tpope/vim-salve'
 
 
 
