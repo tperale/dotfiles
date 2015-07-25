@@ -1,0 +1,22 @@
+#!bin/bash
+notify-send "Backup start."
+
+if ping -c1 -w 3 pi@192.168.0.203 > /dev/null; then
+    # Raspberry ssh.
+    rsync -a /home/thomas/SpiderOak\ Hive/ -e ssh pi@192.168.0.203:~/backup/thomas/Photos &> /dev/null
+    rsync -a /home/thomas/Musique/ -e ssh pi@192.168.0.203:~/backup/thomas/Musique &> /dev/null
+    rsync -a /home/thomas/Vidéos/ -e ssh pi@192.168.0.203:~/backup/thomas/Vidéos &> /dev/null
+    rsync -a /home/thomas/.newsbeuter/urls -e ssh pi@192.168.0.203:~/backup/thomas/Misc &> /dev/null
+
+elif [ -d "/run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/" ]; then
+    # If usb attached
+    rsync -a /home/thomas/SpiderOak\ Hive/ /run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/thomas/Photos
+    rsync -a /home/thomas/Musique/ /run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/thomas/Musique
+    rsync -a /home/thomas/Vidéos/ /run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/thomas/Vidéos
+    rsync -a /home/thomas/.newsbeuter/urls /run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/thomas/Misc
+
+else
+    notify-send  "No peripheral to backup."
+fi
+
+notify-send "Backup ended"
