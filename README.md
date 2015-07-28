@@ -38,11 +38,19 @@
 | winkey + shift + <kbd>e</kbd>   | Exit i3.
 
 
+### mpv
 
 
-
-
-
-
-
+| Key Combination                 | Description                                                                                            |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| <kbd>h</kbd>           | Go backward (--).                                                                  |
+| <kbd>left</kbd>        | Go backward (-).                                                                  |
+| <kbd>j</kbd>           | Playlist next.                                                                  |
+| <kbd>k</kbd>           | Playlist previous.                                                                  |
+| <kbd>l</kbd>           | Go forward (++).                                                                  |
+| <kbd>right</kbd>       | Go forward (+).                                                                  |
+| <kbd>-</kbd>           | Volume UP.                                                                  |
+| <kbd>=</kbd>           | Volume DOWN.                                                                  |
+| <kbd>a</kbd>           | Subtitle cycle.                                                                  |
+| <kbd>A</kbd>           | Subtitle cycle (backward).                                                                  |
 
