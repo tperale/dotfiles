@@ -54,3 +54,21 @@
 | <kbd>a</kbd>           | Subtitle cycle.                                                                  |
 | <kbd>A</kbd>           | Subtitle cycle (backward).                                                                  |
 
+### vim
+
+
+| Key Combination                 | Description                                                                                            |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| <kbd>,</kbd>                    | leader.
+| leader + <kbd>y</kbd>           | Copy to system clipboard.
+| <kbd>Y</kbd>                    | Yank from cursor to end of line.
+| leader + <kbd>W</kbd>           | Sudo write.
+| <kbd>space</kbd>                | Toggle folding.
+| leader + <kbd>r</kbd>           | Toggle relative number.
+| leader + <kbd>ld</kbd>          | Delete multiple empty lines.
+| leader + <kbd>le</kbd>          | Split to relative header/source
+| <kbd>F1</kbd>                   | Toggle tagbar.
+| leader + <kbd>p</kbd>           | Toggle pastemode (no indent).
+| <kbd>F6</kbd>                   | Multi cursor start key.
+| <kbd>F12</kbd>                  | Start Latex preview.
+
