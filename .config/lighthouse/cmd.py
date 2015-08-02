@@ -65,10 +65,15 @@ class Output:
         string = string.replace("\n", " ")
         return string
 
-    def create_result(self, title, action):
-        return "{" + title + " |" + action + " }"
+    def create_result(self, title, action, description):
+        cmd = "{ " + title + " | " + action
+        if description:
+            cmd += " | " + description
+        cmd += " }"
 
-    def append_output(self, title, action, funcType="misc"):
+        return cmd
+
+    def append_output(self, title, action, funcType="misc", description=''):
         """
         ARGUMENTS:
             funcType: place where the output will be displayed in the output.
@@ -78,7 +83,8 @@ class Output:
 
         # Store result value.
         self.functions[funcType] = \
-            self.functions[funcType] + [self.create_result(title, action)]
+            self.functions[funcType] + [self.create_result(title, action,
+                                                           description)]
 
     def update_output(self):
         toSave = []
@@ -211,7 +217,7 @@ class Process_Func:
                     # but 'foo\ bar' is not.
                     self.out.append_output(str(find_array[i]),
                                            "%s --working-directory=%s" % (TERM, clearedOut),
-                                           "find")
+                                           "find", "Open in a new terminal %I/usr/share/pixmaps/qbittorrent.png%")
 
                 else:
                     # Check for every file extension the user specified in the
@@ -227,7 +233,8 @@ class Process_Func:
                             state = True
                             self.out.append_output(str(find_array[i]),
                                                    "%s %s" % (name, clearedOut),
-                                                   "find")
+                                                   "find",
+                                                   "Open with %s." % name)
                             break
 
                     if not state and os.path.isfile(clearedOut):
