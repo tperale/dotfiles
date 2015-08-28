@@ -110,6 +110,7 @@ set nocompatible
 
     "
     Plugin 'mattn/gist-vim'
+    Plugin 'mattn/webapi-vim'
 
     " A fancy start screen, shows MRU etc.
     Plugin 'mhinz/vim-startify'
