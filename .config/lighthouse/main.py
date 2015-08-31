@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import multiprocessing as mp
+import shlex
 import json
 import subprocess as sp
 import sys
@@ -15,42 +16,47 @@ def print_out(results):
     print(res)
 
 
-def launch_script(script_name, query, results_array, index):
-    if '/' in script_name:
-        cmd = '%s %s' % (script_name, query)
-    else:
-        cmd = './%s %s' % (script_name, query)
-
-    output = sp.check_output(cmd, shell=True, executable='/bin/sh')
-
-    results_array[index] = output.decode('utf-8')
-
+def get_result(subprocess, results_array, i):
+    results_array[i] = subprocess.stdout.read().decode('utf-8').replace("\n", "")
     print_out(results_array)
 
 
 if __name__ == "__main__":
-    scripts_file = open("./scripts.json")
+    subprocess_array = []
+    scripts_file = open("/home/thomas/.config/lighthouse/scripts.json")
     scripts = json.loads(scripts_file.read())
     processList = []
     manager = mp.Manager()
+    subprocess_list = manager.list()
     # results = mp.Array("c",  range(len(scripts)))
-    results = manager.list()
 
     while 1:
         request = sys.stdin.readline()[:-1]
 
-        for process in processList:
-            process.terminate()
+        # TODO
+        for p in processList:
+            p.terminate()
+            del p
         processList = []
+        for p in subprocess_list:
+            p.terminate()
+            del p
+        subprocess_list = manager.list()
 
-        # Array like list
-        results = manager.list([None for x in range(len(scripts))])
+        results_array = manager.list([None for x in range(len(scripts))])
+        process_array = []
 
         for i, script_name in enumerate(scripts):
-            process = mp.Process(launch_script(script_name,
-                                               request,
-                                               results,
-                                               i)
+            cmd = '%s %s' % (script_name, request)
+            args = shlex.split(cmd)
+            subprocess = sp.Popen(args, stdout=sp.PIPE)
+            process_array.append(subprocess)
+
+            process = mp.Process(target=get_result,
+                                 args=(subprocess,
+                                       results_array,
+                                       i
+                                       )
                                  )
             process.start()
-            processList.append(process)
+            processList.append(subprocess)
