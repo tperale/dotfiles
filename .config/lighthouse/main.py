@@ -5,23 +5,36 @@ import shlex
 import json
 import subprocess as sp
 import sys
+import signal
 
 
 def print_out(results):
-    res = str()
-    for result in results:
-        if result is not None:
-            res += result
+    print("".join(map(lambda x: x if not None, results)))
 
-    print(res)
+
+def clean_subprocesses(processList, subprocess_list):
+    """
+    Stop all processes started.
+    """
+    for p in processList:
+        p.terminate()
+        del p
+    for p in subprocess_list:
+        p.terminate()
+        del p
 
 
 def get_result(subprocess, results_array, i):
-    results_array[i] = subprocess.stdout.read().decode('utf-8').replace("\n", "")
-    print_out(results_array)
+    """
+    """
+    results = subprocess.stdout.read().decode('utf-8').replace("\n", "")
+    if results.strip() != '':
+        results_array[i] = results
+        print_out(results_array)
 
 
 if __name__ == "__main__":
+    signal.signal(signal.SIGTERM, clean_subprocesses)
     subprocess_array = []
     scripts_file = open("/home/thomas/.config/lighthouse/scripts.json")
     scripts = json.loads(scripts_file.read())
@@ -33,14 +46,8 @@ if __name__ == "__main__":
     while 1:
         request = sys.stdin.readline()[:-1]
 
-        # TODO
-        for p in processList:
-            p.terminate()
-            del p
+        clean_subprocesses(processList, subprocess_list)
         processList = []
-        for p in subprocess_list:
-            p.terminate()
-            del p
         subprocess_list = manager.list()
 
         results_array = manager.list([None for x in range(len(scripts))])
