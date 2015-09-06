@@ -103,7 +103,10 @@ set nocompatible
 "    Deprecated ???
 "    Plugin 'jaredly/pydbgp'
 "    Plugin 'vim-debug ' 
-"
+
+
+    " Relative num in insert mode
+    Plugin "myusuf3/numbers.vim"
 
     " lisp dev
     Plugin 'mikaelj/limp' 
