@@ -18,7 +18,7 @@ def print_out(results):
     print("".join([x if x is not None else "" for x in results]))
 
 
-def clean_subprocesses(processList, subprocess_list):
+def clean_subprocesses(processList, subprocess_list, _exit=0):
     """
     Stop all processes started.
     """
@@ -28,6 +28,8 @@ def clean_subprocesses(processList, subprocess_list):
     for p in subprocess_list:
         p.terminate()
         del p
+    if _exit:
+        exit()
 
 
 def get_result(subprocess, results_array, i):
@@ -67,28 +69,30 @@ def make_commands(scripts_dict):
 
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGTERM, clean_subprocesses)
     subprocess_array = []
-    scripts_file = open("/home/thomas/.config/lighthouse/scripts.json")
+    scripts_file = open(os.path.expanduser("~/.config/lighthouse/scripts.json"))
     scripts = json.loads(scripts_file.read())
     commands = make_commands(scripts)
     processList = []
     manager = mp.Manager()
     subprocess_list = manager.list()
-    # results = mp.Array("c",  range(len(scripts)))
+    signal.signal(signal.SIGTERM, lambda x, y: clean_subprocesses(processList, subprocess_list, 1))
 
     while 1:
         request = sys.stdin.readline()[:-1]
-
         clean_subprocesses(processList, subprocess_list)
         processList = []
         subprocess_list = manager.list()
+
+        if len(request.strip()) == 0:
+            print('')
+            continue
 
         results_array = manager.list([None for x in range(len(scripts))])
         process_array = []
 
         for i, script in enumerate(commands):
-            cmd = '%s %s' % (script, request)
+            cmd = "%s '%s'" % (script, request)
             args = shlex.split(cmd)
             subprocess = sp.Popen(args, stdout=sp.PIPE)
             process_array.append(subprocess)
