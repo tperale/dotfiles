@@ -103,13 +103,17 @@ set nocompatible
 "    Deprecated ???
 "    Plugin 'jaredly/pydbgp'
 "    Plugin 'vim-debug ' 
-"
+
+
+    " Relative num in insert mode
+    Plugin "myusuf3/numbers.vim"
 
     " lisp dev
     Plugin 'mikaelj/limp' 
 
     "
     Plugin 'mattn/gist-vim'
+    Plugin 'mattn/webapi-vim'
 
     " A fancy start screen, shows MRU etc.
     Plugin 'mhinz/vim-startify'
