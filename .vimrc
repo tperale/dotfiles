@@ -98,7 +98,7 @@ set nocompatible
     Plugin 'garbas/vim-snipmate'
 
     " Python-mode (---> pep8, checking, etc)
-    Plugin 'klen/python-mode'
+    " Plugin 'klen/python-mode'
 
 "    Deprecated ???
 "    Plugin 'jaredly/pydbgp'
