@@ -84,12 +84,12 @@ if __name__ == "__main__":
         processList = []
         subprocess_list = manager.list()
 
+        results_array = manager.list([None for x in range(len(scripts))])
+        process_array = []
+
         if len(request.strip()) == 0:
             print('')
             continue
-
-        results_array = manager.list([None for x in range(len(scripts))])
-        process_array = []
 
         for i, script in enumerate(commands):
             cmd = "%s '%s'" % (script, request)
