@@ -1,8 +1,9 @@
-font_name=monospace
+font_name=Hack
 font_size=16
-height=22
+desc_font_size=12
+height=24
 
-cmd=~/.config/lighthouse/cmd.py
+cmd=/home/thomas/.config/lighthouse/main.py
 
 query_fg=0.9,0.9,0.9
 query_bg=0.1,0.1,0.1
@@ -19,3 +20,5 @@ dock_mode=0
 
 desc_size=300
 auto_center=0
+
+line_gap=20
