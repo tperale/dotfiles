@@ -14,142 +14,147 @@ set nocompatible
     if !filereadable($HOME . "/.vimrc.first") | call system("touch $HOME/.vimrc.first") | endif
     if !filereadable($HOME . "/.vimrc.last") | call system("touch $HOME/.vimrc.last") | endif
 """ }}}
-""" Vundle plugin manager {{{
-    """ Automatically setting up Vundle, taken from
-    """ http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/ {{{
-        let has_vundle=1
-        if !filereadable($HOME."/.vim/bundle/Vundle.vim/README.md")
-            echo "Installing Vundle..."
-            echo ""
-            silent !mkdir -p $HOME/.vim/bundle
-            silent !git clone https://github.com/gmarik/Vundle.vim $HOME/.vim/bundle/Vundle.vim
-            let has_vundle=0
-        endif
-    """ }}}
-    """ Initialize Vundle {{{
-        filetype off                                " required to init
-        set rtp+=$HOME/.vim/bundle/Vundle.vim       " include vundle
-        call vundle#begin()                         " init vundle
-    """ }}}
-    """ Github repos, uncomment to disable a plugin {{{
-    Plugin 'gmarik/Vundle.vim'
+let has_plug=1
+if !filereadable($HOME."/.vim/autoload/plug.vim")
+    echo "Installing PLUG..."
+    echo ""
+    silent !mkdir -p $HOME/.vim/autoload
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    let has_plug=0
+endif
 
-    """ Local plugins (and only plugins in this file!) {{{{
-        if filereadable($HOME."/.vimrc.plugins")
-            source $HOME/.vimrc.plugins
-        endif
-    """ }}}
+
+call plug#begin('~/.vim/plugged')
 
     " Edit files using sudo/su
-    Plugin 'chrisbra/SudoEdit.vim'
+    Plug 'chrisbra/SudoEdit.vim'
 
     " Latex
-    Plugin 'jcf/vim-latex'
-    Plugin 'xuhdev/vim-latex-live-preview'
+    Plug 'jcf/vim-latex', { 'for' : ['tex', 'latex'] }
+    Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
 
     " <Tab> everything!
     " Plugin 'ervandew/supertab'
-    Plugin 'Valloric/YouCompleteMe'
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py -clang-completer' }
 
     " Fuzzy finder (files, mru, etc)
-    Plugin 'kien/ctrlp.vim'
+    Plug 'kien/ctrlp.vim'
 
     " A pretty statusline, bufferline integration
-    Plugin 'itchyny/lightline.vim'
-    Plugin 'bling/vim-bufferline'
+    Plug 'itchyny/lightline.vim'
+    Plug 'bling/vim-bufferline'
 
     " Easy... motions... yeah.
-    Plugin 'Lokaltog/vim-easymotion'
+    Plug 'Lokaltog/vim-easymotion'
 
     " Glorious colorscheme
-    Plugin 'nanotech/jellybeans.vim'
-    Plugin 'tomasr/molokai'
+    Plug 'nanotech/jellybeans.vim'
+    Plug 'tomasr/molokai'
+    Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
+
+    " UndoTree
+    Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
     " Super easy commenting, toggle comments etc
-    Plugin 'scrooloose/nerdcommenter'
+    " Plug 'scrooloose/nerdcommenter'
+    Plug 'tpope/vim-commentary'
 
     " Autoclose (, " etc
-    Plugin 'Townk/vim-autoclose'
+    Plug 'Townk/vim-autoclose'
 
     " Git wrapper inside Vim
-    Plugin 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive'
 
     " Handle surround chars like ''
-    Plugin 'tpope/vim-surround'
+    Plug 'tpope/vim-surround'
 
     " Align your = etc.
-    Plugin 'vim-scripts/Align'
+    Plug 'vim-scripts/Align'
 
     " Plugin 't9md/choosewin'  
 
     " Multiple cursor
-    Plugin 'terryma/vim-multiple-cursors'
+    Plug 'terryma/vim-multiple-cursors'
 
-    " Meilleur coleurs
-    Plugin 'jeaye/color_coded' 
+    function Build_Color_Coded(info)
+
+          " info is a dictionary with 3 fields
+          " - name:   name of the plugin
+          " - status: 'installed', 'updated', or 'unchanged'
+          "  - force:  set on PlugInstall! or PlugUpdate!
+        if a:info.status == 'installed' || a:info.force
+            |mkdir build && cd build
+            |cmake ..
+            |make && make install
+            |make clean && make clean_clang
+        endif
+    endfunction
+
+    " Better colors.
+    Plug 'jeaye/color_coded', { 'do' : function('Build_Color_Coded') }
     
     " Correction orthographique.
     " Plugin 'dpelle/vim-LanguageTool '
 
     " Snippets like textmate
-    Plugin 'MarcWeber/vim-addon-mw-utils'
-    Plugin 'tomtom/tlib_vim'
-    Plugin 'honza/vim-snippets'
-    Plugin 'garbas/vim-snipmate'
+    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'tomtom/tlib_vim'
+    Plug 'honza/vim-snippets'
+    Plug 'garbas/vim-snipmate'
 
-    " Python-mode (---> pep8, checking, etc)
-    " Plugin 'klen/python-mode'
-
-"    Deprecated ???
-"    Plugin 'jaredly/pydbgp'
-"    Plugin 'vim-debug ' 
-
+"    Plug 'jaredly/pydbgp'
+"    Plug 'vim-debug ' 
 
     " Relative num in insert mode
-    Plugin "myusuf3/numbers.vim"
+    Plug 'myusuf3/numbers.vim' " , { 'on' : 'NumbersToggle' }
 
-    " lisp dev
-    Plugin 'mikaelj/limp' 
-
-    "
-    Plugin 'mattn/gist-vim'
-    Plugin 'mattn/webapi-vim'
+    Plug 'mattn/gist-vim', { 'on' : 'Gist' }
+    Plug 'mattn/webapi-vim'
 
     " A fancy start screen, shows MRU etc.
-    Plugin 'mhinz/vim-startify'
+    Plug 'mhinz/vim-startify'
 
     " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
-    Plugin 'mhinz/vim-signify'
+    Plug 'mhinz/vim-signify'
+
+    " lisp dev
+    Plug 'mikaelj/limp', { 'for' : ['lisp', 'cl', 'scheme'] }
 
     " REPL clojure
-    Plugin 'tpope/vim-fireplace'
-    Plugin 'tpope/vim-classpath'
-    Plugin 'tpope/vim-leiningen'
-    Plugin 'tpope/vim-projectionist'
-    Plugin 'tpope/vim-dispatch'
-    Plugin 'tpope/vim-salve'
+    Plug 'tpope/vim-fireplace'     , { 'for' : 'clojure' }
+    Plug 'tpope/vim-classpath'     , { 'for' : 'clojure' }
+    Plug 'tpope/vim-leiningen'     , { 'for' : 'clojure' }
+    Plug 'tpope/vim-projectionist' , { 'for' : 'clojure' }
+    Plug 'tpope/vim-dispatch'      , { 'for' : 'clojure' }
+    Plug 'tpope/vim-salve'         , { 'for' : 'clojure' }
 
 
-
+    " Plug 'klen/python-mode', { 'for' : 'python' }
+    Plug 'pangloss/vim-javascript'  , { 'for': 'javascript' }
+    Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
+    Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
+    Plug 'slim-template/vim-slim'   , { 'for': 'slim'       }
+    Plug 'wting/rust.vim'           , { 'for': 'rust'       }
 
     " Awesome syntax checker.
     " REQUIREMENTS: See :h syntastic-intro
-    Plugin 'scrooloose/syntastic'
+    Plug 'scrooloose/syntastic'
 
     " Functions, class data etc.
     " REQUIREMENTS: (exuberant)-ctags
-    Plugin 'majutsushi/tagbar'
+    Plug 'majutsushi/tagbar'
 
-    " Finish Vundle stuff
-    call vundle#end()
+call plug#end()
 
-    """ Installing plugins the first time, quits when done {{{
-        if has_vundle == 0
-            :silent! PluginInstall
-            :qa
-        endif
-    """ }}}
+ 
+
+""" Installing plugins the first time, quits when done {{{
+    if has_plug== 0
+        :silent! PlugInstall
+        :qa
+    endif
 """ }}}
+
 """ Local leading config, only use for prerequisites as it will be
 """ overwritten by anything below {{{{
     if filereadable($HOME."/.vimrc.first")
@@ -712,3 +717,7 @@ let g:multi_cursor_start_key='<F6>'
 autocmd FileType tex setl updatetime=1
 let g:livepreview_previewer = 'zathura'
 nmap <F12> : LLPStartPreview<cr>
+
+" Numbers.vim
+nnoremap <F3> :NumbersToggle<CR>
+nnoremap <F4> :UndotreeToggle<cr>
