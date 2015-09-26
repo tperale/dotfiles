@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# upload images to pomf: requires jshon
+
+image="$1"
+ext="(\.jpg|\.png|\.gif)$"
+
+if (( $# != 1 )); then
+  printf '%s\n' "Usage: ${0##*/} IMAGE"
+  exit 1
+elif [[ $image =~ $ext ]]; then
+  up=$(curl -sf -F files[]=@"$image" http://www.1339.cf/upload.php)
+  url=$(jshon -e files -a -e url -u <<< "$up")
+  printf '%s\n' "http://www.1339.cf/${url}"
+else
+  printf '%s\n' "Not a recognized image type"
+fi
+
