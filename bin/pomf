@@ -1,21 +1,35 @@
 #!/usr/bin/env bash
 # upload images to pomf: requires jshon
 
+usage() {
+    cat <<EOF
+    -h      | Print this message.
+    default | Use the 1339.cf pomf fork.
+    -m      | Use maxfile.ro pomf fork.
+            |
+    else    | Take the two other argument, to select
+            | a specific poomf fork.
+            | ex: pomf <url> <result_url>
+EOF
+}
+
 image="$1"
 ext="(\.jpg|\.png|\.gif)$"
 
 pomf_fork="http://www.1339.cf/"
 result_url="http://b.1339.cf/"
 if (( $# > 2 )); then
-    case "$2" in
+    pomf_fork="$1"
+    result_url="$2"
+else
+    case "$1" in
+        -h) usage
+            ;;
         -m) pomf_fork="https://www.maxfile.ro/"
             result_url="https://d.maxfile.ro/"
             ;;
-        * ) pomf_fork="$2"
-            result_url="$3"
-            ;;
+        * ) ;;
     esac
-    pomf_fork="$2"
 fi
 
 if (( $# != 1 )); then
@@ -25,6 +39,7 @@ elif [[ $image =~ $ext ]]; then
   up=$(curl -sf -F files[]=@"$image" "$pomf_fork""upload.php")
   url=$(jshon -e files -a -e url -u <<< "$up")
   printf '%s' "$result_url$url" | $(xsel -i -b)
+  printf 'Result copied to the clipboard: %s' "$result_url$url"
 else
   printf '%s\n' "Not a recognized image type"
 fi
