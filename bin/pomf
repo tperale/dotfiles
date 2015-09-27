@@ -4,13 +4,27 @@
 image="$1"
 ext="(\.jpg|\.png|\.gif)$"
 
+pomf_fork="http://www.1339.cf/"
+result_url="http://b.1339.cf/"
+if (( $# > 2 )); then
+    case "$2" in
+        -m) pomf_fork="https://www.maxfile.ro/"
+            result_url="https://d.maxfile.ro/"
+            ;;
+        * ) pomf_fork="$2"
+            result_url="$3"
+            ;;
+    esac
+    pomf_fork="$2"
+fi
+
 if (( $# != 1 )); then
   printf '%s\n' "Usage: ${0##*/} IMAGE"
   exit 1
 elif [[ $image =~ $ext ]]; then
-  up=$(curl -sf -F files[]=@"$image" http://www.1339.cf/upload.php)
+  up=$(curl -sf -F files[]=@"$image" "$pomf_fork""upload.php")
   url=$(jshon -e files -a -e url -u <<< "$up")
-  printf '%s\n' "http://www.1339.cf/${url}"
+  printf '%s' "$result_url$url" | $(xsel -i -b)
 else
   printf '%s\n' "Not a recognized image type"
 fi
