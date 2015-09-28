@@ -5,6 +5,7 @@ NC='\033[0m'
 
 usage() {
     cat <<EOF
+    findo stands for Find Occurance.
     OPTIONS:
     name   | Name of the string to find.
     -h     | Print this message.
@@ -12,19 +13,18 @@ EOF
 }
 
 function launch_findo() {
-    printf "LOOKING FOR %s\n" "$1"
-    for filename in $(ls) $CURRENT_DIR
+    for filename in $CURRENT_DIR/* $CURRENT_DIR/**/*
     do
-        #if [ -d $filename ]; then
-            #cd $filename
-        #else
         if [ -f $filename ]; then
             occ="$(cat -b $filename | grep $1)"
-            #if [ ${#occ} ]; then
             #printf "%i" $?
             if ((!$?)); then
                 printf "${RED}In the file %s${NC}\n%s\n\n" "$filename" "$occ"
             fi
+        #else
+        #    cd $filename
+        #    launch_findo $1
+        #    cd ..
         fi
     done
 }
@@ -34,7 +34,8 @@ if (( $# >= 1 )); then
     case "$1" in
         -h) usage
             ;;
-        *) launch_findo $1
+        *)  printf "LOOKING FOR %s\n" "$1"
+            launch_findo $1
             ;;
     esac
 else
