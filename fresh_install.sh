@@ -8,6 +8,7 @@ $m python3
 $m curl
 $m gcc-multilib
 $m gdb
+$m gtk
 $m make
 $m cmake
 $m rsync
@@ -31,6 +32,14 @@ $m python-pip
 $m python2-pip
 $m fish
 chsh -s /usr/bin/fish
+$m tor # https://wiki.archlinux.org/index.php/Tor
+$m torsocks
+$m mumble
+$m pidgin
+$m toxcore
+$m utox
+$m catdoc # READ .doc documents.
+$m thunderbird
 
 
 npm install peerflix
