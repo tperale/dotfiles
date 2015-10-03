@@ -32,15 +32,19 @@ $m python-pip
 $m python2-pip
 $m fish
 chsh -s /usr/bin/fish
+curl -L github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | fish # ho my fish
+curl -L git.io/wa | sh # wahoo
 $m tor # https://wiki.archlinux.org/index.php/Tor
 $m torsocks
+$m onionshare
 $m mumble
 $m pidgin
 $m toxcore
 $m utox
 $m catdoc # READ .doc documents.
 $m thunderbird
-
+$m fasd
+$m flexget
 
 npm install peerflix
 pip install youtube-dl
