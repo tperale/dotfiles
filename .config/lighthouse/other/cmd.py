@@ -5,7 +5,7 @@ import os.path
 import os
 import subprocess
 import logging
-from google import pygoogle
+#from google import pygoogle
 from multiprocessing import Process, Manager
 from math import *
 
@@ -42,7 +42,7 @@ class Output:
                              "basic",
                              "python",
                              "keyword",
-                             "google",
+                             #"google",
                              "misc"]
 
         self.order = self.defaultOrder[:]
@@ -66,10 +66,10 @@ class Output:
         return string
 
     def create_result(self, title, action, description):
-        cmd = "{ " + title + " | " + action
+        cmd = "{" + title + " | " + action
         if description:
             cmd += " | " + description
-        cmd += " }"
+        cmd += "}"
 
         return cmd
 
@@ -137,7 +137,7 @@ class Process_Func:
         # List of all function you want ot launch in the next process,
         # To add a new function just refer it in that list, so when self.spawn
         # is called it will launch it in a process.
-        self.funcNames = [self.google,
+        self.funcNames = [#self.google,
                           self.find,
                           self.basic_function,
                           self.find_xdg,
@@ -162,23 +162,23 @@ class Process_Func:
 
         self.processList = []
 
-    def google(self, query):
         """
-        Append the first result of the 'query' google search.
+        def google(self, query):
+            try:
+                g = pygoogle(query, log_level=logging.CRITICAL)
+                g.pages = 1
+                googleOut = g.get_urls()
+            except:
+                # When no connection for example.
+                pass
+            else:
+                if (len(googleOut) >= 1):
+                    self.out.append_output(googleOut[0],
+                                        "xdg-open " + googleOut[0],
+                                        "google")
+                    self.out.update_output()
+
         """
-        try:
-            g = pygoogle(query, log_level=logging.CRITICAL)
-            g.pages = 1
-            googleOut = g.get_urls()
-        except:
-            # When no connection for example.
-            pass
-        else:
-            if (len(googleOut) >= 1):
-                self.out.append_output(googleOut[0],
-                                       "xdg-open " + googleOut[0],
-                                       "google")
-                self.out.update_output()
 
     def find(self, query):
         """
@@ -217,7 +217,7 @@ class Process_Func:
                     # but 'foo\ bar' is not.
                     self.out.append_output(str(find_array[i]),
                                            "%s --working-directory=%s" % (TERM, clearedOut),
-                                           "find", "Open in a new terminal %I/usr/share/pixmaps/qbittorrent.png%")
+                                           "find", "Open in a new terminal")
 
                 else:
                     # Check for every file extension the user specified in the
