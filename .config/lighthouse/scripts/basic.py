@@ -49,12 +49,12 @@ def basic(sett):
 if __name__ == "__main__":
     parser = ag.ArgumentParser()
     parser.add_argument("user_input")
-    parser.add_argument("-show_execute", default=True, type=bool)
-    parser.add_argument("-show_in_shell", default=True, type=bool)
-    parser.add_argument("-check_exist", default=True, type=bool)
-    parser.add_argument("-term", default="urvxt", type=str)
-    parser.add_argument("-history_search", default=1, type=int)
-    parser.add_argument("-history_location", default="/home/thomas/.bash_history", type=str)
+    parser.add_argument("--show_execute", default=True, type=bool)
+    parser.add_argument("--show_in_shell", default=True, type=bool)
+    parser.add_argument("--check_exist", default=True, type=bool)
+    parser.add_argument("--term", default="urvxt", type=str)
+    parser.add_argument("--history_search", default=1, type=int)
+    parser.add_argument("--history_location", default="/home/thomas/.bash_history", type=str)
     settings = parser.parse_args()
 
     cmd = basic(settings)

@@ -42,9 +42,12 @@ def find(queryList, settings):
                 # 'foo bar' is considered as a folder in python
                 # but 'foo\ bar' is not.
                 dirFile = " " + "%N ".join(os.listdir(str(find_array[i])))
-                res += "{%s|%s --working-directory=%s |%%CFile in directory%%%%L%s}" % (str(find_array[i]), settings.term, clearedOut, dirFile)
+                if len(dirFile):
+                    res += "{%s |%s --working-directory=%s |%%CFiles in directory%%%%L%s}" % (str(find_array[i]), settings.term, clearedOut, dirFile)
+                else:
+                    res += "{%s |%s --working-directory=%s |%%CFiles in directory%%}" % (str(find_array[i]), settings.term, clearedOut)
             elif mime_type and "image" in mime_type:
-                res += "{%s|xdg-open '%s'|%%CPreview%%L%%I%s%%%%}" % (
+                res += "{%s |xdg-open '%s'|%%CPreview%%L%%I%s%%%%}" % (
                     str(find_array[i]), str(find_array[i]), clearedOut)
 
             elif mime_type and "text" in mime_type:
@@ -52,22 +55,25 @@ def find(queryList, settings):
                 preview_text = str()
                 for x in range(15):
                     preview_text += preview_file.readline().replace("\n", "%N")
-                res += "{%s|xdg-open %s|%%CPreview%%%%L'%s'}" % (str(find_array[i]), clearedOut, preview_text)
+                if len(preview_text):
+                    res += "{%s |xdg-open %s|%%CPreview%%%%L'%s'}" % (str(find_array[i]), clearedOut, preview_text)
+                else:
+                    res += "{%s |xdg-open %s|%%CNo preview%%}" % (str(find_array[i]), clearedOut)
                 preview_file.close()
 
             else:
                 # Check for every file extension the user specified in the
                 # begining of this script file
 
-                res += "{%s|xdg-open %s|Launching it with %%B%s%%}" % (
-                    str(find_array[i]), str(find_array[i]), encoding)
+                res += "{%s |xdg-open %s|%%C%s%%}" % (
+                    str(find_array[i]), str(find_array[i]), mime_type)
 
         return res
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("query")
-    parser.add_argument("-number_of_output", default=3, type=int)
-    parser.add_argument("-term", default="urvxt", type=str)
+    parser.add_argument("--number_of_output", default=3, type=int)
+    parser.add_argument("--term", default="urvxt", type=str)
     settings = parser.parse_args()
     print("{%CFind%}" + find(settings.query, settings))
