@@ -1,7 +1,8 @@
 font_name=Hack
-font_size=16
+font_size=14
 desc_font_size=12
-height=24
+height=20
+max_height=800
 
 cmd=/home/thomas/.config/lighthouse/main.py
 
@@ -18,7 +19,7 @@ screen=0
 
 dock_mode=0
 
-desc_size=300
+desc_size=500
 auto_center=0
 
 line_gap=20
