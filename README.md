@@ -53,6 +53,7 @@
 | <kbd>=</kbd>           | Volume DOWN.                                                                  |
 | <kbd>a</kbd>           | Subtitle cycle.                                                                  |
 | <kbd>A</kbd>           | Subtitle cycle (backward).                                                                  |
+| alt + <kbd>W</kbd>     | Record video.
 
 ### vim
 
