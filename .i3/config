@@ -2,7 +2,7 @@
 
 # build from
 # https://github.com/Airblader/i3
-# 
+#
 
 set $mod Mod4
 
@@ -48,14 +48,14 @@ mode "$mode_system" {
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"  
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+Pause mode "$mode_system"
-    
+
 
 # Colors
 #                       BORDER     BACKGROUND TEXT   INDICATOR
@@ -186,6 +186,8 @@ bindsym $mod+r mode "resize"
 
 # Screenshot
 bindsym Print exec "mkdir -p Pictures/Screenshots && scrot Pictures/Screenshots/'Screenshot - %Y-%m-%d--%_$wx$h_scrot.png'"
+bindsym Shift+Print exec "mkdir -p Pictures/Screenshots && scrot -s Pictures/Screenshots/'Screenshot - %Y-%m-%d--%_$wx$h_scrot.png'"
+#bindsym $mpd+Shift+Print exec "mkdir -p Pictures/Screenshots && scrot -s Pictures/Screenshots/'Screenshot - %Y-%m-%d--%_$wx$h_scrot.png'"
 
 
 # VOLUME ADJUSTMENT
@@ -203,14 +205,17 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 # Show the sup-mail scratchpad window, if any.
-# bindsym mod4+s [title="^Sup ::"] scratchpad show
+#bindsym mod4+s [title="^Sup ::"] scratchpad show
+bindsym $mod+m [title="^ncmpcpp ::"] scratchpad show
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    #status_command     i3status
-    i3bar_command ~/.i3/panel.sh | lemonbar -p -F "#FFB5B2AF" -B "#FF282522" -g "1280x20+0+0"
+    status_command     i3status
+    #i3bar_command ~/.i3/panel.sh | lemonbar -p -F "#FFB5B2AF" -B "#FF282522" -g "1280x20+0+0"
+    #i3bar_command     i3bar_command ~/.i3/lemonbar/i3_lemonbar.sh
+
     #status_command     $HOME/.i3/statusline
     position    top
     # tray_output primary
@@ -227,12 +232,12 @@ bar {
     #}
 }
 
-# exec "~/.i3/panel.sh | lemonbar -p -F '#FFB5B2AF' -B '#FF282522' -g '1280x20+0+0'"
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
+exec --no-startup-id thunderbird
 
 exec conky
 # exec python ~/.i3/i3session restore
 
-exec_always --no-startup-id feh --bg-center ~/.i3/wallpaper.png
+exec_always --no-startup-id feh --bg-scale ~/.i3/wallpaper.png
 exec mpd
