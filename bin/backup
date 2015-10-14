@@ -1,4 +1,4 @@
-#!bin/bash
+#!/usr/bin/env bash
 
 if [ -d "/run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/" ]; then
     notify-send  "Launching backup through USB"
