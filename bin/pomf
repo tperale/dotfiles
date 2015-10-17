@@ -24,6 +24,7 @@ if (( $# > 2 )); then
 else
     case "$1" in
         -h) usage
+            exit 0
             ;;
         -m) pomf_fork="https://www.maxfile.ro/"
             result_url="https://d.maxfile.ro/"
