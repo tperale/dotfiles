@@ -36,6 +36,9 @@ alias openmail='mutt -F ~/.mutt/muttrc.openmail'
 
 alias launch_tor='sudo chroot --userspec=tor:tor /opt/torchroot /usr/bin/tor'
 
+alias mountusb='udiskie-mount -a'
+alias umountusb='udiskie-umount -a'
+
 alias cfg_fish='vim ~/.config/config.fish'
 alias cfg_i3='vim ~/.i3/config'
 alias cfg_dunst='vim ~/.config/dunst/dunstrc'
