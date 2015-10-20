@@ -13,27 +13,26 @@ usage() {
 EOF
 }
 
-image="$1"
+image=""
 ext="(\.jpg|\.png|\.gif)$"
 
 pomf_fork="http://www.1339.cf/"
 result_url="http://b.1339.cf/"
-if (( $# > 2 )); then
-    pomf_fork="$1"
-    result_url="$2"
-else
-    case "$1" in
+for arg in "$@"
+do
+    case "$arg" in
         -h) usage
             exit 0
             ;;
         -m) pomf_fork="https://www.maxfile.ro/"
             result_url="https://d.maxfile.ro/"
             ;;
-        * ) ;;
+        * ) image="$arg"
+            ;;
     esac
-fi
+done
 
-if (( $# != 1 )); then
+if (( $# == 0 )); then
   printf '%s\n' "Usage: ${0##*/} IMAGE"
   exit 1
 elif [[ $image =~ $ext ]]; then
@@ -41,7 +40,8 @@ elif [[ $image =~ $ext ]]; then
   url=$(jshon -e files -a -e url -u <<< "$up")
   printf '%s' "$result_url$url" | $(xsel -i -b)
   printf 'Result copied to the clipboard: %s' "$result_url$url"
+
+
 else
   printf '%s\n' "Not a recognized image type"
 fi
-
