@@ -56,4 +56,4 @@ $m cowsay
 
 npm install peerflix
 pip install youtube-dl
-pip3 install instantmusic # AUTOMATICALY find MUSIC by lyrics, artist, name,...
+pip install subliminal
