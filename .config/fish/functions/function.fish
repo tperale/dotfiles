@@ -31,6 +31,11 @@ function record
     ffmpeg -f x11grab -r 25 -s wxga -i :0.0 /tmp/$argv.mp4
 end
 
+function mkdi
+    mkdir $argv
+    cd $argv
+end
+
 function yt2mp3
     ytdl -c --restrict-filenames --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s" $argv;
 end
