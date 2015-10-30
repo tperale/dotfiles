@@ -1,14 +1,17 @@
 m="pacman -S"
 
+$m yaourt
 $m git
 $m npm
 $m nodejs
+$m phantomjs
 $m python2
 $m python3
 $m python-pip
 $m python2-pip
 $m curl
 $m gcc-multilib
+$m jdk8-openjdk
 $m gdb
 $m gtk
 $m make
@@ -27,24 +30,28 @@ curl -L github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | fish # ho my f
 curl -L git.io/wa | sh # wahoo
 
 $m firefox
-$m thunderbird
-$m newsbeuter-git
-$m ranger
-$m mpv
-$m qbittorrent
-$m irssi
-$m zathura
-$m dunst
+$m chromium-pepper-flash
+$m thunderbird # Mail
+$m newsbeuter-git # RSS Reader
+$m ranger # File manager
+$m mpv # VIDEO
+$m qbittorrent # Torrents
+$m irssi # IRC
+$m zathura # PDF viewer
+$m dunst # Notification
 $m compton
-$m scrot
-$m feh
+$m scrot # Printscreen
+$m feh # Image viewer
 $m tor # https://wiki.archlinux.org/index.php/Tor
 $m torsocks
+$m tor-browser-en
 $m onionshare
-$m mumble
-$m pidgin
-$m toxcore
-$m utox
+$m mumble # Voip
+$m toxcore # Chat.
+$m utox # Chat client.
+$m tlp # Power management.
+$m arandr
+$m ttf-hack
 
 $m catdoc # READ .doc documents.
 $m fasd # FAST search in filesystem.
