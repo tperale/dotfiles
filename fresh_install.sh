@@ -1,4 +1,4 @@
-m="pacman -S"
+m="pacman --noconfirm -S"
 
 $m yaourt
 $m git
@@ -22,6 +22,7 @@ $m automake
 $m pkg-config
 $m texlive-core
 $m vim-python3
+$m udiskie
 
 # FISH SHELL
 $m fish
