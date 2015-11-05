@@ -39,6 +39,7 @@ $m mpv # VIDEO
 $m qbittorrent # Torrents
 $m irssi # IRC
 $m zathura # PDF viewer
+$m zathura-pdf-mudpdf
 $m dunst # Notification
 $m compton
 $m scrot # Printscreen
