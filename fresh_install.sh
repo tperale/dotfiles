@@ -54,6 +54,8 @@ $m utox # Chat client.
 $m tlp # Power management.
 $m arandr
 $m ttf-hack
+$m acpi
+$m ctags
 
 $m catdoc # READ .doc documents.
 $m fasd # FAST search in filesystem.
