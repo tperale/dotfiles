@@ -1,6 +1,6 @@
 -- If the laptop is on battery, the VO set in the config will be choosen,
 -- else the one defined with „hqvo“ is used.
-local hqvo = "opengl-hq:interpolation"
+local hqvo = "opengl"
 local utils = require 'mp.utils'
 if mp.get_property_bool("option-info/vo/set-from-commandline") == true then
     return
