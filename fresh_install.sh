@@ -23,6 +23,13 @@ $m pkg-config
 $m texlive-core
 $m vim-python3
 $m udiskie
+$m texlive-bibtexextra
+$m texlive-bin
+$m texlive-core
+$m texlive-fontsextra
+$m texlive-latexextra
+$m texlive-pictures
+$m texlive-science
 
 # FISH SHELL
 $m fish
