@@ -7,6 +7,8 @@ $m nodejs
 $m phantomjs
 $m python2
 $m python3
+$m python2-requests
+$m python-requests
 $m python-pip
 $m python2-pip
 $m curl
