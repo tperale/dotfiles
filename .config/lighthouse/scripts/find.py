@@ -35,7 +35,7 @@ def find(queryList, settings):
             clearedOut = find_array[i].strip().replace(' ', '\\ ').replace('\n', ' ')
             # Path with space don't work.
 
-            mime_type = subprocess.check_output("mimetype %s" % clearedOut,
+            mime_type = subprocess.check_output("file --mime-type -b %s" % clearedOut,
                                                 shell=True,
                                                 executable='/bin/sh')
             if os.path.isdir(find_array[i]):
