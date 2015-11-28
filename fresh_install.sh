@@ -32,6 +32,7 @@ $m texlive-fontsextra
 $m texlive-latexextra
 $m texlive-pictures
 $m texlive-science
+$m openssh
 
 # FISH SHELL
 $m fish
