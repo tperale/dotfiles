@@ -1,0 +1,42 @@
+#!usr/bin/env python3
+import sys
+from datetime import date
+
+def whatDay(dateString):
+    dayName = {0: "lundi",
+               1: "mardi",
+               2: "mercredi",
+               3: "jeudi",
+               4: "vendredi",
+               5: "samedi",
+               6: "dimanche"
+               }
+    day = int(dateString[0:2])
+    month = int(dateString[3:5])
+    year = int(dateString[6:])
+    d = date(year, month, day)
+    return dayName[d.weekday()]
+
+
+def parseEmail (email):
+    result = ""
+    for line in email.split('\n'):
+        line = line.strip()
+
+        if len(line) == 0:
+            continue
+
+        if "?" in line:
+            day = whatDay(line[:10])
+            # auditoire = whatAuditoire(line[11:])
+            print("\nÀ prendre le \033[0;31m" + day + "\033[0m : " + line)
+            doTake = input("La prendre ? ")
+            if doTake == "y":
+                result = result + line + "\n"
+        else:
+            print("PRESTA déjà prise: " + line)
+
+    return result
+
+if __name__ == "__main__":
+    print("\n\n--------OUT-----\n\n" + parseEmail(sys.argv[1]))
