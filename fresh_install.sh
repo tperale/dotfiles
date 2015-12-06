@@ -33,6 +33,9 @@ $m texlive-latexextra
 $m texlive-pictures
 $m texlive-science
 $m openssh
+$m nmap
+$m wireshark-cli
+$m wireshark-qt
 
 # FISH SHELL
 $m fish
