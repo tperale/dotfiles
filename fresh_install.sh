@@ -70,6 +70,8 @@ $m ttf-hack
 $m acpi
 $m ctags
 
+$m keybase # see keybase.io
+
 $m catdoc # READ .doc documents.
 $m fasd # FAST search in filesystem.
 $m flexget # GET automatically torrent when they are available.
