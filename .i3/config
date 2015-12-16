@@ -29,9 +29,10 @@ set $ws9 "9"
 set $ws10 "10"
 
 # New window default border
-new_window pixel 5
-new_float pixel 5
+new_window pixel 2
+new_float pixel 2
 
+smart_gaps on
 # smart_borders on
 
 # Gaps between windows
@@ -81,7 +82,7 @@ font pango:Liberation Mono 9
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec terminator
 
 
 # kill focused window
@@ -186,14 +187,26 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Screenshot
-bindsym Print exec "mkdir -p Pictures/Screenshots && scrot Pictures/Screenshots/'Screenshot - %Y-%m-%d--%_$wx$h_scrot.png'"
-bindsym Shift+Print exec "mkdir -p Pictures/Screenshots && scrot -s Pictures/Screenshots/'Screenshot - %Y-%m-%d--%_$wx$h_scrot.png'"
-#bindsym $mpd+Shift+Print exec "mkdir -p Pictures/Screenshots && scrot -s Pictures/Screenshots/'Screenshot - %Y-%m-%d--%_$wx$h_scrot.png'"
+set $printscreen Select (s), All (a), Use (u)
+mode "$printscreen" {
+    bindsym a mode "default", exec --no-startup-id "mkdir -p Pictures/Screenshots && scrot Pictures/Screenshots/'SS_a - %Y-%m-%d--%_$wx$h_scrot.png'"
+    bindsym s mode "default", exec --no-startup-id "mkdir -p Pictures/Screenshots && scrot -s Pictures/Screenshots/'SS_s - %Y-%m-%d--%_$wx$h_scrot.png'"
+    bindsym u mode "default", exec --no-startup-id "mkdir -p Pictures/Screenshots && scrot -u Pictures/Screenshots/'SS_u - %Y-%m-%d--%_$wx$h_scrot.png'"
 
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym Print mode "$printscreen"
 
 # VOLUME ADJUSTMENT
 bindsym $MOD+SHIFT+Up exec amixer set Master 5.0%+
 bindsym $MOD+SHIFT+Down exec amixer set Master 5.0%-
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Change the workspace output
 bindsym $mod+x move workspace to output right
@@ -213,7 +226,7 @@ bindsym $mod+m [title="^ncmpcpp ::"] scratchpad show
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    status_command     i3status
+    status_command     i3blocks
     #i3bar_command ~/.i3/panel.sh | lemonbar -p -F "#FFB5B2AF" -B "#FF282522" -g "1280x20+0+0"
     #i3bar_command     i3bar_command ~/.i3/lemonbar/i3_lemonbar.sh
 
@@ -236,10 +249,11 @@ bar {
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
 exec --no-startup-id thunderbird
+exec launch_tor
+exec --no-startup-id qtox
 
 exec clipit
 exec conky
-# exec python ~/.i3/i3session restore
 
 exec_always --no-startup-id feh --bg-scale ~/.i3/wallpaper.png
 exec mpd
