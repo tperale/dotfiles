@@ -1,0 +1,21 @@
+#!/bin/node
+var request = require('request');
+
+var url = "http://urlab.be/spaceapi.json";
+
+request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        var urlabJSON = JSON.parse(body);
+
+        var numOfPeople = urlabJSON["sensors"]["people_now_present"][0]["value"];
+        if (numOfPeople) {
+            console.log(numOfPeople);
+        } else {
+            console.log("Closed.");
+        }
+
+
+    } else {
+        console.log("Got an error: ", error, ", status code: ", response.statusCode);
+    }
+});
