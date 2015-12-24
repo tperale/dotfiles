@@ -2,41 +2,102 @@
 import sys
 from datetime import date
 
-def whatDay(dateString):
-    dayName = {0: "lundi",
-               1: "mardi",
-               2: "mercredi",
-               3: "jeudi",
-               4: "vendredi",
-               5: "samedi",
-               6: "dimanche"
-               }
-    day = int(dateString[0:2])
-    month = int(dateString[3:5])
-    year = int(dateString[6:])
+# http://gehol.ulb.ac.be/gehol/Controlleurs/ICal.php?cal=lGKSaWKZaZhp&mode=MonHoraire%5FStudent&week=14
+
+_NAME_ = "thomas" # Pour éventuellement ajouter directement au calendrier.
+_AUDIT_ = ["salle dupréel", "salle dupreel", "dup",
+        "r42", "drion",
+        "lfk", "la fontaine", "lafontaine", "k1 105",
+        "janson",
+        "h1308", "h 1308", "h2215", "h 2215"
+        "forum", "plaine",
+        "chavanne",
+        ]
+
+_DAYNAME_ = {0: "lundi",
+             1: "mardi",
+             2: "mercredi",
+             3: "jeudi",
+             4: "vendredi",
+             5: "samedi",
+             6: "dimanche"
+            }
+
+def get_next_int(string, i):
+    borneInf = i
+    result = "" # Entier suivant.
+    while (i < len(string)) and (not string[i].isdigit()):
+        borneInf += 1
+
+    borneSup = borneInf
+    while (i < len(string)) and (string[i].isdigit()):
+        result += string[i]
+        borneSup += 1
+
+    if ( i == len(string) and (len(result)) == 0 ):
+        result = None
+    else:
+        result = int(result)
+
+    return result, i
+
+
+def what_day(dateString):
+    """
+    @desc Prend en input une date:
+            <day>/<month>/<year>
+            <day>/<month>
+          Pour retourner quel jour de la semaine cela correspond.
+    """
+    i = 0
+    # day = int(dateString[0:2])
+    # month = int(dateString[3:5])
+    # year = int(dateString[6:])
+
+    day, i = get_next_int(dateString, i)
+    month, i = get_next_int(dateString, i)
+    year, i = get_next_int(dateString, i)
+    if (year is None):
+        # Get current year.
+        pass
+
     d = date(year, month, day)
-    return dayName[d.weekday()]
+    return _DAYNAME_[d.weekday()]
 
 
-def parseEmail (email):
+def what_auditoire(auditoireString):
+    """
+    """
+    pass
+
+
+def parse_email (email_text):
+    """
+    """
     result = ""
-    for line in email.split('\n'):
+    for line in email_text.split('\n'):
         line = line.strip()
+        # for line in map( lambda x: x.strip(), email_text.split('\n') ):
+
+        # Creer un dictionnaire à partir de la ligne pour pouvoir manipuler facilement.
 
         if len(line) == 0:
             continue
 
         if "?" in line:
-            day = whatDay(line[:10])
-            # auditoire = whatAuditoire(line[11:])
+            day = what_day(line[:10])
+            # auditoire = what_auditoire(line[11:])
             print("\nÀ prendre le \033[0;31m" + day + "\033[0m : " + line)
             doTake = input("La prendre ? ")
             if doTake == "y":
                 result = result + line + "\n"
         else:
-            print("PRESTA déjà prise: " + line)
+            if (_NAME_ in line):
+                print("\033ATTENTION RAPPEL !!!!\033[0m : " + line)
+            else:
+                print("PRESTATION déjà prise: " + line)
 
     return result
 
 if __name__ == "__main__":
-    print("\n\n--------OUT-----\n\n" + parseEmail(sys.argv[1]))
+    print( "\n\n--------OUT-----\n\n" + parse_email(sys.argv[1].lower()) )
