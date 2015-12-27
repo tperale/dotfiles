@@ -256,4 +256,3 @@ exec clipit
 exec conky
 
 exec_always --no-startup-id feh --bg-scale ~/.i3/wallpaper.png
-exec mpd
