@@ -17,7 +17,6 @@ case "$1" in
         lock && systemctl hibernate
         ;;
     reboot)
-	python i3session save
         systemctl reboot
         ;;
     shutdown)
