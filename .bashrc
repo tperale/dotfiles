@@ -149,14 +149,6 @@ export XDG_MUSIC_DIR=/home/thomas/Music
 #retur nvalue visualisation
 #PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
 
-
-# PS1 = '\[\] thomas \[\] \[\]~ \[\] \[\]'
-function _update_ps1() {
-    export PS1="$(powerline shell left -r .bash)"
-}
-
-export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-
 # colored manpages
 if $_isxrunning; then
         export PAGER=less
