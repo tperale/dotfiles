@@ -59,7 +59,7 @@ def make_commands(scripts_dict):
             if charac == "location":
                 program_name = os.path.expanduser(arg)
             else:
-                program_flags += "-%s %s " % (charac, arg)
+                program_flags += "--%s %s " % (charac, arg)
         if program_name is None:
             # Script location should be always specified by the user.
             raise LocationNotFoundError
