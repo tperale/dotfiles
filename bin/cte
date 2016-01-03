@@ -26,11 +26,11 @@ _DAYNAME_ = {0: "lundi",
 def get_next_int(string, i):
     borneInf = i
     result = "" # Entier suivant.
-    while (i < len(string)) and (not string[i].isdigit()):
+    while (borneInf < len(string)) and (not string[borneInf].isdigit()):
         borneInf += 1
 
     borneSup = borneInf
-    while (i < len(string)) and (string[i].isdigit()):
+    while (borneSup  < len(string)) and (string[borneSup].isdigit()):
         result += string[i]
         borneSup += 1
 
@@ -87,17 +87,21 @@ def parse_email (email_text):
         if "?" in line:
             day = what_day(line[:10])
             # auditoire = what_auditoire(line[11:])
-            print("\nÀ prendre le \033[0;31m" + day + "\033[0m : " + line)
+            print("\n----------------------------------------------\n")
+            print("À prendre le \033[0;31m" + day + "\033[0m : " + line)
             doTake = input("La prendre ? ")
             if doTake == "y":
                 result = result + line + "\n"
+            print("\n----------------------------------------------\n")
         else:
             if (_NAME_ in line):
-                print("\033ATTENTION RAPPEL !!!!\033[0m : " + line)
+                print("\n----------------------------------------------\n")
+                print("\033[0;31mATTENTION RAPPEL !!!!\033[0m : " + line)
+                print("\n----------------------------------------------\n")
             else:
                 print("PRESTATION déjà prise: " + line)
 
     return result
 
 if __name__ == "__main__":
-    print( "\n\n--------OUT-----\n\n" + parse_email(sys.argv[1].lower()) )
+    print(parse_email(sys.argv[1].lower()) + "\n\n--------FIN--------")
