@@ -84,7 +84,11 @@ def parse_email (email_text):
         if len(line) == 0:
             continue
 
-        if "?" in line:
+        if (_NAME_ in line):
+            print("\n----------------------------------------------\n")
+            print("\033[0;31mATTENTION RAPPEL !!!!\033[0m : " + line)
+            print("\n----------------------------------------------\n")
+        elif "?" in line:
             day = what_day(line[:10])
             # auditoire = what_auditoire(line[11:])
             print("\n----------------------------------------------\n")
@@ -94,12 +98,7 @@ def parse_email (email_text):
                 result = result + line + "\n"
             print("\n----------------------------------------------\n")
         else:
-            if (_NAME_ in line):
-                print("\n----------------------------------------------\n")
-                print("\033[0;31mATTENTION RAPPEL !!!!\033[0m : " + line)
-                print("\n----------------------------------------------\n")
-            else:
-                print("PRESTATION déjà prise: " + line)
+            print("PRESTATION déjà prise: " + line)
 
     return result
 

@@ -56,7 +56,7 @@ def find(queryList, settings):
                 for x in range(15):
                     preview_text += preview_file.readline().replace("\n", "%N")
                 if len(preview_text):
-                    res += "{%s |xdg-open %s|%%CPreview%%%%L'%s'}" % (str(find_array[i]), clearedOut, preview_text)
+                    res += "{%s |xdg-open %s|%%CPreview%%%%L%s}" % (str(find_array[i]), clearedOut, preview_text)
                 else:
                     res += "{%s |xdg-open %s|%%CNo preview%%}" % (str(find_array[i]), clearedOut)
                 preview_file.close()

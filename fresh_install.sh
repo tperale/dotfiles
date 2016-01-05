@@ -40,8 +40,7 @@ $m wireshark-qt
 # FISH SHELL
 $m fish
 chsh -s /usr/bin/fish
-curl -L github.com/oh-my-fish/oh-my-fish/raw/master/bin/install | fish # ho my fish
-curl -L git.io/wa | sh # wahoo
+# Use fisherman
 
 $m firefox
 $m chromium-pepper-flash
@@ -69,6 +68,9 @@ $m arandr
 $m ttf-hack
 $m acpi
 $m ctags
+$m xdotool
+$m xtitle
+$m xkill
 
 $m keybase # see keybase.io
 

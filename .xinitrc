@@ -11,15 +11,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-Section "InputClass"
-    Identifier "Keyboard Defaults"
-    MatchIsKeyboard "yes"
-    Option  "XkbLayout" "us"
-    Option  "XkbVariant" "altgr-intl"
-    Option  "setxkbmap"  "caps:escape"
-EndSection
-
-# setxkbmap -option caps:escape
+setxkbmap -option caps:escape
 redshift &
 compton --config ~/.config/compton/compton.conf
 

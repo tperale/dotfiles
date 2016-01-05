@@ -6,4 +6,8 @@
     default = current
 
 [color]
-    ui = auto
+	ui = true
+[credential]
+	helper = cache
+[alias]
+	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"

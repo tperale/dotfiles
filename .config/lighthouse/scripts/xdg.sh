@@ -4,7 +4,6 @@ function search_xdg() {
     RES=""
     for app in $(ls $LOCATION | grep $1)
     do
-
         NAME=$(echo $app | awk -F. '{ print $1 }')
 
         # Get name and desc, etc
@@ -16,7 +15,7 @@ function search_xdg() {
         if (($?)); then # If it find true it mean the app should be exec in a terminal.
             EXEC=$TERMINAL
         fi
-        EXEC=${EXEC}$(cat $LOCATION$app | grep "Exec=" | awk -F= '{ print $2 }' | awk '{ print $1 }')
+        EXEC=${EXEC}$(cat $LOCATION$app | grep -m 1 "Exec=" | awk -F= '{ print $2 }' | awk '{ print $1 }')
 
 
         RES=${RES}"{${NAME}|${EXEC}|"

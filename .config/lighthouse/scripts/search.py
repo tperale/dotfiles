@@ -18,9 +18,9 @@ def searx(query, settings):
 
     res = []
     for i in range(min(len(results), settings.number_of_output)):
-        title = results[i]["title"]
+        title = results[i]["title"].replace("|", "\|")
         url = results[i]["url"]
-        content = results[i]["content"]
+        content = results[i]["content"].replace("|", "\|")
         res.append("{%s|xdg-open %s|%%C%s%%%%L%s}" % (title, url, url, content))
 
     return ''.join(res)

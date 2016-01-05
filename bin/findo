@@ -13,31 +13,52 @@ EOF
 }
 
 function launch_findo() {
-    for filename in $CURRENT_DIR/* $CURRENT_DIR/**/*
-    do
-        if [ -f $filename ]; then
+    for filename in $(ls); do
+        if [ -d $filename ] && [[ $2 -ne 1 ]]; then
+                cd $filename
+                launch_findo $1 $(( $2 - 1 ))
+                cd ..
+        elif [ -f $filename ]; then
             occ="$(cat -b $filename | grep $1)"
-            #printf "%i" $?
             if ((!$?)); then
                 printf "${RED}In the file %s${NC}\n%s\n\n" "$filename" "$occ"
             fi
-        #else
-        #    cd $filename
-        #    launch_findo $1
-        #    cd ..
         fi
     done
 }
 
 CURRENT_DIR=$(pwd)
+str_researched=""
+level=0
+# http://mywiki.wooledge.org/BashFAQ/035
 if (( $# >= 1 )); then
-    case "$1" in
-        -h) usage
-            ;;
-        *)  printf "LOOKING FOR %s\n" "$1"
-            launch_findo $1
-            ;;
-    esac
+    for i in $@
+    do
+        case "$i" in
+            -h|--help)
+                usage
+                exit 0
+                ;;
+            -r|--recursive)
+                level=0
+                ;;
+            -l=*|--level=*)
+                level=${i#*=}
+                ;;
+            *)
+                str_researched=$i
+                ;;
+        esac
+    done
+
+    if [ -n $i ]; then
+        # If a string was entered.
+        printf "LOOKING FOR %s\n" "$str_researched"
+        launch_findo $str_researched $level
+    else
+        usage && exit 1
+    fi
+
 else
     usage && exit 1
 fi

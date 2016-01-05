@@ -36,6 +36,7 @@ call plug#begin('~/.vim/plugged')
     " <Tab> everything!
     " Plugin 'ervandew/supertab'
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py -clang-completer' }
+    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 
     " Fuzzy finder (files, mru, etc)
     Plug 'kien/ctrlp.vim'
@@ -135,6 +136,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
     Plug 'slim-template/vim-slim'   , { 'for': 'slim'       }
     Plug 'wting/rust.vim'           , { 'for': 'rust'       }
+    " Plug 'ervandew/eclim'           , { 'for': 'java' }
 
     " Awesome syntax checker.
     " REQUIREMENTS: See :h syntastic-intro
@@ -752,4 +754,6 @@ let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-spli
 let g:ycm_filetype_whitelist = { '*': 1 }
 let g:ycm_key_invoke_completion = '<C-Space>'
 
-nnoremap <F11> :YcmForceCompileAndDiagnostics <CR> ]
+nnoremap <F10> :YcmForceCompileAndDiagnostics <CR> ]
+
+let g:EclimCompletionMethod = 'omnifunc'
