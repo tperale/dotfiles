@@ -21,7 +21,8 @@ function launch_findo() {
         elif [ -f $filename ]; then
             occ="$(cat -b $filename | grep $1)"
             if ((!$?)); then
-                printf "${RED}In the file %s${NC}\n%s\n\n" "$filename" "$occ"
+                printf "${RED}In the file %s${NC}\n" "$filename"
+                echo -e "${occ//$1/$RED$1$NC}\n"
             fi
         fi
     done
