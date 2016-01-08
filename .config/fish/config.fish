@@ -9,3 +9,4 @@ set EDITOR $EDITOR vim
 
 . "$HOME/.config/fish/functions/aliases.fish"
 . "$HOME/.config/fish/functions/function.fish"
+. "$HOME/.config/fish/functions/pass.fish-completion"
