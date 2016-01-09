@@ -71,6 +71,7 @@ $m ctags
 $m xdotool
 $m xtitle
 $m xkill
+$m jshon
 
 $m keybase # see keybase.io
 
