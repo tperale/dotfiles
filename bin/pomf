@@ -14,8 +14,6 @@ EOF
 }
 
 image=""
-ext="(\.jpg|\.png|\.gif)$"
-
 pomf_fork="http://www.1339.cf/"
 result_url="http://b.1339.cf/"
 for arg in "$@"
@@ -24,24 +22,24 @@ do
         -h) usage
             exit 0
             ;;
-        -m) pomf_fork="https://www.maxfile.ro/"
+        -m|--maxfile) pomf_fork="https://www.maxfile.ro/"
             result_url="https://d.maxfile.ro/"
             ;;
-        * ) image="$arg"
+        -o=*|--other=*)
+            result_url=${arg#*=}
+            ;;
+        * )
+            image="$arg"
             ;;
     esac
 done
 
-if (( $# == 0 )); then
-  printf '%s\n' "Usage: ${0##*/} IMAGE"
-  exit 1
-elif [[ $image =~ $ext ]]; then
+if [ -f $image ]; then
   up=$(curl -sf -F files[]=@"$image" "$pomf_fork""upload.php")
   url=$(jshon -e files -a -e url -u <<< "$up")
   printf '%s' "$result_url$url" | $(xsel -i -b)
   printf 'Result copied to the clipboard: %s' "$result_url$url"
-
-
 else
-  printf '%s\n' "Not a recognized image type"
+  printf '%s\n' "Usage: ${0##*/} IMAGE"
+  exit 1
 fi
