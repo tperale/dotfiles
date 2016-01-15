@@ -72,12 +72,15 @@ $m xdotool
 $m xtitle
 $m xkill
 $m jshon
+$m sshfs # mount with ssh
 
 $m keybase # see keybase.io
 
 $m catdoc # READ .doc documents.
 $m fasd # FAST search in filesystem.
 $m flexget # GET automatically torrent when they are available.
+$m beets # MUSIC Library tagger
+$m gtk2-patched-filechooser-icon-view # thumbnail in gtk
 
 # Essential programs
 $m fortune-mod
