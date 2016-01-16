@@ -73,6 +73,7 @@ $m xtitle
 $m xkill
 $m jshon
 $m sshfs # mount with ssh
+$m syncthing
 
 $m keybase # see keybase.io
 
