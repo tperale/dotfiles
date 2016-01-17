@@ -7,7 +7,7 @@ VIDEO="Videos/"
 PICTURE="Pictures/"
 MUSIC="Music/"
 
-DESTINATION="/run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/thomas"
+DESTINATION="/run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/thomas/"
 
 backup () {
     ${SYNC} ${HOME}${PICTURE} ${DESTINATION}Photos
