@@ -73,10 +73,10 @@ $m xtitle
 $m xkill
 $m jshon
 $m sshfs # mount with ssh
+$m davfs2 # mount WebDAV
 $m syncthing
 
 $m keybase # see keybase.io
-
 $m catdoc # READ .doc documents.
 $m fasd # FAST search in filesystem.
 $m flexget # GET automatically torrent when they are available.
