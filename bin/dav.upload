@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+usage() {
+    cat <<EOF
+    Upload files to WebDav server.
+    -h      | Print this message.
+    -r=*    | Change remote WebDAV server.
+    *       | Files names.
+EOF
+}
+
+upload () {
+    # FIRST ARGUMENT : NAME OF FILES TO ADD
+    # SECOND ARGUMENT : LOCATION IN THE DAV
+    for FILE in $1
+    do
+        if [ -d $FILE ]; then
+            cd $FILE
+            upload $(ls $FILE) $FILE
+            cd ..
+        elif [ -f $FILE ]; then
+            curl -T $FILE -u "$USERNAME":"$PASSWORD" "${REMOTE}${2}"
+        fi
+    done
+}
+
+REMOTE="https://cloud.openmailbox.org/remote.php/webdav/"
+FILES=""
+LOCATION=""
+for arg in "$@"
+do
+    case "$arg" in
+        -h) usage
+            exit 0
+            ;;
+        -r=*|--remote=*)
+            REMOTE=${arg#*=}
+            ;;
+        -l=*|--location=*)
+            LOCATION=${arg#*=}
+            ;;
+        * )
+            FILES="$arg"
+            ;;
+    esac
+done
+
+REMOTE=${REMOTE}${LOCATION}
+
+USERNAME="thomas.perale"
+if ! [ -n "$USERNAME" ]; then
+    echo "Enter your username: "
+    read USERNAME
+fi
+
+
+PASSWORD=""
+if ! [ -n "$PASSWORD" ]; then
+    echo "Enter your password: "
+    read -s PASSWORD
+fi
+
+upload $FILES ""
