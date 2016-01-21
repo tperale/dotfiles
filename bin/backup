@@ -6,6 +6,7 @@ HOME="/home/thomas/"
 VIDEO="Videos/"
 PICTURE="Pictures/"
 MUSIC="Music/"
+DAV="dav/"
 
 DESTINATION="/run/media/thomas/3a7c1ccc-fb55-4a33-962f-6ceb5b7b7d88/thomas/"
 
@@ -25,9 +26,12 @@ elif ping -c1 -w 3 192.168.0.203 > /dev/null; then
     ${SYNC} ${HOME}${MUSIC} -e ssh pi@192.168.0.203:~/backup/thomas/Musique &> /dev/null
     ${SYNC} ${HOME}${VIDEO} -e ssh pi@192.168.0.203:~/backup/thomas/Vidéos &> /dev/null
     ${SYNC} ${HOME}.newsbeuter/urls -e ssh pi@192.168.0.203:~/backup/thomas/Misc &> /dev/null
-
 else
     notify-send  "No peripheral to backup."
 fi
+
+# DAV Backup, only personnal pictures.
+sudo dav.mount
+${SYNC} ${HOME}${PICTURE}pictures/ ${HOME}${DAV}
 
 notify-send "Backup ended"
