@@ -74,6 +74,7 @@ $m xkill
 $m jshon
 $m sshfs # mount with ssh
 $m davfs2 # mount WebDAV
+$m djmount # mount upnp
 $m syncthing
 
 $m keybase # see keybase.io
