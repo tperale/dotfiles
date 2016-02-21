@@ -35,8 +35,11 @@ call plug#begin('~/.vim/plugged')
 
     " <Tab> everything!
     " Plugin 'ervandew/supertab'
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py -clang-completer' }
-    Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+    "
+    " Plug 'Valloric/YouCompleteMe', { 'do': './install.py -clang-completer' }
+    " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+    "
+    Plug 'Shougo/neocomplete.vim'
 
     " Fuzzy finder (files, mru, etc)
     Plug 'kien/ctrlp.vim'
@@ -72,27 +75,27 @@ call plug#begin('~/.vim/plugged')
     " Align your = etc.
     Plug 'vim-scripts/Align'
 
-    " Plugin 't9md/choosewin'  
+    " Plug 't9md/choosewin'  
 
     " Multiple cursor
     Plug 'terryma/vim-multiple-cursors'
 
-    function Build_Color_Coded(info)
+    " function Build_Color_Coded(info)
 
-          " info is a dictionary with 3 fields
-          " - name:   name of the plugin
-          " - status: 'installed', 'updated', or 'unchanged'
-          "  - force:  set on PlugInstall! or PlugUpdate!
-        if a:info.status == 'installed' || a:info.force
-            |mkdir build && cd build
-            |cmake ..
-            |make && make install
-            |make clean && make clean_clang
-        endif
-    endfunction
+    "       " info is a dictionary with 3 fields
+    "       " - name:   name of the plugin
+    "       " - status: 'installed', 'updated', or 'unchanged'
+    "       "  - force:  set on PlugInstall! or PlugUpdate!
+    "     if a:info.status == 'installed' || a:info.force
+    "         |mkdir build && cd build
+    "         |cmake ..
+    "         |make && make install
+    "         |make clean && make clean_clang
+    "     endif
+    " endfunction
 
-    " Better colors.
-    Plug 'jeaye/color_coded', { 'do' : function('Build_Color_Coded') }
+    " " Better colors.
+    " Plug 'jeaye/color_coded', { 'do' : function('Build_Color_Coded') }
     
     " Correction orthographique.
     " Plugin 'dpelle/vim-LanguageTool '
@@ -351,9 +354,12 @@ call plug#end()
         vmap <C-up> [egv
         vmap <C-down> ]egv
 
-        " Scroll up/down lines from 'scroll' option, default half a screen
-        map <C-j> <C-d>
-        map <C-k> <C-u>
+        " Change window
+        nnoremap <C-J> <C-W><C-J>
+        nnoremap <C-K> <C-W><C-K>
+        nnoremap <C-L> <C-W><C-L>
+        nnoremap <C-H> <C-W><C-H>
+
 
         " Treat wrapped lines as normal lines
         nnoremap j gj
@@ -714,14 +720,20 @@ let g:gist_open_browser_after_post = 1
 
 " Map start key separately from next key
 let g:multi_cursor_start_key='<F6>'
-"
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
 " Latex preview
 autocmd FileType tex setl updatetime=1
 let g:livepreview_previewer = 'zathura'
 nmap <F12> : LLPStartPreview<cr>
 
 " Numbers.vim
+nnoremap <F2> :NumbersOnOff<CR>
 nnoremap <F3> :NumbersToggle<CR>
+
 nnoremap <F4> :UndotreeToggle<cr>
 
 " YouCompleteMe options
@@ -755,5 +767,79 @@ let g:ycm_filetype_whitelist = { '*': 1 }
 let g:ycm_key_invoke_completion = '<C-Space>'
 
 nnoremap <F10> :YcmForceCompileAndDiagnostics <CR> ]
+
+
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+    \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+    " For no inserting <CR> key.
+    " return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+" inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+" let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+" set completeopt+=longest
+" let g:neocomplete#enable_auto_select = 1
+" let g:neocomplete#disable_auto_complete = 1
+" inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+" let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+" let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+" let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::' " """" " "
 
 let g:EclimCompletionMethod = 'omnifunc'
