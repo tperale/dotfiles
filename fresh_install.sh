@@ -32,10 +32,14 @@ $m texlive-fontsextra
 $m texlive-latexextra
 $m texlive-pictures
 $m texlive-science
+$m texlive-genericextra
 $m openssh
 $m nmap
 $m wireshark-cli
 $m wireshark-qt
+$m arm-none-eabi-gcc
+$m arm-none-eabi-newlib
+
 
 # FISH SHELL
 $m fish
