@@ -29,6 +29,8 @@ call plug#begin('~/.vim/plugged')
     " Edit files using sudo/su
     Plug 'chrisbra/SudoEdit.vim'
 
+    Plug 'vim-scripts/a.vim'
+
     " Latex
     Plug 'jcf/vim-latex', { 'for' : ['tex', 'latex'] }
     Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
