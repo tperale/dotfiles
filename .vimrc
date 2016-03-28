@@ -533,12 +533,24 @@ call plug#end()
 
     " Syntastic - This is largely up to your own usage, and override these
     "             changes if be needed. This is merely an exemplification.
+    "
     let g:syntastic_cpp_check_header = 1
-    let g:syntastic_cpp_compiler_options = ' -std=c++0x'
+    " let g:syntastic_cpp_check_header = 0
+    " let g:syntastic_cpp_compiler_options = ' -std=c++0x'
+    let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtWidgets/"]
+    let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtGui/"]
+    let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtCore/"]
+    let g:syntastic_cpp_include_dirs = ["/usr/include/qt/"]
+    let g:syntastic_cpp_compiler_options = '-std=c++14 -ggdb3 -Wextra -Winline -Wconversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wall -Wpedantic -Waddress -Warray-bounds -Wcast-align -Wcast-qual -Wchar-subscripts -Wclobbered -Wcomment -Wcoverage-mismatch -Wdisabled-optimization -Wempty-body -Wenum-compare -Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wignored-qualifiers -Winit-self -Wint-to-pointer-cast -Winvalid-offsetof -Winvalid-pch -Wunsafe-loop-optimizations -Wmain -Wmissing-braces -Wmissing-field-initializers -Wmissing-include-dirs -Wmissing-noreturn -Wmultichar -Wnonnull -Woverflow -Woverlength-strings -Wpacked -Wpacked-bitfield-compat -Wparentheses -Wpointer-arith -Wredundant-decls -Wreturn-type -Wsequence-point -Wshadow -Wsign-compare -Wstack-protector -Wstrict-aliasing -Wstrict-overflow -Wswitch -Wswitch-default -Wswitch-enum -Wsync-nand -Wtrigraphs -Wtype-limits -Wuninitialized -Wunknown-pragmas -Wpragmas -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable -Wunused-but-set-parameter -Wunused-but-set-variable -Wvariadic-macros -Wvla -Wvolatile-register-var -Wwrite-strings'
     let g:syntastic_mode_map = {
         \ 'mode': 'passive',
         \ 'active_filetypes':
-            \ ['c', 'cpp', 'perl', 'python', 'sh'] }
+            \ ['c', 'cpp', 'perl', 'javascript', 'html', 'python', 'sh'] }
+    let g:syntastic_javascript_checkers = ['eslint']
+    let g:syntastic_python_python_exec = '/bin/python3'
+    let g:syntastic_python_checkers = ['pylint']
+    let g:syntastic_html_tidy_exec = 'tidy5'
+    let g:syntastic_markdown_mdl_exec = 'textlint'
 
     " Netrw - the bundled (network) file and directory browser
     let g:netrw_banner = 0
