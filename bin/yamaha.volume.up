@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+curl "http://192.168.0.102/YamahaRemoteControl/ctrl" -d "<?xml version=\"1.0\" encoding=\"utf-8\"?><YAMAHA_AV cmd=\"PUT\"><System><Volume><Lvl>Up</Lvl></Volume></System></YAMAHA_AV>"
