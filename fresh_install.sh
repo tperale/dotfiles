@@ -39,6 +39,8 @@ $m wireshark-cli
 $m wireshark-qt
 $m arm-none-eabi-gcc
 $m arm-none-eabi-newlib
+$m shellcheck
+$m cppcheck
 
 
 # FISH SHELL
@@ -95,3 +97,5 @@ $m cowsay
 npm install peerflix
 pip install youtube-dl
 pip install subliminal
+npm install -g eslint
+npm install -g textlint
