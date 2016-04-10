@@ -82,6 +82,7 @@ $m sshfs # mount with ssh
 $m davfs2 # mount WebDAV
 $m djmount # mount upnp
 $m syncthing
+$m audacity
 
 $m keybase # see keybase.io
 $m catdoc # READ .doc documents.
@@ -94,6 +95,7 @@ $m gtk2-patched-filechooser-icon-view # thumbnail in gtk
 $m fortune-mod
 $m cowsay
 
+$m ngrok-bin
 npm install peerflix
 pip install youtube-dl
 pip install subliminal
