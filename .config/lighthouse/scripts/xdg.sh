@@ -2,7 +2,7 @@
 
 function search_xdg() {
     RES=""
-    for app in $(ls $LOCATION | grep $1)
+    for app in $(ls $LOCATION | grep -i $1)
     do
         NAME=$(echo $app | awk -F. '{ print $1 }')
 
