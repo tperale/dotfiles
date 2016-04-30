@@ -54,7 +54,7 @@ if ! [ -n "$USERNAME" ]; then
 fi
 
 
-PASSWORD=""
+PASSWORD="$(pass cloud.openmailbox.org/thomas.perale)"
 if ! [ -n "$PASSWORD" ]; then
     echo "Enter your password: "
     read -s PASSWORD
