@@ -11,6 +11,8 @@ $m python2-requests
 $m python-requests
 $m python-pip
 $m python2-pip
+$m jupyter
+$m ipython
 $m curl
 $m gcc-multilib
 $m jdk8-openjdk
@@ -42,9 +44,8 @@ $m arm-none-eabi-newlib
 $m shellcheck
 $m cppcheck
 
-
 # FISH SHELL
-$m fish
+$m fish-git
 chsh -s /usr/bin/fish
 # Use fisherman
 
@@ -52,6 +53,7 @@ $m firefox
 $m chromium-pepper-flash
 $m thunderbird # Mail
 $m newsbeuter-git # RSS Reader
+$m stfl # dependency
 $m ranger # File manager
 $m mpv # VIDEO
 $m qbittorrent # Torrents
