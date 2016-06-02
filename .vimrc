@@ -537,6 +537,27 @@ call plug#end()
     let g:syntastic_cpp_check_header = 1
     " let g:syntastic_cpp_check_header = 0
     " let g:syntastic_cpp_compiler_options = ' -std=c++0x'
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble_worker.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble_process_info.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble_warn_unsupported_functions.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble_fonts.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/gcolor_definitions.h"]
+
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble_worker.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble_process_info.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble_warn_unsupported_functions.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble_fonts.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/gcolor_definitions.h"]
+
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble_worker.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble_process_info.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble_warn_unsupported_functions.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble_fonts.h"]
+    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/gcolor_definitions.h"]
+
     let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtWidgets/"]
     let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtGui/"]
     let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtCore/"]
