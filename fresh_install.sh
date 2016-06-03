@@ -98,8 +98,9 @@ $m fortune-mod
 $m cowsay
 
 $m ngrok-bin
-npm install peerflix
 pip install youtube-dl
 pip install subliminal
-npm install -g eslint
-npm install -g textlint
+npm install -g peerflix
+npm install -g jshint
+npm install -g gulp-cli
+npm install -g grunt-cli
