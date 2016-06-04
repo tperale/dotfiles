@@ -24,5 +24,4 @@ set EDITOR $EDITOR vim
 . "$HOME/.config/fish/functions/node.fish"
 . "$HOME/.config/fish/functions/ssh.fish"
 . "$HOME/.config/fish/functions/vim.fish"
-. "$HOME/.config/fish/functions/wget.fish"
 . "$HOME/.config/fish/functions/xsel.fish"
