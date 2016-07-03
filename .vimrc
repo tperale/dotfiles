@@ -247,7 +247,9 @@ call plug#end()
     set splitbelow                                  " splits go below w/focus
     set splitright                                  " vsplits go right w/focus
     set ttyfast                                     " for faster redraws etc
-    set ttymouse=xterm2                             " experimental
+    if !has('nvim')
+        set ttymouse=xterm2                             " experimental
+    endif
     """ Folding {{{
         set foldcolumn=0                            " hide folding column
         set foldmethod=indent                       " folds using indent
