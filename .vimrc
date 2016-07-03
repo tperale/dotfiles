@@ -151,6 +151,9 @@ call plug#begin('~/.vim/plugged')
     " REQUIREMENTS: (exuberant)-ctags
     Plug 'majutsushi/tagbar'
 
+    " SaltStack for vim.
+    Plug 'saltstack/salt-vim'
+
 call plug#end()
 
  
