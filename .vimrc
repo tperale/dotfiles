@@ -154,6 +154,9 @@ call plug#begin('~/.vim/plugged')
     " SaltStack for vim.
     Plug 'saltstack/salt-vim'
 
+    " Code searcher.
+    Plug 'mileszs/ack.vim'
+
 call plug#end()
 
  
@@ -883,3 +886,5 @@ endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::' " """" " "
 
 let g:EclimCompletionMethod = 'omnifunc'
+
+let g:ackprg = 'ag --vimgrep'

@@ -86,6 +86,7 @@ $m djmount # mount upnp
 $m syncthing
 $m audacity
 
+$m the_silver_searcher # Code searcher.
 $m keybase # see keybase.io
 $m catdoc # READ .doc documents.
 $m fasd # FAST search in filesystem.
