@@ -25,6 +25,9 @@ alias cp='cp -i'  # Warn when overwriting
 alias mv='mv -i'  # Warn when overwriting
 alias rm='rm -I'
 
+alias vim="nvim"
+alias vi="nvim"
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'

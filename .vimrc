@@ -41,7 +41,22 @@ call plug#begin('~/.vim/plugged')
     " Plug 'Valloric/YouCompleteMe', { 'do': './install.py -clang-completer' }
     " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
     "
-    Plug 'Shougo/neocomplete.vim'
+    " Plug 'Shougo/neocomplete.vim'
+
+    " Autocompletion
+    function! DoRemote(arg)
+        UpdateRemotePlugins
+    endfunction
+    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+    " Omnicomplete for C family languages.
+    " Plug 'zchee/deoplete-clang'
+    Plug 'Rip-Rip/clang_complete'
+    " Include completion.
+    Plug 'Shougo/neoinclude.vim'
+    " Python completion.
+    Plug 'zchee/deoplete-jedi'
+    " Javascript code analysis.
+    Plug 'carlitux/deoplete-ternjs'
 
     " Fuzzy finder (files, mru, etc)
     Plug 'kien/ctrlp.vim'
@@ -134,8 +149,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-dispatch'      , { 'for' : 'clojure' }
     Plug 'tpope/vim-salve'         , { 'for' : 'clojure' }
 
-
-    " Plug 'klen/python-mode', { 'for' : 'python' }
     Plug 'pangloss/vim-javascript'  , { 'for': 'javascript' }
     Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
     Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
@@ -780,80 +793,76 @@ nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :UndotreeToggle<cr>
 
 " YouCompleteMe options
-let g:ycm_register_as_syntastic_checker = 1 "default 1
-let g:Show_diagnostics_ui = 1 "default 1
+" let g:ycm_register_as_syntastic_checker = 1 "default 1
+" let g:Show_diagnostics_ui = 1 "default 1
 
 "will put icons in Vim's gutter on lines that have a diagnostic set.
 "Turning this off will also turn off the YcmErrorLine and YcmWarningLine
 "highlighting
-let g:ycm_enable_diagnostic_signs = 1
-let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_always_populate_location_list = 1 "default 0
-let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+" let g:ycm_enable_diagnostic_signs = 1
+" let g:ycm_enable_diagnostic_highlighting = 0
+" let g:ycm_always_populate_location_list = 1 "default 0
+" let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+
+" let g:ycm_complete_in_strings = 1 "default 1
+" let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
+" let g:ycm_path_to_python_interpreter = '' "default ''
+
+" let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
+" let g:ycm_server_log_level = 'info' "default info
+
+" let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
+" let g:ycm_confirm_extra_conf = 1
+
+" let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
+" let g:ycm_filetype_whitelist = { '*': 1 }
+" let g:ycm_key_invoke_completion = '<C-Space>'
+
+" nnoremap <F10> :YcmForceCompileAndDiagnostics <CR> ]
 
 
-let g:ycm_complete_in_strings = 1 "default 1
-let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
-let g:ycm_path_to_python_interpreter = '' "default ''
-
-
-let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
-let g:ycm_server_log_level = 'info' "default info
-
-
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
-let g:ycm_confirm_extra_conf = 1
-
-
-let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
-let g:ycm_filetype_whitelist = { '*': 1 }
-let g:ycm_key_invoke_completion = '<C-Space>'
-
-nnoremap <F10> :YcmForceCompileAndDiagnostics <CR> ]
-
-
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
+" let g:acp_enableAtStartup = 0
 " Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplete#enable_smart_case = 1
+" let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+" let g:neocomplete#sources#syntax#min_keyword_length = 3
+" let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+" let g:neocomplete#sources#dictionary#dictionaries = {
+"     \ 'default' : '',
+"     \ 'vimshell' : $HOME.'/.vimshell_hist',
+"     \ 'scheme' : $HOME.'/.gosh_completions'
+"     \ }
 
 " Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" if !exists('g:neocomplete#keyword_patterns')
+"     let g:neocomplete#keyword_patterns = {}
+" endif
+" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 
 " Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+" inoremap <expr><C-g>     neocomplete#undo_completion()
+" inoremap <expr><C-l>     neocomplete#complete_common_string()
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
+"     return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
     " For no inserting <CR> key.
     " return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
+" endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
 " inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
@@ -874,17 +883,27 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"     let g:neocomplete#sources#omni#input_patterns = {}
+" endif
 " let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::' " """" " "
+" let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::' " """" " "
 
-let g:EclimCompletionMethod = 'omnifunc'
+" let g:EclimCompletionMethod = 'omnifunc'
+
+" use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+function g:Multiple_cursors_before()
+    let g:deoplete#disable_auto_complete = 1
+endfunction
+function g:Multiple_cursors_after()
+    let g:deoplete#disable_auto_complete = 0
+endfunction
 
 let g:ackprg = 'ag --vimgrep'

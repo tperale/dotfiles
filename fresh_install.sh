@@ -105,3 +105,4 @@ npm install -g peerflix
 npm install -g jshint
 npm install -g gulp-cli
 npm install -g grunt-cli
+npm install -g tern
