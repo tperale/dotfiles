@@ -5,7 +5,9 @@ set -g -x fish_greeting "$fortune"
 
 # LOCAL BIN
 set PATH $PATH /home/thomas/bin
+set PATH $PATH /home/thomas/pebble-dev/pebble-sdk-4.3-linux64/bin
 set EDITOR $EDITOR vim
+set VISUAL $VISUAL vim
 
 . "$HOME/.config/fish/functions/aliases.fish"
 . "$HOME/.config/fish/functions/function.fish"

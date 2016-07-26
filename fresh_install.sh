@@ -41,6 +41,8 @@ $m wireshark-cli
 $m wireshark-qt
 $m arm-none-eabi-gcc
 $m arm-none-eabi-newlib
+$m arm-none-eabi-gdb
+$m ncurses5-compat-libs
 $m shellcheck
 $m cppcheck
 
