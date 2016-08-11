@@ -95,6 +95,8 @@ $m fasd # FAST search in filesystem.
 $m flexget # GET automatically torrent when they are available.
 $m beets # MUSIC Library tagger
 $m gtk2-patched-filechooser-icon-view # thumbnail in gtk
+$m pavucontrol
+$m pulseaudio-dlna
 
 # Essential programs
 $m fortune-mod
