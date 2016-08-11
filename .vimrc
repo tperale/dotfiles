@@ -117,15 +117,6 @@ call plug#begin('~/.vim/plugged')
     " Correction orthographique.
     " Plugin 'dpelle/vim-LanguageTool '
 
-    " Snippets like textmate
-    Plug 'MarcWeber/vim-addon-mw-utils'
-    Plug 'tomtom/tlib_vim'
-    Plug 'honza/vim-snippets'
-    Plug 'garbas/vim-snipmate'
-
-"    Plug 'jaredly/pydbgp'
-"    Plug 'vim-debug ' 
-
     " Relative num in insert mode
     Plug 'myusuf3/numbers.vim' " , { 'on' : 'NumbersToggle' }
 
@@ -169,6 +160,18 @@ call plug#begin('~/.vim/plugged')
 
     " Code searcher.
     Plug 'mileszs/ack.vim'
+
+    " Show line indention.
+    Plug 'Yggdroot/indentLine'
+    " This plugin automatically adjusts 'shiftwidth' and 
+    " 'expandtab' heuristically based on the current file
+    Plug 'tpope/vim-sleuth'
+
+    " A plugin to write plain-text notes.
+    Plug 'junegunn/vim-journal'
+
+    " Snippets
+    Plug 'SirVer/ultisnips' 
 
 call plug#end()
 
@@ -554,40 +557,24 @@ call plug#end()
 
     " Syntastic - This is largely up to your own usage, and override these
     "             changes if be needed. This is merely an exemplification.
-    "
+
+    let g:syntastic_mode_map = {
+        \ 'mode': 'passive',
+        \ 'active_filetypes':
+        \ ['c', 'cpp', 'perl', 'javascript', 'html', 'python', 'sh'] }
+
     let g:syntastic_cpp_check_header = 1
-    " let g:syntastic_cpp_check_header = 0
-    " let g:syntastic_cpp_compiler_options = ' -std=c++0x'
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble_worker.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble_process_info.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble_warn_unsupported_functions.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/pebble_fonts.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/gcolor_definitions.h"]
-
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble_worker.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble_process_info.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble_warn_unsupported_functions.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/pebble_fonts.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/gcolor_definitions.h"]
-
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble_worker.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble_process_info.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble_warn_unsupported_functions.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/pebble_fonts.h"]
-    let g:syntastic_cpp_include_dirs = ["~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/gcolor_definitions.h"]
-
     let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtWidgets/"]
     let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtGui/"]
     let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtCore/"]
     let g:syntastic_cpp_include_dirs = ["/usr/include/qt/"]
     let g:syntastic_cpp_compiler_options = '-std=c++14 -ggdb3 -Wextra -Winline -Wconversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wall -Wpedantic -Waddress -Warray-bounds -Wcast-align -Wcast-qual -Wchar-subscripts -Wclobbered -Wcomment -Wcoverage-mismatch -Wdisabled-optimization -Wempty-body -Wenum-compare -Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wignored-qualifiers -Winit-self -Wint-to-pointer-cast -Winvalid-offsetof -Winvalid-pch -Wunsafe-loop-optimizations -Wmain -Wmissing-braces -Wmissing-field-initializers -Wmissing-include-dirs -Wmissing-noreturn -Wmultichar -Wnonnull -Woverflow -Woverlength-strings -Wpacked -Wpacked-bitfield-compat -Wparentheses -Wpointer-arith -Wredundant-decls -Wreturn-type -Wsequence-point -Wshadow -Wsign-compare -Wstack-protector -Wstrict-aliasing -Wstrict-overflow -Wswitch -Wswitch-default -Wswitch-enum -Wsync-nand -Wtrigraphs -Wtype-limits -Wuninitialized -Wunknown-pragmas -Wpragmas -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable -Wunused-but-set-parameter -Wunused-but-set-variable -Wvariadic-macros -Wvla -Wvolatile-register-var -Wwrite-strings'
-    let g:syntastic_mode_map = {
-        \ 'mode': 'passive',
-        \ 'active_filetypes':
-        \ ['c', 'cpp', 'perl', 'javascript', 'html', 'python', 'sh'] }
+
+    let g:syntastic_c_check_header = 1
+    let g:syntastic_c_include_dirs = ['~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/']
+        " \ '~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/',
+        " \ '~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/']
+
     let g:syntastic_javascript_checkers = ['jshint']
     let g:syntastic_python_python_exec = '/bin/python3'
     let g:syntastic_python_checkers = ['pylint']
@@ -874,13 +861,6 @@ nnoremap <F4> :UndotreeToggle<cr>
 " let g:neocomplete#enable_auto_select = 1
 " let g:neocomplete#disable_auto_complete = 1
 " inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 " if !exists('g:neocomplete#sources#omni#input_patterns')
