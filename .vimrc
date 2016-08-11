@@ -147,6 +147,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'wting/rust.vim'           , { 'for': 'rust'       }
     " Plug 'ervandew/eclim'           , { 'for': 'java' }
 
+    " Arduino
+    Plug 'tclem/vim-arduino'
+
     " Awesome syntax checker.
     " REQUIREMENTS: See :h syntastic-intro
     Plug 'scrooloose/syntastic'
