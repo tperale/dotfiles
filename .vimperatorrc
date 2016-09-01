@@ -13,4 +13,6 @@ function scihubify() {
     liberator.execute( ":open " + url ) ;
 }
 EOF
-command! scihubify javascript scihubify() )}
+command! scihubify javascript scihubify()
+
+let g:wallabag_url="https://www.framabag.org/u/tperale"
