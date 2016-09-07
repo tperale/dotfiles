@@ -176,6 +176,12 @@ call plug#begin('~/.vim/plugged')
     " Snippets
     Plug 'SirVer/ultisnips' 
 
+    " ## FUZZY FINDER ##
+    " A command-line fuzzy finder written in Go
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
+    " bundle of fzf-based commands and mappings
+    Plug 'junegunn/fzf.vim'
+
 call plug#end()
 
  
@@ -759,7 +765,6 @@ call plug#end()
 let g:gist_clip_command = 'xclip -selection clipboard'
 let g:gist_post_private = 1
 let g:gist_post_anonymous = 1
-let g:gist_open_browser_after_post = 1
 
 " ChooseWindow, choose in witch window, move.
 " nmap - <Plug>(choosewin)
