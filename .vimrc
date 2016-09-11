@@ -141,6 +141,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-salve'         , { 'for' : 'clojure' }
 
     Plug 'pangloss/vim-javascript'  , { 'for': 'javascript' }
+    Plug 'mxw/vim-jsx'              , { 'for': 'javascript' }
     Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
     Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
     Plug 'slim-template/vim-slim'   , { 'for': 'slim'       }
@@ -584,7 +585,7 @@ call plug#end()
         " \ '~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/',
         " \ '~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/']
 
-    let g:syntastic_javascript_checkers = ['jshint']
+    let g:syntastic_javascript_checkers = ['eslint']
     let g:syntastic_python_python_exec = '/bin/python3'
     let g:syntastic_python_checkers = ['pylint']
     let g:syntastic_html_tidy_exec = 'tidy5'
@@ -895,3 +896,5 @@ function g:Multiple_cursors_after()
 endfunction
 
 let g:ackprg = 'ag --vimgrep'
+
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
