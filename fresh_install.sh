@@ -87,6 +87,7 @@ $m davfs2 # mount WebDAV
 $m djmount # mount upnp
 $m syncthing
 $m audacity
+$m udevil # mount usb automatically
 
 $m the_silver_searcher # Code searcher.
 $m keybase # see keybase.io
