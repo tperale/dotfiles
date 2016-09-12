@@ -31,10 +31,6 @@ call plug#begin('~/.vim/plugged')
 
     Plug 'vim-scripts/a.vim'
 
-    " Latex
-    Plug 'jcf/vim-latex', { 'for' : ['tex', 'latex'] }
-    Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
-
     " <Tab> everything!
     " Plugin 'ervandew/supertab'
     "
@@ -47,58 +43,55 @@ call plug#begin('~/.vim/plugged')
     function! DoRemote(arg)
         UpdateRemotePlugins
     endfunction
-    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-    " Omnicomplete for C family languages.
-    " Plug 'zchee/deoplete-clang'
-    Plug 'Rip-Rip/clang_complete'
-    " Include completion.
-    Plug 'Shougo/neoinclude.vim'
-    " Python completion.
-    Plug 'zchee/deoplete-jedi'
-    " Javascript code analysis.
-    Plug 'carlitux/deoplete-ternjs'
-
-    " Fuzzy finder (files, mru, etc)
-    Plug 'kien/ctrlp.vim'
-
+    " STYLE
+    Plug 'nanotech/jellybeans.vim'
+    Plug 'tomasr/molokai'
     " A pretty statusline, bufferline integration
     Plug 'itchyny/lightline.vim'
     Plug 'bling/vim-bufferline'
+    " A fancy start screen, shows MRU etc.
+    Plug 'mhinz/vim-startify'
+    " Show line indention.
+    Plug 'Yggdroot/indentLine'
 
+    " GIT
+    " Git wrapper inside Vim
+    Plug 'tpope/vim-fugitive'
+    " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
+    Plug 'mhinz/vim-signify'
+
+    " MOTION
     " Easy... motions... yeah.
     Plug 'Lokaltog/vim-easymotion'
-
     " Glorious colorscheme
-    Plug 'nanotech/jellybeans.vim'
-    Plug 'tomasr/molokai'
     Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
-
     " UndoTree
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-
     " Super easy commenting, toggle comments etc
     " Plug 'scrooloose/nerdcommenter'
     Plug 'tpope/vim-commentary'
-
     " Autoclose (, " etc
     Plug 'Townk/vim-autoclose'
-
-    " Git wrapper inside Vim
-    Plug 'tpope/vim-fugitive'
-
     " Handle surround chars like ''
     Plug 'tpope/vim-surround'
-
     " Align your = etc.
     Plug 'vim-scripts/Align'
-
+    " A vim plugin that simplifies the transition between multiline and single-line code
+    Plug 'AndrewRadev/splitjoin.vim'
     " Plug 't9md/choosewin'  
-
     " Multiple cursor
     Plug 'terryma/vim-multiple-cursors'
+    " A command-line fuzzy finder written in Go
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
+    " bundle of fzf-based commands and mappings
+    Plug 'junegunn/fzf.vim'
+    " Code searcher.
+    Plug 'mileszs/ack.vim'
+    " This plugin automatically adjusts 'shiftwidth' and 
+    " 'expandtab' heuristically based on the current file
+    Plug 'tpope/vim-sleuth'
 
     " function Build_Color_Coded(info)
-
     "       " info is a dictionary with 3 fields
     "       " - name:   name of the plugin
     "       " - status: 'installed', 'updated', or 'unchanged'
@@ -123,15 +116,21 @@ call plug#begin('~/.vim/plugged')
     Plug 'mattn/gist-vim', { 'on' : 'Gist' }
     Plug 'mattn/webapi-vim'
 
-    " A fancy start screen, shows MRU etc.
-    Plug 'mhinz/vim-startify'
+    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+    " Include completion.
+    Plug 'Shougo/neoinclude.vim'
+    " Python completion.
+    Plug 'zchee/deoplete-jedi'
 
-    " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
-    Plug 'mhinz/vim-signify'
+    " Awesome syntax checker.
+    " REQUIREMENTS: See :h syntastic-intro
+    Plug 'scrooloose/syntastic'
 
+    " Omnicomplete for C family languages.
+    " Plug 'zchee/deoplete-clang'
+    Plug 'Rip-Rip/clang_complete'
     " lisp dev
     Plug 'mikaelj/limp', { 'for' : ['lisp', 'cl', 'scheme'] }
-
     " REPL clojure
     Plug 'tpope/vim-fireplace'     , { 'for' : 'clojure' }
     Plug 'tpope/vim-classpath'     , { 'for' : 'clojure' }
@@ -139,49 +138,35 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-projectionist' , { 'for' : 'clojure' }
     Plug 'tpope/vim-dispatch'      , { 'for' : 'clojure' }
     Plug 'tpope/vim-salve'         , { 'for' : 'clojure' }
-
     Plug 'pangloss/vim-javascript'  , { 'for': 'javascript' }
+    Plug 'jelera/vim-javascript-syntax' , { 'for': 'javascript' }
+    " Javascript code analysis.
+    Plug 'carlitux/deoplete-ternjs' , { 'for': 'javascript' }
     Plug 'mxw/vim-jsx'              , { 'for': 'javascript' }
+    Plug 'skammer/vim-css-color'    , { 'for': ['css', 'scss'] }
     Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
     Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
     Plug 'slim-template/vim-slim'   , { 'for': 'slim'       }
     Plug 'wting/rust.vim'           , { 'for': 'rust'       }
     " Plug 'ervandew/eclim'           , { 'for': 'java' }
-
+    " Latex
+    Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
+    " A modern vim plugin for editing LaTeX files
+    Plug 'lervag/vimtex'
     " Arduino
     Plug 'tclem/vim-arduino'
-
-    " Awesome syntax checker.
-    " REQUIREMENTS: See :h syntastic-intro
-    Plug 'scrooloose/syntastic'
+    " SaltStack for vim.
+    Plug 'saltstack/salt-vim'
 
     " Functions, class data etc.
     " REQUIREMENTS: (exuberant)-ctags
     Plug 'majutsushi/tagbar'
-
-    " SaltStack for vim.
-    Plug 'saltstack/salt-vim'
-
-    " Code searcher.
-    Plug 'mileszs/ack.vim'
-
-    " Show line indention.
-    Plug 'Yggdroot/indentLine'
-    " This plugin automatically adjusts 'shiftwidth' and 
-    " 'expandtab' heuristically based on the current file
-    Plug 'tpope/vim-sleuth'
 
     " A plugin to write plain-text notes.
     Plug 'junegunn/vim-journal'
 
     " Snippets
     Plug 'SirVer/ultisnips' 
-
-    " ## FUZZY FINDER ##
-    " A command-line fuzzy finder written in Go
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
-    " bundle of fzf-based commands and mappings
-    Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -543,7 +528,6 @@ call plug#end()
 """ }}}
 """ Plugin settings {{{
     " Startify, the fancy start page
-    let g:ctrlp_reuse_window = 'startify' " don't split in startify
     let g:startify_bookmarks = [
         \ $HOME . "/.vimrc", $HOME . "/.vimrc.first",
         \ $HOME . "/.vimrc.last", $HOME . "/.vimrc.plugins"
@@ -556,10 +540,6 @@ call plug#end()
         \ ''
         \ ]
 
-    " CtrlP - don't recalculate files on start (slow)
-    let g:ctrlp_clear_cache_on_exit = 0
-    let g:ctrlp_working_path_mode = 'ra'
-
     " TagBar
     let g:tagbar_left = 0
     let g:tagbar_width = 30
@@ -567,7 +547,6 @@ call plug#end()
 
     " Syntastic - This is largely up to your own usage, and override these
     "             changes if be needed. This is merely an exemplification.
-
     let g:syntastic_mode_map = {
         \ 'mode': 'passive',
         \ 'active_filetypes':
@@ -678,16 +657,6 @@ call plug#end()
             return &ft !~? 'help' && &readonly ? '≠' : '' " or ⭤
         endfunction
 
-        function! CtrlPMark()
-            if expand('%:t') =~ 'ControlP'
-                call lightline#link('iR'[g:lightline.ctrlp_regex])
-                return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-                    \ , g:lightline.ctrlp_next], 0)
-            else
-                return ''
-            endif
-        endfunction
-
         function! MyBufferline()
             call bufferline#refresh_status()
             let b = g:bufferline_status_info.before
@@ -718,11 +687,6 @@ call plug#end()
         function! MyFiletype()
             return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
         endfunction
-
-        let g:ctrlp_status_func = {
-            \ 'main': 'CtrlPStatusFunc_1',
-            \ 'prog': 'CtrlPStatusFunc_2',
-            \ }
 
         function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
             let g:lightline.ctrlp_regex = a:regex
@@ -788,104 +752,7 @@ nnoremap <F3> :NumbersToggle<CR>
 
 nnoremap <F4> :UndotreeToggle<cr>
 
-" YouCompleteMe options
-" let g:ycm_register_as_syntastic_checker = 1 "default 1
-" let g:Show_diagnostics_ui = 1 "default 1
-
-"will put icons in Vim's gutter on lines that have a diagnostic set.
-"Turning this off will also turn off the YcmErrorLine and YcmWarningLine
-"highlighting
-" let g:ycm_enable_diagnostic_signs = 1
-" let g:ycm_enable_diagnostic_highlighting = 0
-" let g:ycm_always_populate_location_list = 1 "default 0
-" let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
-
-" let g:ycm_complete_in_strings = 1 "default 1
-" let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
-" let g:ycm_path_to_python_interpreter = '' "default ''
-
-" let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
-" let g:ycm_server_log_level = 'info' "default info
-
-" let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
-" let g:ycm_confirm_extra_conf = 1
-
-" let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
-" let g:ycm_filetype_whitelist = { '*': 1 }
-" let g:ycm_key_invoke_completion = '<C-Space>'
-
-" nnoremap <F10> :YcmForceCompileAndDiagnostics <CR> ]
-
-
-" Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-" let g:acp_enableAtStartup = 0
-" Use neocomplete.
-" let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-" let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-" let g:neocomplete#sources#syntax#min_keyword_length = 3
-" let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-" let g:neocomplete#sources#dictionary#dictionaries = {
-"     \ 'default' : '',
-"     \ 'vimshell' : $HOME.'/.vimshell_hist',
-"     \ 'scheme' : $HOME.'/.gosh_completions'
-"     \ }
-
-" Define keyword.
-" if !exists('g:neocomplete#keyword_patterns')
-"     let g:neocomplete#keyword_patterns = {}
-" endif
-" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-
-" Plugin key-mappings.
-" inoremap <expr><C-g>     neocomplete#undo_completion()
-" inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-"     return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-    " For no inserting <CR> key.
-    " return pumvisible() ? "\<C-y>" : "\<CR>"
-" endfunction
-" <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-" inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" AutoComplPop like behavior.
-" let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-" set completeopt+=longest
-" let g:neocomplete#enable_auto_select = 1
-" let g:neocomplete#disable_auto_complete = 1
-" inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable heavy omni completion.
-" if !exists('g:neocomplete#sources#omni#input_patterns')
-"     let g:neocomplete#sources#omni#input_patterns = {}
-" endif
-" let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-" let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-" let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::' " """" " "
-
-" let g:EclimCompletionMethod = 'omnifunc'
-
-" use deoplete.
+" Deoplete autocompletion.
 let g:deoplete#enable_at_startup = 1
 
 function g:Multiple_cursors_before()
@@ -895,6 +762,8 @@ function g:Multiple_cursors_after()
     let g:deoplete#disable_auto_complete = 0
 endfunction
 
+" ag code searcher
 let g:ackprg = 'ag --vimgrep'
 
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+" Allow JSX in normal JS files
+let g:jsx_ext_required = 0 
