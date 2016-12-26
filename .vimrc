@@ -142,19 +142,25 @@ call plug#begin('~/.vim/plugged')
     Plug 'jelera/vim-javascript-syntax' , { 'for': 'javascript' }
     " Javascript code analysis.
     Plug 'carlitux/deoplete-ternjs' , { 'for': 'javascript' }
-    Plug 'mxw/vim-jsx'              , { 'for': 'javascript' }
     Plug 'skammer/vim-css-color'    , { 'for': ['css', 'scss'] }
     Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
     Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
     Plug 'slim-template/vim-slim'   , { 'for': 'slim'       }
     Plug 'wting/rust.vim'           , { 'for': 'rust'       }
+
+    " REACT plugins
+    Plug 'mxw/vim-jsx'              , { 'for': 'javascript' }
+    " React code snippets
+    Plug 'epilande/vim-es2015-snippets'
+    Plug 'epilande/vim-react-snippets'
+
     " Plug 'ervandew/eclim'           , { 'for': 'java' }
     " Latex
     Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
     " A modern vim plugin for editing LaTeX files
     Plug 'lervag/vimtex'
     " Arduino
-    Plug 'tclem/vim-arduino'
+    Plug 'stevearc/vim-arduino'
     " SaltStack for vim.
     Plug 'saltstack/salt-vim'
 
@@ -566,7 +572,7 @@ call plug#end()
 
     let g:syntastic_javascript_checkers = ['eslint']
     let g:syntastic_python_python_exec = '/bin/python3'
-    let g:syntastic_python_checkers = ['pylint']
+    " let g:syntastic_python_checkers = ['pylint']
     let g:syntastic_html_tidy_exec = 'tidy5'
     let g:syntastic_markdown_mdl_exec = 'textlint'
 
