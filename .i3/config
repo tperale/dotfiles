@@ -41,23 +41,6 @@ set $default_gaps_outer 3
 gaps inner $default_gaps_inner
 gaps outer $default_gaps_outer
 
-# Exit
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+Pause mode "$mode_system"
-
-
 # Colors
 #                       BORDER     BACKGROUND TEXT   INDICATOR
 client.focused          $lime      $lime      $white $lime
@@ -90,7 +73,12 @@ bindsym $mod+Return exec terminator
 bindsym $mod+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec lighthouse | sh
+bindsym $mod+d exec "rofi -combi-modi window,drun,ssh -show combi"
+bindsym $mod+p exec rofi-pass
+bindsym $mod+t exec dofi
+bindsym $mod+n exec "/home/thomas/bin/rofi_notes.sh"
+bindsym $mod+g exec "/home/thomas/bin/rofi-surfraw"
+bindsym $mod+Pause exec "/home/thomas/bin/rofi-power"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -187,17 +175,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Screenshot
-set $printscreen Select (s), All (a), Use (u)
-mode "$printscreen" {
-    bindsym a mode "default", exec --no-startup-id "mkdir -p Pictures/Screenshots && scrot Pictures/Screenshots/'SS_a - %Y-%m-%d--%_$wx$h_scrot.png'"
-    bindsym s mode "default", exec --no-startup-id "mkdir -p Pictures/Screenshots && scrot -s Pictures/Screenshots/'SS_s - %Y-%m-%d--%_$wx$h_scrot.png'"
-    bindsym u mode "default", exec --no-startup-id "mkdir -p Pictures/Screenshots && scrot -u Pictures/Screenshots/'SS_u - %Y-%m-%d--%_$wx$h_scrot.png'"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym Print mode "$printscreen"
+bindsym Print exec teiler 
 
 # VOLUME ADJUSTMENT
 bindsym $MOD+SHIFT+Up exec amixer set Master 5.0%+
@@ -250,9 +228,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
 exec --no-startup-id thunderbird
 exec launch_tor
-exec --no-startup-id qtox
 
 exec clipit
-exec conky
 
 exec_always --no-startup-id feh --bg-scale ~/.i3/wallpaper.png
