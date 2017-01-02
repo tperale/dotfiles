@@ -1,4 +1,3 @@
-# some more ls aliases
 alias ll='ls -l'
 alias sl='ls --color=auto'
 alias lsl='ls --color=auto'
@@ -28,27 +27,7 @@ alias rm='rm -I'
 alias vim="nvim"
 alias vi="nvim"
 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-
-alias ulbmail='mutt -F ~/.mutt/muttrc.ulb'
-alias hotmail='mutt -F ~/.mutt/muttrc.hotmail'
-alias openmail='mutt -F ~/.mutt/muttrc.openmail'
-
 alias launch_tor='sudo chroot --userspec=tor:tor /opt/torchroot /usr/bin/tor'
 
 alias mountusb='udiskie-mount -a'
 alias umountusb='udiskie-umount -a'
-
-alias cfg_fish='vim ~/.config/config.fish'
-alias cfg_i3='vim ~/.i3/config'
-alias cfg_dunst='vim ~/.config/dunst/dunstrc'
-alias cfg_htop='vim ~/.config/htop/htoprc'
-alias cfg_qbit='vim ~/.config/qBittorrent/qBittorrent.conf'
-alias cfg_mpv='vim ~/.config/mpv/mpv.conf'
-alias cfg_zathura='vim ~/.config/zathura/zathurarc'
-alias cfg_terminator='vim ~/.config/terminator/config'
-alias cfg_vim='vim ~/.vimrc'
