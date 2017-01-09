@@ -138,35 +138,40 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-projectionist' , { 'for' : 'clojure' }
     Plug 'tpope/vim-dispatch'      , { 'for' : 'clojure' }
     Plug 'tpope/vim-salve'         , { 'for' : 'clojure' }
-    Plug 'pangloss/vim-javascript'  , { 'for': 'javascript' }
-    Plug 'jelera/vim-javascript-syntax' , { 'for': 'javascript' }
-    " Javascript code analysis.
-    Plug 'carlitux/deoplete-ternjs' , { 'for': 'javascript' }
-    Plug 'skammer/vim-css-color'    , { 'for': ['css', 'scss'] }
-    Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
+
     Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
     Plug 'slim-template/vim-slim'   , { 'for': 'slim'       }
     Plug 'wting/rust.vim'           , { 'for': 'rust'       }
 
-    " REACT plugins
+    " Javascript plugins
+    Plug 'pangloss/vim-javascript'  , { 'for': 'javascript' }
+    Plug 'jelera/vim-javascript-syntax' , { 'for': 'javascript' }
     Plug 'mxw/vim-jsx'              , { 'for': 'javascript' }
-    " React code snippets
+    Plug 'carlitux/deoplete-ternjs' , { 'for': 'javascript' }
+    Plug 'othree/javascript-libraries-syntax.vim'
+    Plug 'jiangmiao/simple-javascript-indenter'
     Plug 'epilande/vim-es2015-snippets'
     Plug 'epilande/vim-react-snippets'
+    Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
 
-    " Plug 'ervandew/eclim'           , { 'for': 'java' }
     " Latex
     Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
     " A modern vim plugin for editing LaTeX files
     Plug 'lervag/vimtex'
-    " Arduino
-    Plug 'stevearc/vim-arduino'
-    " SaltStack for vim.
+
+    " Syntax highlighting
     Plug 'saltstack/salt-vim'
+    Plug 'mitsuhiko/vim-jinja'
+    Plug 'hail2u/vim-css3-syntax'
+    Plug 'skammer/vim-css-color'    , { 'for': ['css', 'scss'] }
+    Plug 'othree/html5.vim'
+
 
     " Functions, class data etc.
     " REQUIREMENTS: (exuberant)-ctags
     Plug 'majutsushi/tagbar'
+
+    Plug 'itchyny/dictionary.vim'
 
     " A plugin to write plain-text notes.
     Plug 'junegunn/vim-journal'
