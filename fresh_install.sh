@@ -74,6 +74,9 @@ $m mumble # Voip
 $m toxcore # Chat.
 $m utox # Chat client.
 $m tlp # Power management.
+$m tlp-rdw
+$m tp_smapi-dkms
+$m acpi_call-dkms
 $m arandr
 $m ttf-hack
 $m acpi
@@ -99,15 +102,25 @@ $m gtk2-patched-filechooser-icon-view # thumbnail in gtk
 $m pavucontrol
 $m pulseaudio-dlna
 
+# rofi
+$m rofi
+$m rofi-pass
+$m surfraw
+
 # Essential programs
 $m fortune-mod
 $m cowsay
 
+$m diff-so-fancy
+
 $m ngrok-bin
 pip install youtube-dl
 pip install subliminal
+pip install caldav
+pip install icalendar
 npm install -g peerflix
 npm install -g jshint
 npm install -g gulp-cli
 npm install -g grunt-cli
 npm install -g tern
+npm install -g release
