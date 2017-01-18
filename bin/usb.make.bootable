@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# $1 path to .iso
+# $2 path to usb
+
+# make sure $2 is umount
+
+dd if="$1" of="$2" bs=4M
+sync
+
