@@ -148,6 +148,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'jelera/vim-javascript-syntax' , { 'for': 'javascript' }
     Plug 'mxw/vim-jsx'              , { 'for': 'javascript' }
     Plug 'carlitux/deoplete-ternjs' , { 'for': 'javascript' }
+    Plug 'sindresorhus/vim-xo'      , { 'for': 'javascript' } " Javascript Style Linter with XO
     Plug 'othree/javascript-libraries-syntax.vim'
     Plug 'jiangmiao/simple-javascript-indenter'
     Plug 'epilande/vim-es2015-snippets'
@@ -166,6 +167,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'skammer/vim-css-color'    , { 'for': ['css', 'scss'] }
     Plug 'othree/html5.vim'
 
+    " Arduino
+    Plug 'vim-scripts/Arduino-syntax-file'
+    " Plug 'coddingtonbear/neomake-platformio'
 
     " Functions, class data etc.
     " REQUIREMENTS: (exuberant)-ctags
@@ -564,20 +568,16 @@ call plug#end()
         \ ['c', 'cpp', 'perl', 'javascript', 'html', 'python', 'sh'] }
 
     let g:syntastic_cpp_check_header = 1
-    let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtWidgets/"]
-    let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtGui/"]
-    let g:syntastic_cpp_include_dirs = ["/usr/include/qt/QtCore/"]
-    let g:syntastic_cpp_include_dirs = ["/usr/include/qt/"]
     let g:syntastic_cpp_compiler_options = '-std=c++14 -ggdb3 -Wextra -Winline -Wconversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wall -Wpedantic -Waddress -Warray-bounds -Wcast-align -Wcast-qual -Wchar-subscripts -Wclobbered -Wcomment -Wcoverage-mismatch -Wdisabled-optimization -Wempty-body -Wenum-compare -Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wignored-qualifiers -Winit-self -Wint-to-pointer-cast -Winvalid-offsetof -Winvalid-pch -Wunsafe-loop-optimizations -Wmain -Wmissing-braces -Wmissing-field-initializers -Wmissing-include-dirs -Wmissing-noreturn -Wmultichar -Wnonnull -Woverflow -Woverlength-strings -Wpacked -Wpacked-bitfield-compat -Wparentheses -Wpointer-arith -Wredundant-decls -Wreturn-type -Wsequence-point -Wshadow -Wsign-compare -Wstack-protector -Wstrict-aliasing -Wstrict-overflow -Wswitch -Wswitch-default -Wswitch-enum -Wsync-nand -Wtrigraphs -Wtype-limits -Wuninitialized -Wunknown-pragmas -Wpragmas -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable -Wunused-but-set-parameter -Wunused-but-set-variable -Wvariadic-macros -Wvla -Wvolatile-register-var -Wwrite-strings'
 
     let g:syntastic_c_check_header = 1
     let g:syntastic_c_include_dirs = ['~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/']
         " \ '~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/',
         " \ '~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/']
+    let g:syntastic_c_avrgcc_config_file = '.config'
 
-    let g:syntastic_javascript_checkers = ['eslint']
+    let g:syntastic_javascript_checkers = ['xo', 'eslint']
     let g:syntastic_python_python_exec = '/bin/python3'
-    " let g:syntastic_python_checkers = ['pylint']
     let g:syntastic_html_tidy_exec = 'tidy5'
     let g:syntastic_markdown_mdl_exec = 'textlint'
 
