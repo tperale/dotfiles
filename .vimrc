@@ -107,9 +107,6 @@ call plug#begin('~/.vim/plugged')
     " " Better colors.
     " Plug 'jeaye/color_coded', { 'do' : function('Build_Color_Coded') }
     
-    " Correction orthographique.
-    " Plugin 'dpelle/vim-LanguageTool '
-
     " Relative num in insert mode
     Plug 'myusuf3/numbers.vim' " , { 'on' : 'NumbersToggle' }
 
@@ -138,20 +135,18 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-dispatch'      , { 'for' : 'clojure' }
     Plug 'tpope/vim-salve'         , { 'for' : 'clojure' }
 
-    Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
     Plug 'slim-template/vim-slim'   , { 'for': 'slim'       }
     Plug 'wting/rust.vim'           , { 'for': 'rust'       }
 
     " Javascript plugins
-    Plug 'pangloss/vim-javascript'  , { 'for': 'javascript' }
-    Plug 'jelera/vim-javascript-syntax' , { 'for': 'javascript' }
-    Plug 'mxw/vim-jsx'              , { 'for': 'javascript' }
-    Plug 'carlitux/deoplete-ternjs' , { 'for': 'javascript' }
-    Plug 'othree/javascript-libraries-syntax.vim'
-    Plug 'jiangmiao/simple-javascript-indenter'
-    Plug 'epilande/vim-es2015-snippets'
-    Plug 'epilande/vim-react-snippets'
-    Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
+    Plug 'pangloss/vim-javascript'                  , { 'for': ['javascript', 'jsx'] }
+    Plug 'jelera/vim-javascript-syntax'             , { 'for': ['javascript', 'jsx'] }
+    Plug 'mxw/vim-jsx'                              , { 'for': ['javascript', 'jsx'] }
+    Plug 'othree/javascript-libraries-syntax.vim'   , { 'for': ['javascript', 'jsx'] }
+    Plug 'jiangmiao/simple-javascript-indenter'     , { 'for': ['javascript', 'jsx'] }
+    Plug 'epilande/vim-es2015-snippets'             , { 'for': ['javascript', 'jsx'] }
+    Plug 'epilande/vim-react-snippets'              , { 'for': ['javascript', 'jsx'] }
+    Plug 'kchmck/vim-coffee-script'                 , { 'for': 'coffee' }
 
     " Latex
     " Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
@@ -160,10 +155,10 @@ call plug#begin('~/.vim/plugged')
 
     " Syntax highlighting
     Plug 'saltstack/salt-vim'
-    Plug 'mitsuhiko/vim-jinja'
-    Plug 'hail2u/vim-css3-syntax'
-    Plug 'skammer/vim-css-color'    , { 'for': ['css', 'scss'] }
-    Plug 'othree/html5.vim'
+    Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss'] }
+    Plug 'gko/vim-coloresque'
+    Plug 'othree/html5.vim'      , { 'for': 'html' }
+    Plug 'mitsuhiko/vim-jinja'   , { 'for': 'html' }
 
     " Arduino
     Plug 'vim-scripts/Arduino-syntax-file'
@@ -173,7 +168,12 @@ call plug#begin('~/.vim/plugged')
     " REQUIREMENTS: (exuberant)-ctags
     Plug 'majutsushi/tagbar'
 
+
+    " Text processing
+    Plug 'plasticboy/vim-markdown'  , { 'for': 'markdown'   }
     Plug 'itchyny/dictionary.vim'
+    " Correction orthographique.
+    " Plugin 'dpelle/vim-LanguageTool '
 
     " A plugin to write plain-text notes.
     Plug 'junegunn/vim-journal'
