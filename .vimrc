@@ -122,9 +122,8 @@ call plug#begin('~/.vim/plugged')
     " Python completion.
     Plug 'zchee/deoplete-jedi'
 
-    " Awesome syntax checker.
-    " REQUIREMENTS: See :h syntastic-intro
-    Plug 'scrooloose/syntastic'
+    " Linter
+    Plug 'w0rp/ale'
 
     " Omnicomplete for C family languages.
     " Plug 'zchee/deoplete-clang'
@@ -148,7 +147,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'jelera/vim-javascript-syntax' , { 'for': 'javascript' }
     Plug 'mxw/vim-jsx'              , { 'for': 'javascript' }
     Plug 'carlitux/deoplete-ternjs' , { 'for': 'javascript' }
-    Plug 'sindresorhus/vim-xo'      , { 'for': 'javascript' } " Javascript Style Linter with XO
     Plug 'othree/javascript-libraries-syntax.vim'
     Plug 'jiangmiao/simple-javascript-indenter'
     Plug 'epilande/vim-es2015-snippets'
@@ -156,9 +154,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'kchmck/vim-coffee-script' , { 'for': 'coffee'     }
 
     " Latex
-    Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
+    " Plug 'xuhdev/vim-latex-live-preview', { 'on': 'LLPStartPreview' }
     " A modern vim plugin for editing LaTeX files
-    Plug 'lervag/vimtex'
+    " Plug 'lervag/vimtex'
 
     " Syntax highlighting
     Plug 'saltstack/salt-vim'
@@ -535,10 +533,6 @@ call plug#end()
 
         " Toggle pastemode, doesn't indent
         set pastetoggle=<leader>p
-
-        " Syntastic - toggle error list. Probably should be toggleable.
-        noremap <silent><leader>lo :Errors<CR>
-        noremap <silent><leader>lc :lcl<CR>
     """ }}}
 """ }}}
 """ Plugin settings {{{
@@ -559,27 +553,6 @@ call plug#end()
     let g:tagbar_left = 0
     let g:tagbar_width = 30
     set tags=tags;/
-
-    " Syntastic - This is largely up to your own usage, and override these
-    "             changes if be needed. This is merely an exemplification.
-    let g:syntastic_mode_map = {
-        \ 'mode': 'passive',
-        \ 'active_filetypes':
-        \ ['c', 'cpp', 'perl', 'javascript', 'html', 'python', 'sh'] }
-
-    let g:syntastic_cpp_check_header = 1
-    let g:syntastic_cpp_compiler_options = '-std=c++14 -ggdb3 -Wextra -Winline -Wconversion -Weffc++ -Wstrict-null-sentinel -Wold-style-cast -Wnoexcept -Wctor-dtor-privacy -Woverloaded-virtual -Wsign-promo -Wzero-as-null-pointer-constant -Wall -Wpedantic -Waddress -Warray-bounds -Wcast-align -Wcast-qual -Wchar-subscripts -Wclobbered -Wcomment -Wcoverage-mismatch -Wdisabled-optimization -Wempty-body -Wenum-compare -Wformat -Wformat-nonliteral -Wformat-security -Wformat-y2k -Wignored-qualifiers -Winit-self -Wint-to-pointer-cast -Winvalid-offsetof -Winvalid-pch -Wunsafe-loop-optimizations -Wmain -Wmissing-braces -Wmissing-field-initializers -Wmissing-include-dirs -Wmissing-noreturn -Wmultichar -Wnonnull -Woverflow -Woverlength-strings -Wpacked -Wpacked-bitfield-compat -Wparentheses -Wpointer-arith -Wredundant-decls -Wreturn-type -Wsequence-point -Wshadow -Wsign-compare -Wstack-protector -Wstrict-aliasing -Wstrict-overflow -Wswitch -Wswitch-default -Wswitch-enum -Wsync-nand -Wtrigraphs -Wtype-limits -Wuninitialized -Wunknown-pragmas -Wpragmas -Wunreachable-code -Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable -Wunused-but-set-parameter -Wunused-but-set-variable -Wvariadic-macros -Wvla -Wvolatile-register-var -Wwrite-strings'
-
-    let g:syntastic_c_check_header = 1
-    let g:syntastic_c_include_dirs = ['~/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/include/']
-        " \ '~/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt/include/',
-        " \ '~/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk/include/']
-    let g:syntastic_c_avrgcc_config_file = '.config'
-
-    let g:syntastic_javascript_checkers = ['xo', 'eslint']
-    let g:syntastic_python_python_exec = '/bin/python3'
-    let g:syntastic_html_tidy_exec = 'tidy5'
-    let g:syntastic_markdown_mdl_exec = 'textlint'
 
     " Netrw - the bundled (network) file and directory browser
     let g:netrw_banner = 0
@@ -605,7 +578,7 @@ call plug#end()
             \     'right': [
             \         ['lineinfo'],
             \         ['percent'],
-            \         ['fileformat', 'fileencoding', 'filetype', 'syntastic']
+            \         ['fileformat', 'fileencoding', 'filetype']
             \     ]
             \ },
             \ 'component': {
@@ -620,12 +593,6 @@ call plug#end()
             \     'fileformat'   : 'MyFileformat',
             \     'fileencoding' : 'MyFileencoding',
             \     'filetype'     : 'MyFiletype'
-            \ },
-            \ 'component_expand': {
-            \     'syntastic': 'SyntasticStatuslineFlag',
-            \ },
-            \ 'component_type': {
-            \     'syntastic': 'middle',
             \ },
             \ 'subseparator': {
             \     'left': '|', 'right': '|'
@@ -717,18 +684,6 @@ call plug#end()
             let g:lightline.fname = a:fname
             return lightline#statusline(0)
         endfunction
-
-        function! s:syntastic()
-            SyntasticCheck
-            call lightline#update()
-        endfunction
-
-        augroup AutoSyntastic
-            autocmd!
-            execute "autocmd FileType " .
-                        \join(g:syntastic_mode_map["active_filetypes"], ",") .
-                        \" autocmd BufWritePost <buffer> :call s:syntastic()"
-        augroup END
     """ }}}
 """ }}}
 """ Local ending config, will overwrite anything above. Generally use this. {{{{
@@ -778,3 +733,7 @@ let g:ackprg = 'ag --vimgrep'
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0 
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
