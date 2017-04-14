@@ -122,6 +122,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'zchee/deoplete-jedi'
     " Javascript completion
     Plug 'wokalski/autocomplete-flow'
+    " Java completion
+    Plug 'artur-shaik/vim-javacomplete2'
     " LaTeX completion
     Plug 'poppyschmo/deoplete-latex'
 
@@ -730,6 +732,8 @@ endfunction
 function g:Multiple_cursors_after()
     let g:deoplete#disable_auto_complete = 0
 endfunction
+
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " ag code searcher
 let g:ackprg = 'ag --vimgrep'
