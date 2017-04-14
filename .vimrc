@@ -113,18 +113,21 @@ call plug#begin('~/.vim/plugged')
     Plug 'mattn/gist-vim', { 'on' : 'Gist' }
     Plug 'mattn/webapi-vim'
 
-    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " C family completoin
+    Plug 'zchee/deoplete-clang' 
     " Include completion.
     Plug 'Shougo/neoinclude.vim'
     " Python completion.
     Plug 'zchee/deoplete-jedi'
+    " Javascript completion
+    Plug 'wokalski/autocomplete-flow'
+    " LaTeX completion
+    Plug 'poppyschmo/deoplete-latex'
 
     " Linter
     Plug 'w0rp/ale'
 
-    " Omnicomplete for C family languages.
-    " Plug 'zchee/deoplete-clang'
-    Plug 'Rip-Rip/clang_complete'
     " lisp dev
     Plug 'mikaelj/limp', { 'for' : ['lisp', 'cl', 'scheme'] }
     " REPL clojure
