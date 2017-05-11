@@ -1,0 +1,5 @@
+#!/bin/bash
+
+name="$(md5sum "$1" | cut -d ' ' -f 1).${1##*.}"
+url="http://sendnu.de/images/$name"
+scp -q "$1" root@sendnu.de:sendnu.de/static/images/$name && echo $url && echo $url | xclip
