@@ -31,13 +31,8 @@ call plug#begin('~/.vim/plugged')
 
     Plug 'vim-scripts/a.vim'
 
-    " <Tab> everything!
-    " Plugin 'ervandew/supertab'
-    "
-    " Plug 'Valloric/YouCompleteMe', { 'do': './install.py -clang-completer' }
-    " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-    "
-    " Plug 'Shougo/neocomplete.vim'
+    " Rename, create, delete files in vim
+    Plug 'cocopon/vaffle.vim'
 
     " Autocompletion
     function! DoRemote(arg)
@@ -59,6 +54,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'
     " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
     Plug 'mhinz/vim-signify'
+    " Better commit messages
+    Plug 'rhysd/committia.vim'
 
     " MOTION
     " Easy... motions... yeah.
@@ -108,7 +105,7 @@ call plug#begin('~/.vim/plugged')
     " Plug 'jeaye/color_coded', { 'do' : function('Build_Color_Coded') }
     
     " Relative num in insert mode
-    Plug 'myusuf3/numbers.vim' " , { 'on' : 'NumbersToggle' }
+    Plug 'myusuf3/numbers.vim'
 
     Plug 'mattn/gist-vim', { 'on' : 'Gist' }
     Plug 'mattn/webapi-vim'
@@ -126,6 +123,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'artur-shaik/vim-javacomplete2'
     " LaTeX completion
     Plug 'poppyschmo/deoplete-latex'
+    " Vim completion
+    Plug 'Shougo/neco-vim'
+    " Fish completion
+    Plug 'dag/vim-fish'
+    Plug 'ponko2/deoplete-fish'
+
+    " Autoformatter
+    Plug 'Chiel92/vim-autoformat'
 
     " Linter
     Plug 'w0rp/ale'
@@ -186,6 +191,12 @@ call plug#begin('~/.vim/plugged')
     " Snippets
     Plug 'SirVer/ultisnips' 
 
+    " Language Tools
+    Plug 'junegunn/goyo.vim'       , { 'for': ['markdown', 'tex', 'latex'] }
+    Plug 'junegunn/limelight.vim'  , { 'for': ['markdown', 'tex', 'latex'] }
+    Plug 'rhysd/vim-grammarous'    , { 'for': ['markdown', 'tex', 'latex'] }
+    Plug 'dpelle/vim-LanguageTool' , { 'for': ['markdown', 'tex', 'latex'] }
+
 call plug#end()
 
  
@@ -238,7 +249,6 @@ call plug#end()
     """ Interface general {{{
         set cursorline                              " hilight cursor line
         set more                                    " ---more--- like less
-        set number                                  " line numbers
         set scrolloff=3                             " lines above/below cursor
         set showcmd                                 " show cmds being typed
         set title                                   " window title
@@ -717,10 +727,6 @@ autocmd FileType tex setl updatetime=1
 let g:livepreview_previewer = 'zathura'
 nmap <F12> : LLPStartPreview<cr>
 
-" Numbers.vim
-nnoremap <F2> :NumbersOnOff<CR>
-nnoremap <F3> :NumbersToggle<CR>
-
 nnoremap <F4> :UndotreeToggle<cr>
 
 " Deoplete autocompletion.
@@ -741,6 +747,68 @@ let g:ackprg = 'ag --vimgrep'
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0 
 
+" Only use eslint to lint with Ale
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \}
+
+" VIM distraction free
+function! s:goyo_enter()
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  Limelight
+  NumbersDisable
+endfunction
+
+function! s:goyo_leave()
+  set showmode
+  set showcmd
+  set scrolloff=5
+  Limelight!
+  NumbersEnable
+endfunction
+
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.7
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+let g:limelight_bop = '^\s'
+let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" Commit messages modification
+let g:committia_hooks = {}
+function! g:committia_hooks.edit_open(info)
+    " Additional settings
+    setlocal spell
+
+    " If no commit message, start with insert mode
+    if a:info.vcs ==# 'git' && getline(1) ==# ''
+        startinsert
+    end
+
+    " Scroll the diff window from insert mode
+    " Map <C-n> and <C-p>
+    imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+    imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+endfunction
