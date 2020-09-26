@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-umount -t davfs "https://cloud.openmailbox.org/remote.php/webdav/"

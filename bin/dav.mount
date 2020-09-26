@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-DAV_FOLDER="/home/$(users)/Documents/dav/"
-mkdir -p "$DAV_FOLDER"
-mount -t davfs -o username="thomas.perale@openmailbox.org" "https://cloud.openmailbox.org/remote.php/webdav/" "$DAV_FOLDER"
