@@ -1,0 +1,5 @@
+[core]
+	excludesfile = /home/tperale/.gitignore
+[user]
+	email = perale.thomas@gmail.com
+	name = Thomas Perale
