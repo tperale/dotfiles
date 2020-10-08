@@ -1,0 +1,3 @@
+#!/bin/bash
+
+i3lockmore --image-fill $HOME/Pictures/wall/5.jpg

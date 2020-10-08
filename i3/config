@@ -71,7 +71,7 @@ font pango:monospace 8
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lockmore --nofork --image-fill /home/tperale/Pictures/wall/5.jpg
 exec compton
 
-bindsym $mod+c exec i3lockmore --image-fill /home/tperale/Pictures/wall/5.jpg
+bindsym $mod+c exec lock
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
