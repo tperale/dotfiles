@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+convert -density 1600 -background white -alpha remove -alpha off "output.pdf" -resize 1920x1080 out.png
