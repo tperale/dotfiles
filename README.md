@@ -2,6 +2,23 @@
 
 ## Install
 
+### DiplayLink ([wiki](https://wiki.archlinux.org/index.php/DisplayLink))
+
+If your computer is using a DisplayLink docking station make sure to install
+the `displaylink` driver from the AUR and `systemctl enable displaylink.service`.
+
+Configure Xorg with the following section to use it with xrandr by creating the 
+following file `/usr/share/X11/xorg.conf.d/20-evdidevice.conf`.
+
+```
+Section "OutputClass"
+	Identifier "DisplayLink"
+	MatchDriver "evdi"
+	Driver "modesetting"
+	Option  "AccelMethod" "none"
+EndSection
+```
+
 ## Key Combination
 
 ### i3
