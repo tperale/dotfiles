@@ -7,6 +7,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
+    " Plugin makes scrolling nice and smooth when pressing Ctrl-D and Ctrl-U
+    Plug 'psliwka/vim-smoothie'
+
     " GIT
     " Git wrapper inside Vim
     Plug 'tpope/vim-fugitive'
@@ -29,9 +32,8 @@ call plug#begin('~/.vim/plugged')
     " Linter
     " Plug 'dpelle/vim-LanguageTool'
     Plug 'merijn/writegooder.vim', { 'for': ['tex', 'markdown', 'latex'] }
-    Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'markdown', 'latex'] }
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd',]
+    let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex']
     " Language Typescript
     Plug 'leafgarland/typescript-vim'
     Plug 'peitalin/vim-jsx-typescript'
