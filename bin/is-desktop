@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DESKTOP_HOSTNAME="arch"
+
+[ "$(hostname)"  == "${DESKTOP_HOSTNAME}" ]

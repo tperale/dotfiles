@@ -1,0 +1,5 @@
+#!/bin/bash
+
+LAPTOP_HOSTNAME="thinkpad"
+
+[ "$(hostname)" = "${LAPTOP_HOSTNAME}" ]
