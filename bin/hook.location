@@ -1,0 +1,35 @@
+#!/bin/bash
+
+function is-work {
+    screen.work
+    LOG_FILE="/tmp/work-$(date '+%G-%m-%e')"
+    if [ -f "${LOG_FILE}" ]; then
+        date '+%T' > "${LOG_FILE}"
+    else
+        true
+    fi
+}
+
+function is-not-work {
+    screen.default
+}
+
+function is-home {
+    true;
+}
+
+function is-not-home {
+    true;
+}
+
+if is-work; then
+    is-work
+else
+    is-not-work
+fi
+
+if is-home; then
+    is-home
+else
+    is-not-home
+fi

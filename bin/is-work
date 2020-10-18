@@ -1,0 +1,6 @@
+#!/bin/bash
+
+WORK_WIFI="eduroam"
+WORK_WIFI2="ETROVUB-5G"
+
+[ "$(iwgetid -r)"  == "${WORK_WIFI}" ] || [ "$(iwgetid -r)"  == "${WORK_WIFI2}" ]

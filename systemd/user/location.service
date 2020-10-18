@@ -1,0 +1,8 @@
+[Unit]
+Description=Location check service
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=100
+ExecStart=/usr/bin/env hook.location
