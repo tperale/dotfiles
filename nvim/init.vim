@@ -33,7 +33,7 @@ call plug#begin('~/.vim/plugged')
     " Plug 'dpelle/vim-LanguageTool'
     Plug 'merijn/writegooder.vim', { 'for': ['tex', 'markdown', 'latex'] }
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex']
+    let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic']
     " Language Typescript
     Plug 'leafgarland/typescript-vim'
     Plug 'peitalin/vim-jsx-typescript'
