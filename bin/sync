@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+rclone $HOME/Sync/ drive:

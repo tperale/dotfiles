@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function is-work {
+function hook-is-work {
     screen.work
     LOG_FILE="/tmp/work-$(date '+%G-%m-%e')"
     if [ -f "${LOG_FILE}" ]; then
@@ -10,26 +10,26 @@ function is-work {
     fi
 }
 
-function is-not-work {
+function hook-is-not-work {
     screen.default
 }
 
-function is-home {
+function hook-is-home {
     true;
 }
 
-function is-not-home {
+function hook-is-not-home {
     true;
 }
 
 if is-work; then
-    is-work
+    hook-is-work
 else
-    is-not-work
+    hook-is-not-work
 fi
 
 if is-home; then
-    is-home
+    hook-is-home
 else
-    is-not-home
+    hook-is-not-home
 fi
