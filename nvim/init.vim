@@ -6,6 +6,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'myusuf3/numbers.vim'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'jackguo380/vim-lsp-cxx-highlight'
 
     " Plugin makes scrolling nice and smooth when pressing Ctrl-D and Ctrl-U
     Plug 'psliwka/vim-smoothie'
@@ -37,6 +38,8 @@ call plug#begin('~/.vim/plugged')
     " Language Typescript
     Plug 'leafgarland/typescript-vim'
     Plug 'peitalin/vim-jsx-typescript'
+    " Snippets
+    Plug 'honza/vim-snippets'
 
     " File Explorer
     Plug 'scrooloose/nerdtree'
@@ -261,6 +264,10 @@ call plug#end()
         " Use tab for trigger completion with characters ahead and navigate.
         " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
         " other plugin before putting this into your config.
+        let g:lsp_cxx_hl_use_text_props = 1
+        let g:cpp_class_scope_highlight = 1
+        let g:cpp_member_variable_highlight = 1
+        let g:cpp_class_decl_highlight = 1
         inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ <SID>check_back_space() ? "\<TAB>" :

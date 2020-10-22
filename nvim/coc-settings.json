@@ -1,10 +1,42 @@
 {
+  "diagnostic-languageserver.linters": {
+    "cpplint": {
+      "command": "cpplint --linelength=120",
+      "args": ["%file"],
+      "debounce": 100,
+      "isStderr": true,
+      "isStdout": false,
+      "sourceName": "cpplint",
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "formatPattern": [
+        "^[^:]+:(\\d+):(\\d+)?\\s+([^:]+?)\\s\\[(\\d)\\]$",
+        {
+          "line": 1,
+          "column": 2,
+          "message": 3,
+          "security": 4
+        }
+      ],
+      "securities": {
+        "1": "info",
+        "2": "warning",
+        "3": "warning",
+        "4": "error",
+        "5": "error"
+      }
+    }
+  },
   "diagnostic-languageserver.filetypes": {
-    "sh": "shellcheck"
+    "sh": "shellcheck",
+    "c": "cpplint",
+    "cpp": "cpplint",
+    "markdown": ["write-good", "markdownlint"]
   },
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt"
   },
+
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
@@ -21,12 +53,6 @@
     "typescript.tsx"
   ],
   "coc.preferences.diagnostic.virtualText": true,
-  "markdownlint": {
-    "config": {
-      "default": true,
-      "line_length": false
-    }
-  },
   "languageserver": {
     "efm": {
       "command": "efm-langserver",
@@ -34,6 +60,6 @@
       "filetypes": ["vim", "eruby", "yaml"]
     }
   },
-  "clangd.path": "/home/tperale/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10.0.0/bin/clangd"
+  "clangd.path": "/home/tperale/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10.0.0/bin/clangd",
+  "clangd.semanticHighlighting": true
 }
-
