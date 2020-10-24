@@ -1,0 +1,4 @@
+#/bin/bash
+
+WALL=$(find "${HOME}/Pictures/wall/" -type f | sort -R | tail -1)
+feh --no-fehbg --bg-scale "$WALL"
