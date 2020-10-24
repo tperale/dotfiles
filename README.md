@@ -19,6 +19,14 @@ Section "OutputClass"
 EndSection
 ```
 
+### BIOS Drivers
+
+Don't forget to check if any new BIOS version of the [T470s BIOS](https://pcsupport.lenovo.com/be/en/products/laptops-and-netbooks/thinkpad-t-series-laptops/thinkpad-t470s/downloads/ds120418)
+are available on the Lenovo website.
+Download the `.iso` on the Lenovo website and use the `geteltorito` tool to
+extract the `.img` content from the iso to flash it to a USB Drive.
+Boot from the USB drive from the bios and start the BIOS upgrade process.
+
 ## Key Combination
 
 ### i3
