@@ -38,6 +38,9 @@ call plug#begin('~/.vim/plugged')
     " Language Typescript
     Plug 'leafgarland/typescript-vim'
     Plug 'peitalin/vim-jsx-typescript'
+    " Language latex
+    Plug 'lervag/vimtex'
+
     " Snippets
     Plug 'honza/vim-snippets'
 
@@ -57,7 +60,7 @@ call plug#end()
         syntax on                                   " syntax highlighting
         set background=dark                         " we're using a dark bg
         colorscheme molokai                      " colorscheme from plugin
-        " let g:tex_flavor="latex"
+        let g:tex_flavor="latex"
         """ force behavior and filetypes, and by extension highlighting {{{
             augroup FileTypeRules
                 autocmd!
@@ -415,5 +418,4 @@ call plug#end()
         endfunction
         nnoremap <c-n> :call OpenTerminal()<CR>
     """ }}}
-
 """ }}}
