@@ -49,14 +49,15 @@ call plug#begin('~/.vim/plugged')
                 Plug 'honza/vim-snippets'
             """ }}}
         """ }}}
-        """ Language Typescript && Javascript {{{
+        """ Typescript && Javascript {{{
             Plug 'leafgarland/typescript-vim'
             Plug 'peitalin/vim-jsx-typescript'
         """ }}}
-        """ Language latex {{{
+        """ LaTex {{{
             Plug 'lervag/vimtex'
         """ }}}
-        """ C Highlight Language Support {{{
+        """ C {{{
+            " Highlight Language Support
             Plug 'jackguo380/vim-lsp-cxx-highlight'
         """ }}}
     """ }}}
