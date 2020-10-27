@@ -1,56 +1,72 @@
 call plug#begin('~/.vim/plugged')
-    " Theming
-    Plug 'mhinz/vim-startify'
-    Plug 'tomasr/molokai'
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'myusuf3/numbers.vim'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'jackguo380/vim-lsp-cxx-highlight'
+    """ Theming {{{
+        Plug 'tomasr/molokai'
+        Plug 'ryanoasis/vim-devicons'
+        Plug 'myusuf3/numbers.vim'
+        Plug 'vim-airline/vim-airline'
+        Plug 'vim-airline/vim-airline-themes'
+    """ }}}
 
-    " Plugin makes scrolling nice and smooth when pressing Ctrl-D and Ctrl-U
-    Plug 'psliwka/vim-smoothie'
+    """ Movement Extension {{{
+        """ ctrl-d/ctrl-u {{{
+            " Plugin makes scrolling nice and smooth when pressing Ctrl-D and Ctrl-U
+            Plug 'psliwka/vim-smoothie'
+        """ }}}
+        """ <v>gcc {{{
+            " Super easy commenting, toggle comments etc
+            Plug 'tpope/vim-commentary'
+        """ }}}
+        """ tab {{{
+            " This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file
+            Plug 'tpope/vim-sleuth'
+        """ }}}
+        """ ctrl-a/ctrl-x {{{
+            Plug 'tpope/vim-speeddating'
+            Plug 'Konfekt/vim-CtrlXA'
+        """ }}}
+    """ }}}
 
-    " GIT
-    " Git wrapper inside Vim
-    Plug 'tpope/vim-fugitive'
-    " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
-    Plug 'mhinz/vim-signify'
+    """ GIT {{{
+        " Git wrapper inside Vim
+        Plug 'tpope/vim-fugitive'
+        " Vim signs (:h signs) for modified lines based off VCS (e.g. Git)
+        Plug 'mhinz/vim-signify'
+        " Gist
+        Plug 'mattn/webapi-vim'
+        Plug 'mattn/vim-gist'
+    """ }}}
 
-    " Session management
-    Plug 'tpope/vim-obsession'
-    Plug 'dhruvasagar/vim-prosession'
+    """ Session management {{{
+        Plug 'tpope/vim-obsession'
+        Plug 'dhruvasagar/vim-prosession'
+    """ }}}
 
-    " Super easy commenting, toggle comments etc
-    Plug 'tpope/vim-commentary'
-    " This plugin automatically adjusts 'shiftwidth' and 'expandtab' heuristically based on the current file
-    Plug 'tpope/vim-sleuth'
+    """ Language Support {{{
+        """ Global {{{
+            Plug 'neoclide/coc.nvim', {'branch': 'release'}
+            let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic']
+            """ Snippets {{{
+                Plug 'honza/vim-snippets'
+            """ }}}
+        """ }}}
+        """ Language Typescript && Javascript {{{
+            Plug 'leafgarland/typescript-vim'
+            Plug 'peitalin/vim-jsx-typescript'
+        """ }}}
+        """ Language latex {{{
+            Plug 'lervag/vimtex'
+        """ }}}
+        """ C Highlight Language Support {{{
+            Plug 'jackguo380/vim-lsp-cxx-highlight'
+        """ }}}
+    """ }}}
 
-    " ctrl-a/ctrl-x
-    Plug 'tpope/vim-speeddating'
-    Plug 'Konfekt/vim-CtrlXA'
-
-    " Linter
-    " Plug 'dpelle/vim-LanguageTool'
-    Plug 'merijn/writegooder.vim', { 'for': ['tex', 'markdown', 'latex'] }
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic']
-    " Language Typescript
-    Plug 'leafgarland/typescript-vim'
-    Plug 'peitalin/vim-jsx-typescript'
-    " Language latex
-    Plug 'lervag/vimtex'
-
-    " Snippets
-    Plug 'honza/vim-snippets'
-
-    " File Explorer
-    Plug 'scrooloose/nerdtree'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
-    Plug 'mattn/webapi-vim'
-    Plug 'mattn/vim-gist'
+    """ File Navigation {{{
+        Plug 'scrooloose/nerdtree'
+        Plug 'Xuyuanp/nerdtree-git-plugin'
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        Plug 'junegunn/fzf.vim'
+    """ }}}
 call plug#end()
 
 """ Local leading config, only use for prerequisites as it will be
