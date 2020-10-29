@@ -79,7 +79,7 @@ call plug#end()
         filetype plugin indent on                   " detect file plugin+indent
         syntax on                                   " syntax highlighting
         set background=dark                         " we're using a dark bg
-        colorscheme molokai                      " colorscheme from plugin
+        colorscheme molokai                         " colorscheme from plugin
         let g:tex_flavor="latex"
         """ force behavior and filetypes, and by extension highlighting {{{
             augroup FileTypeRules
