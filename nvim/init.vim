@@ -448,8 +448,7 @@ call plug#end()
         " start terminal in insert mode
         au BufEnter * if &buftype == 'terminal' | :startinsert | endif
         "
-        " open terminal on ctrl+;
-        " uses zsh instead of bash
+        " open terminal on ctrl+n
         function! OpenTerminal()
             split term://bash
             resize 10
