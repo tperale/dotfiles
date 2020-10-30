@@ -47,7 +47,7 @@ call plug#begin('~/.vim/plugged')
     """ Language Support {{{
         """ Global {{{
             Plug 'neoclide/coc.nvim', {'branch': 'release'}
-            let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic']
+            let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic', 'coc-smartf']
             """ Snippets {{{
                 Plug 'honza/vim-snippets'
             """ }}}
@@ -416,6 +416,18 @@ call plug#end()
         nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
         " Resume latest coc list.
         nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+        """ coc-smartf {{{
+            " press <esc> to cancel.
+            nmap f <Plug>(coc-smartf-forward)
+            nmap F <Plug>(coc-smartf-backward)
+            nmap ; <Plug>(coc-smartf-repeat)
+            nmap , <Plug>(coc-smartf-repeat-opposite)
+
+            augroup Smartf
+            autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#6638F0
+            autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
+            augroup end
+        """ }}}
     """ }}}
     """ Language Tool {{{
         "Enable all categories
