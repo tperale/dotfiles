@@ -209,4 +209,4 @@ bar {
        status_command i3status
 }
 
-exec --no-startup-id feh --bg-fill /home/tperale/Pictures/wall/1.bmp
+exec --no-startup-id feh --bg-fill /home/tperale/Pictures/wall/1.png
