@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged')
     """ Theming {{{
-        Plug 'tomasr/molokai'
+        Plug 'tomasr/molokai' " colorscheme molokai
+        Plug 'rhysd/vim-color-spring-night' " colorscheme sping-night
         Plug 'ryanoasis/vim-devicons'
         Plug 'myusuf3/numbers.vim'
         Plug 'vim-airline/vim-airline'
@@ -75,38 +76,6 @@ call plug#end()
 
 """ Local leading config, only use for prerequisites as it will be
 """ User interface {{{
-    """ Syntax highlighting {{{
-        filetype plugin indent on                   " detect file plugin+indent
-        syntax on                                   " syntax highlighting
-        set background=dark                         " we're using a dark bg
-        colorscheme molokai                         " colorscheme from plugin
-        let g:tex_flavor="latex"
-        """ force behavior and filetypes, and by extension highlighting {{{
-            augroup FileTypeRules
-                autocmd!
-                autocmd BufNewFile,BufRead *.md set ft=markdown tw=79
-                autocmd BufNewFile,BufRead *.tex set ft=tex tw=79
-                autocmd BufNewFile,BufRead *.txt set ft=sh tw=79
-            augroup END
-        """ }}}
-        """ 256 colors for maximum jellybeans bling. See commit log for info {{{
-            if (&term =~ "xterm") || (&term =~ "screen")
-                set t_Co=256
-            endif
-        """ }}}
-        """ Custom highlighting, where NONE uses terminal background {{{
-            function! CustomHighlighting()
-                highlight Normal ctermbg=NONE
-                highlight NonText ctermbg=NONE
-                highlight LineNr ctermbg=NONE
-                highlight SignColumn ctermbg=NONE
-                highlight SignColumn guibg=#151515
-                highlight CursorLine ctermbg=235
-            endfunction
-
-            call CustomHighlighting()
-        """ }}}
-    """ }}}
     """ Interface general {{{
         set cursorline                              " hilight cursor line
         set more                                    " ---more--- like less
@@ -133,10 +102,37 @@ call plug#end()
             set guioptions-=T                       " remove toolbar
             set guioptions-=r                       " remove right scrollbar
         """ }}}
-        """ Airline {{{
-            let g:airline_powerline_fonts = 1
+        """ colorscheme {{{
+            set background=dark                         " we're using a dark bg
+            colorscheme spring-night                    " colorscheme from plugin
+            let g:spring_night_high_contrast=1
+            """ Enable 24bits colors {{{
+                if has('termguicolors')
+                    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+                    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+                    set termguicolors
+                endif
+            """ }}}
+            """ Airline {{{
+                let g:airline_theme = 'spring_night'
+                let g:airline_powerline_fonts = 1
+            """ }}}
         """ }}}
     """ }}}
+    """ Syntax highlighting {{{
+        filetype plugin indent on                   " detect file plugin+indent
+        syntax on                                   " syntax highlighting
+        let g:tex_flavor="latex"
+        """ force behavior and filetypes, and by extension highlighting {{{
+            augroup FileTypeRules
+                autocmd!
+                autocmd BufNewFile,BufRead *.md set ft=markdown tw=79
+                autocmd BufNewFile,BufRead *.tex set ft=tex tw=79
+                autocmd BufNewFile,BufRead *.txt set ft=sh tw=79
+            augroup END
+        """ }}}
+    """ }}}
+
 """ }}}
 """ General settings {{{
     set shell=/usr/bin/bash
