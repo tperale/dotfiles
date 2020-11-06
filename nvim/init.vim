@@ -79,66 +79,57 @@ call plug#begin('~/.vim/plugged')
     """ }}}
 call plug#end()
 
-""" Local leading config, only use for prerequisites as it will be
-""" User interface {{{
-    """ Interface general {{{
-        """ colorscheme {{{
-            syntax on                                   " syntax highlighting
-            set background=dark                         " we're using a dark bg
-            colorscheme spring-night                    " colorscheme from plugin
-            let g:spring_night_high_contrast=1
-            """ Enable 24bits colors {{{
-                if has('termguicolors')
-                    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-                    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-                    set termguicolors
-                endif
-            """ }}}
-            """ Airline {{{
-                let g:airline_theme = 'spring_night'
-                let g:airline_powerline_fonts = 1
-            """ }}}
+""" Interface general {{{
+    """ colorscheme {{{
+        syntax on                                   " syntax highlighting
+        set background=dark                         " we're using a dark bg
+        colorscheme spring-night                    " colorscheme from plugin
+        let g:spring_night_high_contrast=1
+        """ Enable 24bits colors {{{
+            if has('termguicolors')
+                let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+                let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+                set termguicolors
+            endif
         """ }}}
-        set cursorline                              " hilight cursor line
-        set more                                    " ---more--- like less
-        set scrolloff=3                             " lines above/below cursor
-        set showcmd                                 " show cmds being typed
-        set title                                   " window title
-        set vb t_vb=                                " disable beep and flashing
-        set wildignore=*.a,*.o,*.so,*.pyc,*.jpg,
-                    \*.jpeg,*.png,*.gif,*.pdf,*.git,
-                    \*.swp,*.swo                    " tab completion ignores
-        set wildmenu                                " better auto complete
-        set wildmode=longest,list                   " bash-like auto complete
-        set cmdheight=2                             " Give more space for displaying messages.
-        set updatetime=300
-        set signcolumn=yes
-        """ Depending on your setup you may want to enforce UTF-8.
-        """ Should generally be set in your environment LOCALE/$LANG {{{
-            " set encoding=utf-8                    " default $LANG/latin1
-            " set fileencoding=utf-8                " default none
-        """ }}}
-        """ Gvim {{{
-            set guifont=Hack\ Nerd\ \Font\ Mono\ Regular\ 9
-            set guioptions-=m                       " remove menubar
-            set guioptions-=T                       " remove toolbar
-            set guioptions-=r                       " remove right scrollbar
+        """ Airline {{{
+            let g:airline_theme = 'spring_night'
+            let g:airline_powerline_fonts = 1
         """ }}}
     """ }}}
-    """ Syntax highlighting {{{
-        filetype plugin indent on                   " detect file plugin+indent
-        let g:tex_flavor="latex"
-        """ force behavior and filetypes, and by extension highlighting {{{
-            augroup FileTypeRules
-                autocmd!
-                autocmd BufNewFile,BufRead *.tex  set ft=tex      tw=79
-                autocmd BufNewFile,BufRead *.tikz set ft=tex      tw=79
-                autocmd BufNewFile,BufRead *.md   set ft=markdown tw=79
-                autocmd BufNewFile,BufRead *.txt  set ft=markdown tw=79
-            augroup END
-        """ }}}
+    set cursorline                              " hilight cursor line
+    set more                                    " ---more--- like less
+    set scrolloff=3                             " lines above/below cursor
+    set showcmd                                 " show cmds being typed
+    set title                                   " window title
+    set vb t_vb=                                " disable beep and flashing
+    set wildignore=*.a,*.o,*.so,*.pyc,*.jpg,
+                \*.jpeg,*.png,*.gif,*.pdf,*.git,
+                \*.swp,*.swo                    " tab completion ignores
+    set wildmenu                                " better auto complete
+    set wildmode=longest,list                   " bash-like auto complete
+    set cmdheight=2                             " Give more space for displaying messages.
+    set updatetime=300
+    set signcolumn=yes
+    """ Gvim {{{
+        set guifont=Cousine\ Nerd\ Font:h10
+        set guioptions-=m                       " remove menubar
+        set guioptions-=T                       " remove toolbar
+        set guioptions-=r                       " remove right scrollbar
     """ }}}
-
+""" }}}
+""" Syntax highlighting {{{
+    filetype plugin indent on                   " detect file plugin+indent
+    let g:tex_flavor="latex"
+    """ force behavior and filetypes, and by extension highlighting {{{
+        augroup FileTypeRules
+            autocmd!
+            autocmd BufNewFile,BufRead *.tex  set ft=tex      tw=79
+            autocmd BufNewFile,BufRead *.tikz set ft=tex      tw=79
+            autocmd BufNewFile,BufRead *.md   set ft=markdown tw=79
+            autocmd BufNewFile,BufRead *.txt  set ft=markdown tw=79
+        augroup END
+    """ }}}
 """ }}}
 """ General settings {{{
     set shell=/usr/bin/bash
