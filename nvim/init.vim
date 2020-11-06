@@ -57,7 +57,10 @@ call plug#begin('~/.vim/plugged')
             Plug 'leafgarland/typescript-vim'
             Plug 'peitalin/vim-jsx-typescript'
         """ }}}
-        """ LaTex {{{
+        """ CSS {{{
+            Plug 'etdev/vim-hexcolor'
+        """ }}}
+        """ LaTex && Markdown {{{
             Plug 'lervag/vimtex'
         """ }}}
         """ C {{{
