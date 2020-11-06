@@ -29,6 +29,9 @@ call plug#begin('~/.vim/plugged')
         """ alignment {{{
             Plug 'junegunn/vim-easy-align'
         """ }}}
+        """ Search status {{{
+            Plug 'osyo-manga/vim-anzu' 
+        """ }}}
     """ }}}
 
     """ GIT {{{
@@ -285,6 +288,13 @@ call plug#end()
         xmap ga <Plug>(EasyAlign)
         " Start interactive EasyAlign for a motion/text object (e.g. gaip)
         nmap ga <Plug>(EasyAlign)
+    """ }}}
+    """ vim-anzu - VIM Search Status {{{
+        nmap n <Plug>(anzu-n-with-echo)
+        nmap N <Plug>(anzu-N-with-echo)
+        nmap * <Plug>(anzu-star-with-echo)
+        nmap # <Plug>(anzu-sharp-with-echo)
+        nmap <Esc><Esc> <Plug>(anzu-clear-search-status) <Bar> :<C-u>nohlsearch<CR>
     """ }}}
     """ COC {{{
         " Use tab for trigger completion with characters ahead and navigate.
