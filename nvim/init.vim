@@ -62,6 +62,7 @@ call plug#begin('~/.vim/plugged')
         """ }}}
         """ LaTex && Markdown {{{
             Plug 'lervag/vimtex'
+            Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install'  }
         """ }}}
         """ C {{{
             " Highlight Language Support
