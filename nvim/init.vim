@@ -254,7 +254,9 @@ call plug#end()
 """ }}}
 """ Custom Binding {{{
     let mapleader=","
-    vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+    """ Visual replace {{{
+        vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+    """ }}}
     """ Copy/Paste clipboard {{{
     vmap <leader>xyy :!xclip -f -sel clip<CR>
     map <leader>xpp mz:-1r !xclip -o -sel clip<CR>
