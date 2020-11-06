@@ -152,7 +152,7 @@ call plug#end()
     set ttyfast                                     " for faster redraws etc
     set clipboard+=unnamedplus
     if !has('nvim')
-        set ttymouse=xterm2                             " experimental
+        set ttymouse=xterm2                         " experimental
     endif
     """ Folding {{{
         set foldcolumn=0                            " hide folding column
@@ -223,14 +223,26 @@ call plug#end()
     set softtabstop=4                               " "tab" feels like <tab>
     set tabstop=4                                   " replace <TAB> w/4 spaces
 """ }}}
-""" NERDTree Configuration {{{
-    let g:NERDTreeShowHidden = 1
-    let g:NERDTreeMinimalUI = 1
-    let g:NERDTreeIgnore = []
-    let g:NERDTreeStatusline = ''
-    " Automaticaly close nvim if NERDTree is only thing left open
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+""" Plugin Configuration {{{
+    """ NERDTree Configuration {{{
+        let g:NERDTreeShowHidden = 1
+        let g:NERDTreeMinimalUI = 1
+        let g:NERDTreeIgnore = []
+        let g:NERDTreeStatusline = ''
+        " Automaticaly close nvim if NERDTree is only thing left open
+        autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+        let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+    """ }}}
+    """ COC {{{
+        let g:lsp_cxx_hl_use_text_props = 1
+        let g:cpp_class_scope_highlight = 1
+        let g:cpp_member_variable_highlight = 1
+        let g:cpp_class_decl_highlight = 1
+        " Add (Neo)Vim's native statusline support.
+        " NOTE: Please see `:h coc-status` for integrations with external plugins that
+        " provide custom statusline: lightline.vim, vim-airline.
+        set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+    """ }}}
 """ }}}
 """ Custom Binding {{{
     let mapleader=","
@@ -238,8 +250,8 @@ call plug#end()
         vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
     """ }}}
     """ Copy/Paste clipboard {{{
-    vmap <leader>xyy :!xclip -f -sel clip<CR>
-    map <leader>xpp mz:-1r !xclip -o -sel clip<CR>
+        vmap <leader>xyy :!xclip -f -sel clip<CR>
+        map <leader>xpp mz:-1r !xclip -o -sel clip<CR>
     """ }}}
     """ Use alt+hjkl to move between split/vsplit panels {{{
         tnoremap <A-h> <C-\><C-n><C-w>h
@@ -268,14 +280,16 @@ call plug#end()
         onoremap <silent> <C-a> :Commands<CR>
         onoremap <silent> <C-l> :Commits<CR>
     """ }}}
+    """ Easy align {{{
+        " Start interactive EasyAlign in visual mode (e.g. vipga)
+        xmap ga <Plug>(EasyAlign)
+        " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+        nmap ga <Plug>(EasyAlign)
+    """ }}}
     """ COC {{{
         " Use tab for trigger completion with characters ahead and navigate.
         " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
         " other plugin before putting this into your config.
-        let g:lsp_cxx_hl_use_text_props = 1
-        let g:cpp_class_scope_highlight = 1
-        let g:cpp_member_variable_highlight = 1
-        let g:cpp_class_decl_highlight = 1
         inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ <SID>check_back_space() ? "\<TAB>" :
@@ -293,10 +307,10 @@ call plug#end()
         " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
         " position. Coc only does snippet and additional edit on confirm.
         if has('patch8.1.1068')
-        " Use `complete_info` if your (Neo)Vim version supports it.
-        inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+            " Use `complete_info` if your (Neo)Vim version supports it.
+            inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
         else
-        imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+            imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
         endif
 
         " Use `[g` and `]g` to navigate diagnostics
@@ -379,11 +393,6 @@ call plug#end()
         " Add `:OR` command for organize imports of the current buffer.
         command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
-        " Add (Neo)Vim's native statusline support.
-        " NOTE: Please see `:h coc-status` for integrations with external plugins that
-        " provide custom statusline: lightline.vim, vim-airline.
-        set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
         " Mappings using CoCList:
         " Show all diagnostics.
         nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -414,12 +423,6 @@ call plug#end()
             augroup end
         """ }}}
     """ }}}
-    """ Easy align {{{
-        " Start interactive EasyAlign in visual mode (e.g. vipga)
-        xmap ga <Plug>(EasyAlign)
-        " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-        nmap ga <Plug>(EasyAlign)
-    """ }}}
     """ Terminal {{{
         " start terminal in insert mode
         au BufEnter * if &buftype == 'terminal' | :startinsert | endif
@@ -432,3 +435,4 @@ call plug#end()
         nnoremap <c-n> :call OpenTerminal()<CR>
     """ }}}
 """ }}}
+
