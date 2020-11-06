@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged')
     """ Theming {{{
         Plug 'tomasr/molokai'
+        Plug 'dylanaraps/wal.vim'
         Plug 'ryanoasis/vim-devicons'
         Plug 'myusuf3/numbers.vim'
         Plug 'vim-airline/vim-airline'
