@@ -133,6 +133,9 @@ call plug#end()
             autocmd BufNewFile,BufRead *.txt  set ft=markdown tw=79
         augroup END
     """ }}}
+    """ JSON add comments correct syntax highlighting support {{{
+        autocmd FileType json syntax match Comment +\/\/.\+$+
+    """ }}}
 """ }}}
 """ General settings {{{
     set shell=/usr/bin/bash
