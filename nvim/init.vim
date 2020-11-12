@@ -14,6 +14,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'myusuf3/numbers.vim'
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
+        Plug 'mboughaba/i3config.vim'
     """ }}}
 
     """ Movement Extension {{{
@@ -134,11 +135,12 @@ call plug#end()
     """ force behavior and filetypes, and by extension highlighting {{{
         augroup FileTypeRules
             autocmd!
-            autocmd BufNewFile,BufRead *.tex  set ft=tex      tw=79
-            autocmd BufNewFile,BufRead *.tikz set ft=tex      tw=79
-            autocmd BufNewFile,BufRead *.md   set ft=markdown tw=79
-            autocmd BufNewFile,BufRead *.txt  set ft=markdown tw=79
-        augroup END
+            autocmd BufNewFile,BufRead *.tex               set ft=tex      tw=79
+            autocmd BufNewFile,BufRead *.tikz              set ft=tex      tw=79
+            autocmd BufNewFile,BufRead *.md                set ft=markdown tw=79
+            autocmd BufNewFile,BufRead *.txt               set ft=markdown tw=79
+            autocmd BufNewFile,BufRead ~/.config/i3/config set ft=i3config tw=79
+        augroup     END
     """ }}}
     """ JSON add comments correct syntax highlighting support {{{
         autocmd FileType json syntax match Comment +\/\/.\+$+
