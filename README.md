@@ -19,6 +19,22 @@ Section "OutputClass"
 EndSection
 ```
 
+### Mouse Configuration
+
+If you are using different mouse and want to apply specific configuration for each one of them, you can do that through x.org configuration.
+In `/etc/X11/xorg.conf.d/` create a new file `50-<device>.conf` with the following content:
+
+```
+Section "InputClass"
+    Identifier    "<device> Acceleration"
+    MatchProduct "<device>"
+    MatchDriver  "libinput"
+    Option       "AccelSpeed" "0.1"
+EndSection
+```
+
+The name of your specific product can be found using `xinput list` and the different configuration field available with `xinput list-props <deviceid>`.
+
 ### BIOS Drivers
 
 Don't forget to check if any new BIOS version of the [T470s BIOS](https://pcsupport.lenovo.com/be/en/products/laptops-and-netbooks/thinkpad-t-series-laptops/thinkpad-t470s/downloads/ds120418)
