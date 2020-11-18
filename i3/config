@@ -205,7 +205,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-for_window [class=".*"] border pixel 2
+for_window [class="(?i)thunderbird"] title_format " ✉ %title"
 for_window [class="(?i)firefox"] title_format "   %title"
 for_window [class="(?i)alacritty"] title_format "   %title "
 for_window [title="(?i)ranger"] title_format "   %title"
