@@ -214,4 +214,5 @@ bar {
        status_command i3status
 }
 
+exec udiskie &
 exec --no-startup-id feh --bg-fill /home/tperale/Pictures/wall/1.png
