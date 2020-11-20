@@ -48,9 +48,14 @@ OSH_THEME="powerline"
 # Example format: completions=(ssh git bundler gem pip pip3)
 # Add wisely, as too many completions slow down shell startup.
 completions=(
+  defaults
   git
   composer
   ssh
+  npm
+  pip3
+  pip
+  makefile
 )
 
 # Which aliases would you like to load? (aliases can be found in ~/.oh-my-bash/aliases/*)
@@ -59,6 +64,7 @@ completions=(
 # Add wisely, as too many aliases slow down shell startup.
 aliases=(
   general
+  ls
 )
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-bash/plugins/*)
@@ -96,3 +102,5 @@ export XDG_DATA_DIRS='~/.local/share/:/usr/local/share:/usr/share'
 # Example aliases
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
