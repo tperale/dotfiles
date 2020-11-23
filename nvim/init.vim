@@ -87,6 +87,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         Plug 'junegunn/fzf.vim'
+        Plug 'tpope/vim-eunuch' " mv, rm, chmod, mkdir and everything
     """ }}}
 call plug#end()
 
