@@ -72,6 +72,26 @@
       "filetypes": ["vim", "eruby", "yaml"]
     }
   },
-  "clangd.path": "/home/tperale/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10.0.0/bin/clangd",
-  "clangd.semanticHighlighting": true
+  "clangd.path": "/home/tperale/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd",
+  "clangd.semanticHighlighting": true,
+  "suggest.completionItemKindLabels": {
+    "variable": "⬥",
+    "function": "",
+    "class": "↣",
+    "interface": "☍",
+    "module": "{}",
+    "keyword": "≔",
+    "property": "⚲",
+    "value": "◰",
+    "enum": "◰",
+    "field": "☐",
+    "method": "",
+    "file": "\uf24a",
+    "folder": "\uf114"
+  },
+  "diagnostic.virtualText": true,
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": "ﯦ"
 }
