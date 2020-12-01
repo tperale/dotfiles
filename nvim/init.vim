@@ -2,7 +2,7 @@
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
+  autocmd VimEnter * PlugInstall | source $HOME/.config/nvim/init.vim
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -90,6 +90,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         Plug 'junegunn/fzf.vim'
+        Plug 'tpope/vim-eunuch' " mv, rm, chmod, mkdir and everything
     """ }}}
 call plug#end()
 

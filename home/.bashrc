@@ -48,9 +48,14 @@ OSH_THEME="powerline"
 # Example format: completions=(ssh git bundler gem pip pip3)
 # Add wisely, as too many completions slow down shell startup.
 completions=(
+	defaults
 	git
 	composer
 	ssh
+	npm
+	pip3
+	pip
+	makefile
 )
 
 # Which aliases would you like to load? (aliases can be found in ~/.oh-my-bash/aliases/*)
