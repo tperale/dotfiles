@@ -47,15 +47,17 @@
     "sh": "shfmt",
     "c": "uncrustify"
   },
-
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
     "typescriptreact",
     "json",
     "javascriptreact",
-    "typescript.tsx"
+    "typescript.tsx",
+    "c",
+    "sh"
   ],
+  "prettier.eslintIntegration": true,
   "eslint.filetypes": [
     "javascript",
     "typescript",
@@ -63,7 +65,6 @@
     "javascriptreact",
     "typescript.tsx"
   ],
-  "coc.preferences.diagnostic.virtualText": true,
   "languageserver": {
     "efm": {
       "command": "efm-langserver",
