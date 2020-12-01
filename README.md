@@ -43,6 +43,34 @@ Download the `.iso` on the Lenovo website and use the `geteltorito` tool to
 extract the `.img` content from the iso to flash it to a USB Drive.
 Boot from the USB drive from the bios and start the BIOS upgrade process.
 
+### Import PGP Key from keybase in gpg
+
+Following [this](https://blog.scottlowe.org/2017/09/06/using-keybase-gpg-macos/) 
+blog post. This post use the keybase linux app.
+Import the public key in your local gpg keyring with the following command.
+
+```shell
+keybase pgp export | gpg --import
+```
+
+You can check the key is correctly imported with
+
+```shell
+gpg -k
+```
+
+Use the imported key id to import the private key in the keyring.
+
+```shell
+keybase pgp export -q <key-id> --secret | gpg --import --allow-secret-key-import
+```
+
+With this key you can now create a pass storage encrypted with this key.
+
+```shell
+pass init <key-id>
+```
+
 ## Key Combination
 
 ### i3
