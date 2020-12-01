@@ -27,6 +27,16 @@
       }
     }
   },
+  "diagnostic-languageserver.formatters": {
+    "clang-format": {
+      "command": "clang-format",
+      "args": []
+    },
+    "uncrustify": {
+      "command": "uncrustify -c $(vcs-root)/uncrustify.cfg",
+      "args": []
+    }
+  },
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck",
     "c": "cpplint",
@@ -34,7 +44,8 @@
     "markdown": ["write-good", "markdownlint"]
   },
   "diagnostic-languageserver.formatFiletypes": {
-    "sh": "shfmt"
+    "sh": "shfmt",
+    "c": "uncrustify"
   },
 
   "coc.preferences.formatOnSaveFiletypes": [
