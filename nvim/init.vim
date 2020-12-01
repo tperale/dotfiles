@@ -60,7 +60,7 @@ call plug#begin('~/.vim/plugged')
     """ Language Support {{{
         """ Global {{{
             Plug 'neoclide/coc.nvim', {'branch': 'release'}
-            let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic', 'coc-smartf']
+            let g:coc_global_extensions = ['coc-snippets', 'coc-pairs', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic', 'coc-smartf']
             """ Snippets {{{
                 Plug 'honza/vim-snippets'
             """ }}}
