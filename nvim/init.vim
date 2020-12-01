@@ -80,6 +80,9 @@ call plug#begin('~/.vim/plugged')
             " Highlight Language Support
             Plug 'jackguo380/vim-lsp-cxx-highlight'
         """ }}}
+        """ TOML {{{
+            Plug 'cespare/vim-toml'
+        """ }}}
     """ }}}
 
     """ File Navigation {{{
@@ -457,4 +460,3 @@ call plug#end()
         nnoremap <c-n> :call OpenTerminal()<CR>
     """ }}}
 """ }}}
-
