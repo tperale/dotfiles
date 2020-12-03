@@ -114,10 +114,12 @@ call plug#end()
                 set termguicolors
             endif
         """ }}}
-        """ Airline {{{
-            let g:airline_theme = 'spring_night'
-            let g:airline_powerline_fonts = 1
-        """ }}}
+    """ }}}
+    """ Airline {{{
+        let g:airline_theme = 'spring_night'
+        let g:airline_powerline_fonts = 1
+        let g:airline#extensions#tabline#enabled = 1
+        let g:airline#extensions#tabline#formatter = 'unique_tail'
     """ }}}
     set cursorline                              " hilight cursor line
     set more                                    " ---more--- like less
