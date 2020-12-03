@@ -299,7 +299,8 @@ call plug#end()
         nnoremap <C-p> :GFiles<CR>
         nnoremap <C-s> :GFiles?<CR>
         nnoremap <C-t> :BTags<CR>
-        " nnoremap <C-p> :FZF<CR>
+        nnoremap <C-b> :Windows<CR>
+        nnoremap <C-a> :Ag<CR>
         let g:fzf_action = {
         \ 'ctrl-t': 'tab split',
         \ 'ctrl-s': 'split',
