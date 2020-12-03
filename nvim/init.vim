@@ -67,6 +67,10 @@ call plug#begin('~/.vim/plugged')
             """ Snippets {{{
                 Plug 'honza/vim-snippets'
             """ }}}
+            """ Tags {{{
+                  Plug 'ludovicchabant/vim-gutentags' " Tag support require universal-ctags
+                  Plug 'liuchengxu/vista.vim'
+            """ }}}
         """ }}}
         """ Typescript && Javascript {{{
             Plug 'leafgarland/typescript-vim'
