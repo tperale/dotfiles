@@ -300,14 +300,14 @@ call plug#end()
         nnoremap <C-s> :GFiles?<CR>
         nnoremap <C-t> :BTags<CR>
         nnoremap <C-b> :Windows<CR>
-        nnoremap <C-a> :Ag<CR>
+        nnoremap <C-q> :Ag<CR>
+        nnoremap <C-c> :Commands<CR>
+        nnoremap <C-l> :Commits<CR>
         let g:fzf_action = {
         \ 'ctrl-t': 'tab split',
         \ 'ctrl-s': 'split',
         \ 'ctrl-v': 'vsplit'
         \}
-        onoremap <silent> <C-a> :Commands<CR>
-        onoremap <silent> <C-l> :Commits<CR>
     """ }}}
     """ Easy align {{{
         " Start interactive EasyAlign in visual mode (e.g. vipga)
