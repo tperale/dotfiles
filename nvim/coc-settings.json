@@ -45,7 +45,8 @@
   },
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
-    "c": "uncrustify"
+    "c": "clang-format",
+    "cpp": "clang-format"
   },
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
@@ -55,6 +56,7 @@
     "javascriptreact",
     "typescript.tsx",
     "c",
+    "cpp",
     "sh"
   ],
   "prettier.eslintIntegration": true,
