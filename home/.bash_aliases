@@ -1,0 +1,5 @@
+alias rn="ranger"
+alias vi="nvim"
+alias nvi="nvim"
+alias vim="nvim"
+alias v="nvim"
