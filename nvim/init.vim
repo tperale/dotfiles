@@ -8,8 +8,9 @@ endif
 call plug#begin('~/.vim/plugged')
     """ Theming {{{
         Plug 'tomasr/molokai' " colorscheme molokai
-        Plug 'dylanaraps/wal.vim'
         Plug 'rhysd/vim-color-spring-night' " colorscheme sping-night
+        Plug 'aonemd/kuroi.vim' " colorscheme kuroi
+        Plug 'dylanaraps/wal.vim'
         Plug 'ryanoasis/vim-devicons'
         Plug 'myusuf3/numbers.vim'
         Plug 'vim-airline/vim-airline'
@@ -273,6 +274,7 @@ call plug#end()
     """ }}}
 """ }}}
 """ Custom Binding {{{
+    let g:python3_host_prog = '/usr/bin/python3'
     let mapleader=","
     """ Visual replace {{{
         vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
