@@ -16,6 +16,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'vim-airline/vim-airline'
         Plug 'vim-airline/vim-airline-themes'
         Plug 'mboughaba/i3config.vim'
+        Plug 'junegunn/goyo.vim'
     """ }}}
 
     """ Movement Extension {{{
@@ -64,7 +65,7 @@ call plug#begin('~/.vim/plugged')
     """ Language Support {{{
         """ Global {{{
             Plug 'neoclide/coc.nvim', {'branch': 'release'}
-            let g:coc_global_extensions = ['coc-snippets', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic', 'coc-smartf', 'coc-go']
+            let g:coc_global_extensions = ['coc-snippets', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic', 'coc-smartf', 'coc-rls', 'coc-go']
             """ Snippets {{{
                 Plug 'honza/vim-snippets'
             """ }}}
@@ -72,6 +73,7 @@ call plug#begin('~/.vim/plugged')
                   " Plug 'ludovicchabant/vim-gutentags' " Tag support require universal-ctags
                   Plug 'liuchengxu/vista.vim'
             """ }}}
+            Plug 'RRethy/vim-illuminate' " Highlight word under cursor
         """ }}}
         """ Typescript && Javascript {{{
             Plug 'leafgarland/typescript-vim'
@@ -101,8 +103,10 @@ call plug#begin('~/.vim/plugged')
         Plug 'scrooloose/nerdtree'
         Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-        Plug 'junegunn/fzf.vim'
+        Plug 'junegunn/fzf.vim' " Required for previews
+        Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
         Plug 'tpope/vim-eunuch' " mv, rm, chmod, mkdir and everything
+        Plug 'simnalamburt/vim-mundo'
     """ }}}
 call plug#end()
 
@@ -275,6 +279,26 @@ call plug#end()
         " NOTE: Please see `:h coc-status` for integrations with external plugins that
         " provide custom statusline: lightline.vim, vim-airline.
         set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+    """ }}}
+    """ Goyo {{{
+        function! s:goyo_enter()
+          set noshowmode
+          set noshowcmd
+          set scrolloff=999
+          set nonumber
+          " ...
+        endfunction
+
+        function! s:goyo_leave()
+          set showmode
+          set showcmd
+          set scrolloff=5
+          set number
+          " ...
+        endfunction
+        autocmd! User GoyoEnter nested call <SID>goyo_enter()
+        autocmd! User GoyoLeave nested call <SID>goyo_leave()
+        let g:numbers_exclude = ['goyo_pad']
     """ }}}
 """ }}}
 """ Custom Binding {{{
