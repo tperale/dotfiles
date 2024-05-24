@@ -48,19 +48,7 @@
     "c": "clang-format",
     "cpp": "clang-format"
   },
-  "coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "typescript",
-    "typescriptreact",
-    "json",
-    "javascriptreact",
-    "typescript.tsx",
-    "c",
-    "cpp",
-    "sh",
-    "python"
-  ],
-  "prettier.eslintIntegration": true,
+  "coc.preferences.formatOnSaveFiletypes": ["sh"],
   "eslint.filetypes": [
     "javascript",
     "typescript",
@@ -73,10 +61,13 @@
       "command": "efm-langserver",
       "args": [],
       "filetypes": ["vim", "eruby", "yaml"]
+    },
+    "coc-clangd": {
+      "command": "/home/tperale/.config/coc/extensions/coc-clangd-data/install/17.0.3/clangd_17.0.3/bin/clangd --fallback-style=none",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
     }
   },
-  "clangd.path": "/home/tperale/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd",
-  "clangd.semanticHighlighting": true,
   "suggest.completionItemKindLabels": {
     "variable": "⬥",
     "function": "",
@@ -99,5 +90,5 @@
   "diagnostic.hintSign": "ﯦ",
   "python.linting.flake8Enabled": true,
   "python.linting.pylintEnabled": false,
-  "python.linting.lintOnSave": true
+  "python.linting.lintOnSave": false
 }

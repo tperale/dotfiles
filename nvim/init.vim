@@ -64,18 +64,22 @@ call plug#begin('~/.vim/plugged')
     """ Language Support {{{
         """ Global {{{
             Plug 'neoclide/coc.nvim', {'branch': 'release'}
-            let g:coc_global_extensions = ['coc-snippets', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic', 'coc-smartf']
+            let g:coc_global_extensions = ['coc-snippets', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-eslint', 'coc-python', 'coc-vimlsp', 'coc-clangd', 'coc-vimtex', 'coc-diagnostic', 'coc-smartf', 'coc-go']
             """ Snippets {{{
                 Plug 'honza/vim-snippets'
             """ }}}
             """ Tags {{{
-                  Plug 'ludovicchabant/vim-gutentags' " Tag support require universal-ctags
+                  " Plug 'ludovicchabant/vim-gutentags' " Tag support require universal-ctags
                   Plug 'liuchengxu/vista.vim'
             """ }}}
         """ }}}
         """ Typescript && Javascript {{{
             Plug 'leafgarland/typescript-vim'
             Plug 'peitalin/vim-jsx-typescript'
+            Plug 'heavenshell/vim-jsdoc', {
+                \ 'for': ['javascript', 'javascript.jsx','typescript'],
+                \ 'do': 'make install'
+                \}
         """ }}}
         """ CSS {{{
             Plug 'etdev/vim-hexcolor'
