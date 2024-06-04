@@ -1,0 +1,29 @@
+[user]
+    email = thomas.perale@mind.be
+    name = Thomas Perale
+[sendemail]
+    smtpServer = smtp.gmail.com
+    smtpServerPort = 587
+    smtpEncryption = tls
+    smtpUser = thomas.perale@essensium.com
+    from = "Thomas Perale" <thomas.perale@mind.be>
+    suppresscc = all
+    signedoffcc = false
+[init]
+    defaultBranch = main
+[url "https://"]
+    insteadOf = git://
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
