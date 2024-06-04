@@ -40,12 +40,6 @@ new_float pixel 2
 smart_gaps on
 # smart_borders on
 
-# Gaps between windows
-set $default_gaps_inner 7
-set $default_gaps_outer 3
-gaps inner $default_gaps_inner
-gaps outer $default_gaps_outer
-
 # Colors
 #                       BORDER     BACKGROUND TEXT   INDICATOR
 client.focused          $lime      $lime      $white $lime
@@ -69,6 +63,7 @@ font pango:monospace 8
 # font, it doesn’t scale on retina/hidpi displays.
 
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lockmore --nofork --image-fill /home/tperale/Pictures/wall/5.jpg
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 exec compton
 
 bindsym $mod+c exec lock
