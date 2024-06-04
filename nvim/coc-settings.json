@@ -63,7 +63,7 @@
       "filetypes": ["vim", "eruby", "yaml"]
     },
     "coc-clangd": {
-      "command": "/home/tperale/.config/coc/extensions/coc-clangd-data/install/17.0.3/clangd_17.0.3/bin/clangd --fallback-style=none",
+      "command": ["/home/tperale/.config/coc/extensions/coc-clangd-data/install/17.0.3/clangd_17.0.3/bin/clangd --fallback-style=none", "/usr/bin/clangd"],
       "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
     }
