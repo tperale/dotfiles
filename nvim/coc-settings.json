@@ -2,7 +2,9 @@
   "diagnostic-languageserver.linters": {
     "cpplint": {
       "command": "cpplint --linelength=120",
-      "args": ["%file"],
+      "args": [
+        "%file"
+      ],
       "debounce": 100,
       "isStderr": true,
       "isStdout": false,
@@ -41,26 +43,28 @@
     "sh": "shellcheck",
     "c": "cpplint",
     "cpp": "cpplint",
-    "markdown": ["write-good", "markdownlint"]
+    "markdown": [
+      "write-good",
+      "markdownlint"
+    ]
   },
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
     "c": "clang-format",
     "cpp": "clang-format"
   },
-  "coc.preferences.formatOnSaveFiletypes": ["sh"],
-  "eslint.filetypes": [
-    "javascript",
-    "typescript",
-    "typescriptreact",
-    "javascriptreact",
-    "typescript.tsx"
-  ],
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": false,
   "languageserver": {
     "efm": {
       "command": "efm-langserver",
       "args": [],
-      "filetypes": ["vim", "eruby", "yaml"]
+      "filetypes": [
+        "vim",
+        "eruby",
+        "yaml"
+      ]
+
     },
     "coc-clangd": {
       "command": ["/home/tperale/.config/coc/extensions/coc-clangd-data/install/17.0.3/clangd_17.0.3/bin/clangd --fallback-style=none", "/usr/bin/clangd"],
