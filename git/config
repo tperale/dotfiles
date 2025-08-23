@@ -9,6 +9,8 @@
     from = "Thomas Perale" <thomas.perale@mind.be>
     suppresscc = all
     signedoffcc = false
+[credential]
+    helper = store
 [init]
     defaultBranch = main
 [url "https://"]
