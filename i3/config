@@ -88,6 +88,7 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec rofi -show run -terminal /usr/bin/alacritty -modi emoji
+bindsym $mod+Shift+d exec rofi -show power-menu -modi power-menu:rofi-power-menu
 
 # change focus
 bindsym $mod+h focus left
