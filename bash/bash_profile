@@ -1,0 +1,35 @@
+#
+# ~/.bash_profile
+#
+
+if [ -z "${PATH-}" ]; then
+	export PATH=/usr/local/bin:/usr/bin:/bin;
+fi
+
+if [ -d "$HOME/.config/bin" ] ; then
+	export PATH="$PATH:$HOME/.config/bin";
+fi
+
+#
+# Environment
+#
+export EDITOR="nvim"
+export VISUAL="nvim"
+export NVM_DIR="$HOME/.nvm"
+
+if [ -n "${XDG_RUNTIME_DIR-}" ]; then
+	export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+fi
+
+# Start X on tty1
+# exec replaces this shell, so quitting X logs you out instead of
+# leaving a logged-in shell behind. Drop "exec" if you'd rather fall
+# back to a shell when X exits or crashes.
+if [[ -z ${DISPLAY-} ]] && [[ $(tty) = /dev/tty1 ]]; then
+	exec startx
+fi
+
+#
+# Interactive setup
+#
+[[ -f ~/.bashrc ]] && . ~/.bashrc
