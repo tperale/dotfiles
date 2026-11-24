@@ -1,5 +1,0 @@
-#!/bin/bash
-
-HOME_WIFI="socks"
-
-[ "$(iwgetid -r)"  == "${HOME_WIFI}" ]
